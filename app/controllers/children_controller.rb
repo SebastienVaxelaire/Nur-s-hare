@@ -19,6 +19,28 @@ class ChildrenController < ApplicationController
     end
   end
 
+  def edit
+    @family = Family.find(params[:family_id])
+    @child = Child.find(params[:id])
+  end
+
+  def update
+    @family = Family.find(params[:family_id])
+    @child = Child.find(params[:id])
+    if @child.update(child_params)
+      redirect_to family_path(@family)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @family = Family.find(params[:family_id])
+    @child = Child.find(params[:id])
+    @child.destroy
+    redirect_to family_path(@family)
+  end
+
   private
 
   def child_params
