@@ -2,6 +2,7 @@ class FamiliesController < ApplicationController
   before_action :set_family, only: [:show, :edit, :update]
 
   def show
+    @children = Child.where(family: @family)
   end
 
   def edit

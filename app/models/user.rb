@@ -11,7 +11,9 @@ class User < ApplicationRecord
   private
 
   def create_associated_family
-    Family.create(user_id: id)
+    family = Family.new(user_id: id)
+    family.save
+    # raise
   end
 
 end

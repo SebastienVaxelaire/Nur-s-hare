@@ -16,7 +16,10 @@
   <p><%= @family.description %></p>
 
 <% end %>
-
+<%= link_to "<i class='fa-solid fa-plus'></i>".html_safe, new_family_child_path(@family) %>
+<% @children.each do |child| %>
+  <p><%= child.name %></p>
+<% end %>
 
 
 </div>
