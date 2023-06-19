@@ -13,7 +13,7 @@ main {
   h4 {
     width: 20%;
     font-size: medium;
-    margin-left: 20px;
+    margin-left: 110px;
     border: 1px solid;
     background: $fairy-tale;
     border-radius: 3px;
@@ -23,6 +23,8 @@ main {
 }
  .home-quick-explain {
   display: flex;
+  align-items: center;
+  justify-content: space-around;
   img {
     width: 40%;
   }
