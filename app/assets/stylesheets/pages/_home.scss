@@ -1,6 +1,7 @@
 // Specific CSS for your home-page
 main {
-  background-color: $fairy-tale;
+  // background-color: $uranian-blue;
+  background-color: white;
 }
 
 .home-top-image {
@@ -24,8 +25,12 @@ main {
  .home-quick-explain {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   img {
-    width: 40%;
+    width: 20%;
+  }
+  .home-quick-explain-text {
+    width: 20%;
+    margin-left: 50px;
   }
  }
