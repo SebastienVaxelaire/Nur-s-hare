@@ -2,13 +2,15 @@
 main {
   // background-color: $uranian-blue;
   background-color: white;
+  min-height: 100vh;
+  font-family: 'Nunito', sans-serif;
 }
 
 .home-top-image {
   display: flex;
   align-items: center;
   background-size: cover;
-  background-position: center;
+  background-position: 50% 75%;
   height: 400px;
   background-image: url("https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
   h4 {
@@ -26,11 +28,36 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  column-gap: 1%;
+  height: 400px;
   img {
-    width: 20%;
+    height: 80%;
   }
   .home-quick-explain-text {
-    width: 20%;
-    margin-left: 50px;
+    padding: 10px;
+    min-height: 80%;
+    max-width: 25%;
+    border: 1px solid $light-sky-blue;
+    border-radius: 3px;
+    h2 {
+      min-height: 3em;
+    }
+  }
+ }
+
+ .step-explain {
+    background-color: $thistle;
+    margin: auto;
+    width: 70%;
+    display: flex;
+    justify-content: space-around;
+ }
+
+ footer {
+  display: flex;
+  justify-content: space-evenly;
+  ul {
+    list-style-type: none;
+    padding: 0;
   }
  }
