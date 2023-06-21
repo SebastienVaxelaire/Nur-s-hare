@@ -17,6 +17,7 @@ class ChildrenController < ApplicationController
     if @child.save
       redirect_to family_path(@child.family)
     else
+      @family = Family.find(params[:family_id])
       render :new, status: :unprocessable_entity
     end
   end
@@ -40,7 +41,7 @@ class ChildrenController < ApplicationController
   private
 
   def child_params
-    params.require(:child).permit(:name, :gender, :birthday)
+    params.require(:child).permit(:name, :gender, :birthday, :family_id)
   end
 
   def set_child

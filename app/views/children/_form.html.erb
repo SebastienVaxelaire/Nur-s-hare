@@ -1,4 +1,4 @@
-<%= simple_form_for([@family, @child]) do |f| %>
+<%= simple_form_for([family, child]) do |f| %>
   <%= f.input :name, label: 'Prénom' %>
   <%= f.input :gender, collection: ["Garçon", "Fille"], label: 'Garçon ou fille?' %>
   <%= f.input :birthday, label: 'Date de naissance' %>
