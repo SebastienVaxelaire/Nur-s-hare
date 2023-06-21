@@ -2,5 +2,6 @@
   <%= f.input :name, label: 'Prénom' %>
   <%= f.input :gender, collection: ["Garçon", "Fille"], label: 'Garçon ou fille?' %>
   <%= f.input :birthday, label: 'Date de naissance' %>
+  <%= f.input :photo, as: :file %>
   <%= f.submit %>
 <% end %>
