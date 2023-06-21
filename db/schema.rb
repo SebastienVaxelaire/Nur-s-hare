@@ -10,20 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_17_105645) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_17_233641) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "childrens", force: :cascade do |t|
+  create_table "children", force: :cascade do |t|
     t.string "name"
-    t.integer "age"
-    t.integer "gender"
+    t.string "gender"
     t.date "birthday"
-    t.bigint "user_id"
+    t.bigint "family_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_childrens_on_user_id"
-  end
+    t.index ["family_id"], name: "index_children_on_family_id"
 
   create_table "families", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -54,7 +52,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_17_105645) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
-
-  add_foreign_key "childrens", "users"
+  add_foreign_key "children", "families"
   add_foreign_key "families", "users"
 end
