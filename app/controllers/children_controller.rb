@@ -1,11 +1,13 @@
 class ChildrenController < ApplicationController
+  before_action :set_child, only: [:edit, :update, :destroy]
+  before_action :set_family, only: [:new, :edit, :update, :destroy]
+
   # def index
   #   @family = Family.find(params[:family_id])
   #   @children = Child.where(family: @family)
   # end
 
   def new
-    @family = Family.find(params[:family_id])
     @child = Child.new
   end
 
@@ -20,13 +22,9 @@ class ChildrenController < ApplicationController
   end
 
   def edit
-    @family = Family.find(params[:family_id])
-    @child = Child.find(params[:id])
   end
 
   def update
-    @family = Family.find(params[:family_id])
-    @child = Child.find(params[:id])
     if @child.update(child_params)
       redirect_to family_path(@family)
     else
@@ -35,8 +33,6 @@ class ChildrenController < ApplicationController
   end
 
   def destroy
-    @family = Family.find(params[:family_id])
-    @child = Child.find(params[:id])
     @child.destroy
     redirect_to family_path(@family)
   end
@@ -45,5 +41,13 @@ class ChildrenController < ApplicationController
 
   def child_params
     params.require(:child).permit(:name, :gender, :birthday)
+  end
+
+  def set_child
+    @child = Child.find(params[:id])
+  end
+
+  def set_family
+    @family = Family.find(params[:family_id])
   end
 end
