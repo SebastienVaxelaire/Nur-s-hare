@@ -1,19 +1,19 @@
 <div class="container mt-4">
 
-<% if @family.name == nil %>
+  <% if @family.name == nil %>
 
-  <h2>Tu n'as pas encore ajouter d'informations sur ta famille, il est temps de nous en dire un peu plus !</h2>
+    <h2>Tu n'as pas encore ajouté d'informations sur ta famille, il est temps de nous en dire un peu plus !</h2>
 
-  <%= render 'form', family: @family %>
+    <%= render 'form', family: @family %>
 
-<% end %>
+  <% end %>
 
 
-<% if @family.name != nil %>
+  <% if @family.name != nil %>
 
-  <h2>Famille <%= @family.name %></h2>
+    <h2>Famille <%= @family.name %></h2>
 
-  <p><%= @family.description %></p>
+    <p><%= @family.description %></p>
 
 <% end %>
 <%= link_to "<i class='fa-solid fa-plus'></i>".html_safe, new_family_child_path(@family) %>
@@ -35,5 +35,3 @@
             data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de supprimer ?"} %>
 <% end %>
 <p><%= link_to "Create a group", new_family_group_path(@family) %></p>
-
-</div>

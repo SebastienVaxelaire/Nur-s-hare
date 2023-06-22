@@ -1,12 +1,13 @@
 <%= simple_form_for(family) do |f| %>
   <%# <%= f.error_notification %>
   <%# <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-  <%= f.input :name %>
-  <%= f.input :husband_first_name %>
-  <%= f.input :wife_first_name %>
-  <%= f.input :address %>
-  <%= f.input :phone_number %>
-  <%= f.input :description %>
-  <%= f.input :key_points %>
-  <%= f.submit %>
+  <%= f.input :name, label: "Nom" %>
+  <%= f.input :husband_first_name, label: "Prénom du papa" %>
+  <%= f.input :wife_first_name, label: "Prénom de la maman" %>
+  <%= f.input :address, label: "Adresse" %>
+  <%= f.input :phone_number, label: "Numéro de téléphone" %>
+   <%= f.input :photos, as: :file, input_html: { multiple: true } %>
+  <%= f.input :description, label: "Décrivez-vous en quelques phrases !" %>
+  <%= f.input :key_points, label: "Points particuliers" %>
+  <%= f.submit "Valider les informations" %>
 <% end %>

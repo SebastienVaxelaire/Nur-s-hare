@@ -23,7 +23,7 @@ class FamiliesController < ApplicationController
   end
 
   def params_family
-    params.require(:family).permit(:name, :husband_first_name, :wife_first_name, :address, :phone_number, :description, :key_points)
+    params.require(:family).permit(:name, :husband_first_name, :wife_first_name, :address, :phone_number, :description, :key_points, photos: [])
   end
 
 end

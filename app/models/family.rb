@@ -8,6 +8,7 @@ class Family < ApplicationRecord
   validates :address, presence: true, on: :update
   validates :phone_number, presence: true, on: :update
   validate :validate_husband_or_wife_first_name_presence, on: :update
+  has_many_attached :photos
 
   private
 
