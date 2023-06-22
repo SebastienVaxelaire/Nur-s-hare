@@ -2,5 +2,6 @@
   <%= f.input :name, label: "Prénom" %>
   <%= f.input :gender, label: "Sexe", collection: ["Garçon", "Fille"] %>
   <%= f.input :birthday, label: "Date d'anniversaire" %>
+  <%= f.input :photos, as: :file, input_html: { multiple: true } %>
   <%= f.submit "Valider" %>
 <% end %>
