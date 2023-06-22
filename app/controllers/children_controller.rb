@@ -35,7 +35,7 @@ class ChildrenController < ApplicationController
   end
 
   def destroy
-    @family = Family.find(params[:family_id])
+    @family =current_user.family
     @child = Child.find(params[:id])
     @child.destroy
     redirect_to family_path(@family)

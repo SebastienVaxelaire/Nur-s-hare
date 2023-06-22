@@ -1,0 +1,2 @@
+class FamiliesGroupsController < ApplicationController
+end

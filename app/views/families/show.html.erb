@@ -21,10 +21,19 @@
   <p><%= child.name %></p>
   <%= link_to "Edit", edit_family_child_path(@family, child) %> |
   <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
-            family_child_path(@family, child),
+            child_path(child),
             class: "text-decoration-none link-dark",
             data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de supprimer ?"} %>
 <% end %>
 
+<% @family.groups.each do |group| %>
+  <p> <%= link_to group.name, family_group_path(@family, group) %> |
+      <%= link_to "Edit",  edit_family_group_path(@family, group) %> |
+      <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
+            group_path(group),
+            class: "text-decoration-none link-dark",
+            data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de supprimer ?"} %>
+<% end %>
+<p><%= link_to "Create a group", new_family_group_path(@family) %></p>
 
 </div>
