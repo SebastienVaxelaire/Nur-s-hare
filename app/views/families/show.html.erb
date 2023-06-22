@@ -15,37 +15,39 @@
 
     <p><%= @family.description %></p>
 
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
+    <div id="carouselExampleIndicators" class="carousel slide w-50">
+      <div class="carousel-indicators">
         <% @family.photos.each_with_index do |photo, index| %>
-          <li data-target="#carouselExampleIndicators" data-slide-to="<%= index %>" <% if index == 0 %>class="active"<% end %>></li>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></button>
         <% end %>
-      </ol>
+      </div>
       <div class="carousel-inner">
         <% @family.photos.each_with_index do |photo, index| %>
-          <div class="carousel-item <% if index == 0 %>active<% end %>">
+          <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
             <%= cl_image_tag photo.key, class: "d-block w-100" %>
           </div>
         <% end %>
       </div>
-      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
-      </a>
+      </button>
     </div>
 
     <hr>
 
     <%# <%= link_to "<i class='fa-solid fa-plus'></i>".html_safe, new_family_child_path(@family) %>
 
+    <%= link_to "Ajouter un enfant", new_family_child_path(@family) %>
+
     <% if @children.present? %>
       <h3><%= pluralize @children.count, "enfant" %></h3>
       <%# <%= link_to "<i class='fa-solid fa-plus'></i>".html_safe, new_family_child_path(@family) %>
-      <%= link_to "Ajouter un enfant", new_family_child_path(@family) %>
+
 
       <div class="nur-card">
         <div class="d-flex justify-content-around">
