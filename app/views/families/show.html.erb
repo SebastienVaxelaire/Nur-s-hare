@@ -1,104 +1,74 @@
 <div class="container mt-4">
 
-<% if @family.name == nil %>
+  <% if @family.name == nil %>
 
-  <h2>Tu n'as pas encore ajouté d'informations sur ta famille, il est temps de nous en dire un peu plus !</h2>
+    <h2>Tu n'as pas encore ajouté d'informations sur ta famille, il est temps de nous en dire un peu plus !</h2>
 
-  <%= render 'form', family: @family %>
+    <%= render 'form', family: @family %>
 
-<% end %>
+  <% end %>
 
 
-<% if @family.name != nil %>
+  <% if @family.name != nil %>
 
-  <h2>Famille <%= @family.name %></h2>
+    <h2>Famille <%= @family.name %></h2>
 
-  <p><%= @family.description %></p>
+    <p><%= @family.description %></p>
 
-  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-      <% @family.photos.each_with_index do |photo, index| %>
-        <li data-target="#carouselExampleIndicators" data-slide-to="<%= index %>" <% if index == 0 %>class="active"<% end %>></li>
-      <% end %>
-    </ol>
-    <div class="carousel-inner">
-      <% @family.photos.each_with_index do |photo, index| %>
-        <div class="carousel-item <% if index == 0 %>active<% end %>">
-          <%= cl_image_tag photo.key, class: "d-block w-100" %>
-        </div>
-      <% end %>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <% @family.photos.each_with_index do |photo, index| %>
+          <li data-target="#carouselExampleIndicators" data-slide-to="<%= index %>" <% if index == 0 %>class="active"<% end %>></li>
+        <% end %>
+      </ol>
+      <div class="carousel-inner">
+        <% @family.photos.each_with_index do |photo, index| %>
+          <div class="carousel-item <% if index == 0 %>active<% end %>">
+            <%= cl_image_tag photo.key, class: "d-block w-100" %>
+          </div>
+        <% end %>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
 
-  <hr>
+    <hr>
 
-  <%# <%= link_to "<i class='fa-solid fa-plus'></i>".html_safe, new_family_child_path(@family) %>
+    <%# <%= link_to "<i class='fa-solid fa-plus'></i>".html_safe, new_family_child_path(@family) %>
 
-  <% if @children.present? %>
-    <h3><%= pluralize @children.count, "enfant" %></h3>
-    <div class="d-flex align-items-stretch">
-      <div class="cards">
-        <% @children.each do |child| %>
-          <div class="card">
-            <p class="card-title"><%= child.name %>,
+    <% if @children.present? %>
+      <h3><%= pluralize @children.count, "enfant" %></h3>
+      <%# <%= link_to "<i class='fa-solid fa-plus'></i>".html_safe, new_family_child_path(@family) %>
+      <%= link_to "Ajouter un enfant", new_family_child_path(@family) %>
+
+      <div class="nur-card">
+        <div class="d-flex justify-content-around">
+          <% @children.each do |child| %>
+            <% if child.photo.attached? %>
+              <%= cl_image_tag child.photo.key, crop: :fill, class: "avatar-extra-large"%>
+            <% end %>
+            <p><%= child.name %>,
               <% if ((Date.today - child.birthday) / 365.25) > 1 %>
                 <%= pluralize ((Date.today - child.birthday) / 365.25).to_i, "an" %>
               <% else %>
                 <%= pluralize ((Date.today - child.birthday) / 30.4375).to_i, "mois" %>
               <% end %>
             </p>
-
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-              <ol class="carousel-indicators">
-                <% child.photos.each_with_index do |photo, index| %>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="<%= index %>" <% if index == 0 %>class="active"<% end %>></li>
-                <% end %>
-              </ol>
-              <div class="carousel-inner">
-                <% child.photos.each_with_index do |photo, index| %>
-                  <div class="carousel-item <% if index == 0 %>active<% end %>">
-                    <%= cl_image_tag photo.key, class: "d-block w-100" %>
-                  </div>
-                <% end %>
-              </div>
-              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
-            </div>
-
-            <div class="card-body">
-              <%= link_to "<i class='fa-solid fa-pen-to-square'></i>".html_safe, edit_family_child_path(@family, child) %>
-              <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
-                        family_child_path(@family, child),
-                        class: "text-decoration-none link-dark",
-                        data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ?"} %>
-            </div>
-
-          </div>
-        <% end %>
+            <%= link_to "<i class='fa-solid fa-pen-to-square'></i>".html_safe, edit_family_child_path(@family, child) %>
+            <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
+                      family_child_path(@family, child),
+                      class: "text-decoration-none link-dark",
+                      data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ?"} %>
+          <% end %>
+        </div>
       </div>
-    </div>
+    <% end %>
   <% end %>
-
-  <br>
-
-  <%= link_to "Ajouter un enfant", new_family_child_path(@family) %>
-
-<% end %>
-
-
 
 </div>
