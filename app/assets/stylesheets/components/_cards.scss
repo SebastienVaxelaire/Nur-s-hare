@@ -1,7 +1,21 @@
-.nur-card {
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.nur-girl-card {
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   border-radius: 4px;
   padding: 16px;
   border: 1px solid $carnation-pink;
   background-color: $fairy-tale;
+}
+
+.nur-boy-card {
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 4px;
+  padding: 16px;
+  border: 1px solid $carnation-pink;
+  background-color: $light-sky-blue;
 }

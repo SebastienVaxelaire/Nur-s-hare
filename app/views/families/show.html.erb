@@ -38,39 +38,69 @@
       </button>
     </div>
 
+    <%= link_to "Mettre à jour mes informations", edit_family_path(@family), class: "btn btn-info btn-sm mt-3" %>
+
     <hr>
 
     <%# <%= link_to "<i class='fa-solid fa-plus'></i>".html_safe, new_family_child_path(@family) %>
 
-    <%= link_to "Ajouter un enfant", new_family_child_path(@family) %>
+    <h3><%= pluralize @children.count, "enfant" %></h3>
 
     <% if @children.present? %>
-      <h3><%= pluralize @children.count, "enfant" %></h3>
       <%# <%= link_to "<i class='fa-solid fa-plus'></i>".html_safe, new_family_child_path(@family) %>
-
-
-      <div class="nur-card">
+      <div class="cards">
         <div class="d-flex justify-content-around">
           <% @children.each do |child| %>
-            <% if child.photo.attached? %>
-              <%= cl_image_tag child.photo.key, crop: :fill, class: "avatar-extra-large"%>
+
+            <% if child.gender == "Fille" %>
+              <div class="nur-girl-card">
+                <% if child.photo.attached? %>
+                  <%= cl_image_tag child.photo.key, crop: :fill, class: "avatar-extra-large"%>
+                <% end %>
+                <p class="mt-3 text-center fs-5"><%= child.name %>,
+                  <% if ((Date.today - child.birthday) / 365.25) > 1 %>
+                    <%= pluralize ((Date.today - child.birthday) / 365.25).to_i, "an" %>
+                  <% else %>
+                    <%= pluralize ((Date.today - child.birthday) / 30.4375).to_i, "mois" %>
+                  <% end %>
+                </p>
+                <div class="d-flex justify-content-between small mt-0">
+                  <%= link_to "<i class='fa-solid fa-pen-to-square'></i>".html_safe, edit_family_child_path(@family, child) %>
+                  <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
+                            family_child_path(@family, child),
+                            class: "text-decoration-none link-dark",
+                            data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ?"} %>
+                </div>
+              </div>
+
+            <% else %>
+              <div class="nur-boy-card">
+                <% if child.photo.attached? %>
+                  <%= cl_image_tag child.photo.key, crop: :fill, class: "avatar-extra-large"%>
+                <% end %>
+                <p class="mt-3 text-center fs-5"><%= child.name %>,
+                  <% if ((Date.today - child.birthday) / 365.25) > 1 %>
+                    <%= pluralize ((Date.today - child.birthday) / 365.25).to_i, "an" %>
+                  <% else %>
+                    <%= pluralize ((Date.today - child.birthday) / 30.4375).to_i, "mois" %>
+                  <% end %>
+                </p>
+                <div class="d-flex justify-content-between small">
+                  <%= link_to "<i class='fa-solid fa-pen-to-square'></i>".html_safe, edit_family_child_path(@family, child) %>
+                  <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
+                            family_child_path(@family, child),
+                            class: "text-decoration-none link-dark",
+                            data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ?"} %>
+                </div>
+              </div>
             <% end %>
-            <p><%= child.name %>,
-              <% if ((Date.today - child.birthday) / 365.25) > 1 %>
-                <%= pluralize ((Date.today - child.birthday) / 365.25).to_i, "an" %>
-              <% else %>
-                <%= pluralize ((Date.today - child.birthday) / 30.4375).to_i, "mois" %>
-              <% end %>
-            </p>
-            <%= link_to "<i class='fa-solid fa-pen-to-square'></i>".html_safe, edit_family_child_path(@family, child) %>
-            <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
-                      family_child_path(@family, child),
-                      class: "text-decoration-none link-dark",
-                      data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ?"} %>
+
           <% end %>
         </div>
       </div>
     <% end %>
+
+    <%= link_to "Ajouter un enfant", new_family_child_path(@family), class: "btn btn-info btn-sm mt-3" %>
   <% end %>
 
 </div>
