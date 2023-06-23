@@ -1,0 +1,2 @@
+class FamiliesGroup < ApplicationRecord
+end

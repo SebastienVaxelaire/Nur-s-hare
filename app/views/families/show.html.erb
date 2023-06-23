@@ -39,13 +39,12 @@
 
     <hr>
 
-    <%# <%= link_to "<i class='fa-solid fa-plus'></i>".html_safe, new_family_child_path(@family) %>
 
     <% if @children.present? %>
 
       <h3 class="mb-3"><%= pluralize @children.count, "enfant" %></h3>
 
-      <div class="cards mb-5">
+      <div class="cards mb-3">
         <% @children.each do |child| %>
           <% if child.gender == "Fille" %>
             <div class="nur-girl-card" data-bs-toggle="modal" data-bs-target="#girlModal">
@@ -126,20 +125,36 @@
 
               </div>
             </div>
+
           <% end %>
         <% end %>
+
         <div class="new-child-card">
           <div class="fs-3">
             <%= link_to "<i class='fa-solid fa-plus' id='new-child-plus'></i>".html_safe, new_family_child_path(@family) %>
           </div>
         </div>
+
       </div>
 
     <% else %>
       <h3 class="mb-3">Pas d'enfant pour le moment !</h3>
-      <%= link_to "Ajouter un enfant", new_family_child_path(@family), class: "btn btn-info btn-small mb-5" %>
+      <%= link_to "Ajouter un enfant", new_family_child_path(@family), class: "btn btn-info btn-small mb-3" %>
     <% end %>
 
   <% end %>
+
+  <hr>
+
+  <% @family.groups.each do |group| %>
+    <p> <%= link_to group.name, family_group_path(@family, group) %> |
+        <%= link_to "Éditer", edit_family_group_path(@family, group) %> |
+        <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
+              group_path(group),
+              class: "text-decoration-none link-dark",
+              data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de supprimer ?"} %>
+  <% end %>
+
+  <p><%= link_to "Créer un groupe", new_family_group_path(@family) %></p>
 
 </div>
