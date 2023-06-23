@@ -12,7 +12,9 @@
 
 .avatar-extra-large {
   width: 168px;
+  height: 168px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .avatar-bordered {
