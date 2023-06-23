@@ -66,6 +66,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_230025) do
     t.index ["user_id"], name: "index_families_on_user_id"
   end
 
+  create_table "families_groups", force: :cascade do |t|
+    t.bigint "family_id", null: false
+    t.bigint "group_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["family_id"], name: "index_families_groups_on_family_id"
+    t.index ["group_id"], name: "index_families_groups_on_group_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.bigint "family_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["family_id"], name: "index_groups_on_family_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -82,4 +100,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_230025) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "children", "families"
   add_foreign_key "families", "users"
+  add_foreign_key "families_groups", "families"
+  add_foreign_key "families_groups", "groups"
+  add_foreign_key "groups", "families"
 end

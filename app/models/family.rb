@@ -1,6 +1,7 @@
 class Family < ApplicationRecord
   belongs_to :user
   has_many :children, dependent: :destroy
+  has_many :groups, dependent: :destroy
   validates :user, presence: true
   validates :name, presence: true, on: :update
   validates :description, presence: true, on: :update, length: { minimum: 10, maximum: 1000 }

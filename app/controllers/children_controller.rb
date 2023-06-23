@@ -1,6 +1,6 @@
 class ChildrenController < ApplicationController
   before_action :set_child, only: [:edit, :update, :destroy]
-  before_action :set_family, only: [:new, :edit, :update, :destroy]
+  before_action :set_family, only: [:new, :edit, :update]
 
   # def index
   #   @family = Family.find(params[:family_id])
@@ -34,6 +34,7 @@ class ChildrenController < ApplicationController
   end
 
   def destroy
+    @family = current_user.family
     @child.destroy
     redirect_to family_path(@family)
   end
