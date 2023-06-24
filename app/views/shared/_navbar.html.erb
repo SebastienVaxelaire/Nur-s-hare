@@ -13,6 +13,9 @@
           <li class="nav-item active me-3">
             <%= link_to "Ma famille", family_path(current_user.family), class: "nav-link" %>
           </li>
+          <li class="nav-item active me-3">
+            <%= link_to "Créer un groupe", new_family_group_path(current_user.family), class: "nav-link" %>
+          </li>
           <li class="nav-item me-3">
             <%= link_to "Mes échanges", "#", class: "nav-link" %>
           </li>

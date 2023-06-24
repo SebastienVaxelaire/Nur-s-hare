@@ -1,208 +1,182 @@
 <div class="container margin-with-navbar">
-
   <% if @family.name == nil %>
-
     <h2>Tu n'as pas encore ajouté d'informations sur ta famille, il est temps de nous en dire un peu plus !</h2>
-
     <%= render 'form', family: @family %>
-
   <% end %>
 
   <% if @family.name != nil %>
-
     <h2 class="mb-3">Famille <%= @family.name %> <%= link_to "<i class='fa-solid fa-pen-to-square'></i>".html_safe, edit_family_path(@family), class: "btn btn-info btn-sm ms-3" %></h2>
 
-<div class="row">
-
-
-
-    <div class="col-md-6">
-
-    <div class="light-card">
-
-
-      <div id="carouselExampleIndicators" class="carousel slide w-100">
-        <div class="carousel-indicators">
-          <% @family.photos.each_with_index do |photo, index| %>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></button>
-          <% end %>
-        </div>
-        <div class="carousel-inner">
-          <% @family.photos.each_with_index do |photo, index| %>
-            <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
-              <%= cl_image_tag photo.key, class: "d-block w-100" %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="light-card">
+          <div id="carouselExampleIndicators" class="carousel carousel-container slide d-block w-100">
+            <div class="carousel-indicators">
+              <% @family.photos.each_with_index do |photo, index| %>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></button>
+              <% end %>
             </div>
-          <% end %>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </button>
-      </div>
-
-    </div>
-
-    </div>
-
-
-    <div class="col-md-6">
-
-      <div class="light-card description mb-3">
-        <p class="mb-0"><%= @family.description %></p>
-      </div>
-
-      <div class="light-card">
-
-        <div class="d-flex justify-content-start align-items-center">
-
-          <% if @family.husband_first_name.present? %>
-
-            <div class="col-md-6">
-
-              <div class="d-flex justify-content-start align-items-center">
-
-                <div class="image-container" style="height: 80px;">
-                  <img src="http://www.mediatoon-licensing.com/wp-content/myinserts/2019/07/NOUVELLES-ENTREES_Page_18.jpg" alt="Description de l'image">
+            <div class="carousel-inner">
+              <% @family.photos.each_with_index do |photo, index| %>
+                <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+                  <%= cl_image_tag(photo.key, class: "d-block w-100 h-100", crop: :thumb) %>
                 </div>
+              <% end %>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
 
-                <div class="">
-                  <p class="mb-0 text-light-sky-blue text-bolder">LE PAPA</p>
-                  <p class="mb-0"><%= @family.husband_first_name %></p>
+      <div class="col-md-6">
+        <div class="light-card description mb-3">
+          <p class="mb-0"><%= @family.description %></p>
+        </div>
+
+        <div class="light-card">
+          <div class="d-flex justify-content-start align-items-center">
+            <% if @family.husband_first_name.present? %>
+              <div class="col-md-6">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="image-container" style="height: 80px;">
+                    <img src="http://www.mediatoon-licensing.com/wp-content/myinserts/2019/07/NOUVELLES-ENTREES_Page_18.jpg" alt="Description de l'image">
+                  </div>
+                  <div class="">
+                    <p class="mb-0 text-light-sky-blue text-bolder">LE PAPA</p>
+                    <p class="mb-0"><%= @family.husband_first_name %></p>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+
+            <% if @family.wife_first_name.present? %>
+              <div class="col-md-6">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div class="image-container" style="height: 80px;">
+                    <img src="https://easydrawingguides.com/wp-content/uploads/2022/05/Super-Mom-step-by-step-drawing-tutorial-step-10.png" alt="Description de l'image">
+                  </div>
+                  <div class="">
+                    <p class="mb-0 text-carnation-pink text-bolder">LA MAMAN</p>
+                    <p class="mb-0"><%= @family.wife_first_name %></p>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="light-card mt-3">
+        <% if @total_groups == 0 %>
+        <p class="mb-0">Notre famille n'est encore membre d'aucun groupe de Nur's'hare !</p>
+        <% else %>
+        <p class="mb-0">Notre famille est membre de <%= pluralize(@total_groups, "groupe") %> de Nur's'hare !</p>
+        <% end %>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="light-card mt-3">
+      <% if @children.present? %>
+        <h3 class="mb-3"><%= pluralize(@children.count, "enfant") %></h3>
+
+        <div class="cards mb-3">
+          <% @children.each do |child| %>
+            <% if child.gender == "Fille" %>
+              <% avatar_image = child.photo.attached? ? cl_image_tag(child.photo.key, crop: :thumb, gravity: :face, class: "avatar-extra-large") : image_tag("https://img.freepik.com/premium-vector/little-girl-smiles-lifts-up-his-eyes-hands-prayer_71593-911.jpg", class: "avatar-extra-large") %>
+              <% card_class = "nur-girl-card" %>
+              <% modal_id = "girlModal-#{child.id}" %>
+              <% modal_label_id = "girlModalLabel-#{child.id}" %>
+            <% else %>
+              <% avatar_image = child.photo.attached? ? cl_image_tag(child.photo.key, crop: :thumb, gravity: :face, class: "avatar-extra-large") : image_tag("https://media.istockphoto.com/id/1241499465/vector/vector-mexican-boy-jumping-and-laughing-cartoon-character-design-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=nGEI21M6TDh9bZqC7tEbNpOfNtFrB4ZKeNIQB5CTq_g=", class: "avatar-extra-large") %>
+              <% card_class = "nur-boy-card" %>
+              <% modal_id = "boyModal-#{child.id}" %>
+              <% modal_label_id = "boyModalLabel-#{child.id}" %>
+            <% end %>
+
+            <div class="<%= card_class %>" data-bs-toggle="modal" data-bs-target="#<%= modal_id %>">
+              <div class="text-center">
+                <%= avatar_image %>
+
+                <div class="d-flex flex-column">
+                  <div>
+                    <%= child.name %>
+                  </div>
+                  <div>
+                    <% if ((Date.today - child.birthday) / 365.25) > 1 %>
+                      <%= pluralize(((Date.today - child.birthday) / 365.25).to_i, "an") %>
+                    <% else %>
+                      <%= pluralize(((Date.today - child.birthday) / 30.4375).to_i, "mois") %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal fade" id="<%= modal_id %>" tabindex="-1" aria-labelledby="<%= modal_label_id %>" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-4" id="exampleModalLabel"><%= child.name %></h1>
+                      <%= link_to "<i class='fa-solid fa-trash-can ms-2 mt-2' style='color: #ff2600;'></i>".html_safe,
+                                 family_child_path(@family, child),
+                                 class: "mb-2",
+                                 data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir enlever #{child.name} ?"} %>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <%= render 'children/form', family: @family, child: child %>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           <% end %>
 
-                    <% if @family.wife_first_name.present? %>
-
-            <div class="col-md-6">
-
-              <div class="d-flex justify-content-start align-items-center">
-
-                <div class="image-container" style="height: 80px;">
-                  <img src="https://easydrawingguides.com/wp-content/uploads/2022/05/Super-Mom-step-by-step-drawing-tutorial-step-10.png" alt="Description de l'image">
-                </div>
-
-                <div class="">
-                  <p class="mb-0 text-carnation-pink text-bolder">LA MAMAN</p>
-                  <p class="mb-0"><%= @family.wife_first_name %></p>
-                </div>
-              </div>
+          <div class="new-child-card">
+            <div class="fs-3">
+              <%= link_to "<i class='fa-solid fa-plus' id='new-child-plus'></i>".html_safe, new_family_child_path(@family) %>
             </div>
-          <% end %>
+          </div>
         </div>
 
-      </div>
-
-
-
-      </div>
-
-
-    </div>
-
-
-<div class="light-card mt-3">
-
-<% if @children.present? %>
-  <h3 class="mb-3">Nos <%= @children.count %> <%= @children.count > 1 ? "enfants" : "enfant" %></h3>
-
-
-
-  <div class="cards mb-3">
-    <% @children.each do |child| %>
-      <% if child.gender == "Fille" %>
-        <% avatar_image = child.photo.attached? ? cl_image_tag(child.photo.key, crop: :thumb, gravity: :face, class: "avatar-extra-large") : image_tag("https://img.freepik.com/premium-vector/little-girl-smiles-lifts-up-his-eyes-hands-prayer_71593-911.jpg", class: "avatar-extra-large") %>
-        <% card_class = "nur-girl-card" %>
-        <% modal_id = "girlModal-#{child.id}" %>
-        <% modal_label_id = "girlModalLabel-#{child.id}" %>
       <% else %>
-        <% avatar_image = child.photo.attached? ? cl_image_tag(child.photo.key, crop: :thumb, gravity: :face, class: "avatar-extra-large") : image_tag("https://media.istockphoto.com/id/1241499465/vector/vector-mexican-boy-jumping-and-laughing-cartoon-character-design-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=nGEI21M6TDh9bZqC7tEbNpOfNtFrB4ZKeNIQB5CTq_g=", class: "avatar-extra-large") %>
-        <% card_class = "nur-boy-card" %>
-        <% modal_id = "boyModal-#{child.id}" %>
-        <% modal_label_id = "boyModalLabel-#{child.id}" %>
+        <h3 class="mb-3">Pas d'enfant pour le moment !</h3>
+        <%= link_to "Ajouter un enfant", new_family_child_path(@family), class: "btn btn-info btn-small mb-3" %>
       <% end %>
-
-      <div class="<%= card_class %>" data-bs-toggle="modal" data-bs-target="#<%= modal_id %>">
-        <div class="text-center">
-          <%= avatar_image %>
-
-  <div class="d-flex flex-column">
-  <div>
-    <%= child.name %>
-  </div>
-  <div>
-    <% if ((Date.today - child.birthday) / 365.25) > 1 %>
-      <%= pluralize ((Date.today - child.birthday) / 365.25).to_i, "an" %>
-    <% else %>
-      <%= pluralize ((Date.today - child.birthday) / 30.4375).to_i, "mois" %>
-    <% end %>
-  </div>
-</div>
-
-
-
-          <div class="modal fade" id="<%= modal_id %>" tabindex="-1" aria-labelledby="<%= modal_label_id %>" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-4" id="exampleModalLabel"><%= child.name %></h1>
-        <%= link_to "<i class='fa-solid fa-trash-can ms-2 mt-2' style='color: #ff2600;'></i>".html_safe,
-                   family_child_path(@family, child),
-                   class: "mb-2",
-                   data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir enlever #{child.name} ?"} %>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-  <%= render 'children/form', family: @family, child: child %>
-
-      </div>
     </div>
-  </div>
-</div>
 
+    <div class="light-card mt-3">
+    <h3 class="mb-4">Nous sommes membres des groupes suivants</h3>
 
-        </div>
-      </div>
+    <% @family.groups.each do |group| %>
 
-    <% end %>
+      <div class="px-4">
 
-    <div class="new-child-card">
-      <div class="fs-3">
-        <%= link_to "<i class='fa-solid fa-plus' id='new-child-plus'></i>".html_safe, new_family_child_path(@family) %>
+    <div class="card-product mb-4">
+      <%= group.banner_photo.key.present? ? cl_image_tag(group.banner_photo.key, crop: :fit) : image_tag('https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80') %>
+
+      <div class="card-product-infos">
+        <h2><%= link_to group.name, family_group_path(@family, group) %> </h2>
+        <p><%= group.description %></p>
       </div>
     </div>
 
+      </div>
+
+    <% end %>
+     <% end %>
+
   </div>
 
-<% else %>
-  <h3 class="mb-3">Pas d'enfant pour le moment !</h3>
-  <%= link_to "Ajouter un enfant", new_family_child_path(@family), class: "btn btn-info btn-small mb-3" %>
-<% end %>
 
-
-  <% end %>
-
-
-</div>
-
-
-
-  <hr>
-
-  <% @family.groups.each do |group| %>
-    <p> <%= link_to group.name, family_group_path(@family, group) %> |
-        <%= link_to "Éditer", edit_family_group_path(@family, group) %> |
-        <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
-              group_path(group),
-              class: "text-decoration-none link-dark",
-              data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de supprimer ?"} %>
-  <% end %>
-
-  <p><%= link_to "Créer un groupe", new_family_group_path(@family) %></p>
+    </div>
 
 </div>
