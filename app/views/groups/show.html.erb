@@ -1,6 +1,17 @@
-<div class="container margin-with-navbar">
+<div class="banner" style="background-image: linear-gradient(rgba(255, 192, 203, 0.6), rgba(0, 0, 0, 0.6)), url('<%= @group.banner_photo.key.present? ? cl_image_path(@group.banner_photo.key, crop: :fit) : 'https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80' %>');">
 
-  <h1><%= @group.name %></h1>
+  <div class="container">
+    <h1 class="group-title"><%= @group.name %></h1>
+    <p><%= @group.description %></p>
+    <a class="btn btn-primary" href="#">Rejoindre le groupe</a>
+  </div>
+</div>
+
+
+
+
+
+<div class="container margin-with-navbar">
 
   <h2>Créé par la famille <%= @family.name %></h2>
 
