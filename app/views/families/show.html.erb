@@ -60,14 +60,21 @@
       <div class="<%= card_class %>" data-bs-toggle="modal" data-bs-target="#<%= modal_id %>">
         <div class="text-center">
           <%= avatar_image %>
-          <p class="mt-2 fs-6">
-            <%= child.name %>,
-            <% if ((Date.today - child.birthday) / 365.25) > 1 %>
-              <%= pluralize ((Date.today - child.birthday) / 365.25).to_i, "an" %>
-            <% else %>
-              <%= pluralize ((Date.today - child.birthday) / 30.4375).to_i, "mois" %>
-            <% end %>
-          </p>
+
+  <div class="d-flex flex-column">
+  <div>
+    <%= child.name %>
+  </div>
+  <div>
+    <% if ((Date.today - child.birthday) / 365.25) > 1 %>
+      <%= pluralize ((Date.today - child.birthday) / 365.25).to_i, "an" %>
+    <% else %>
+      <%= pluralize ((Date.today - child.birthday) / 30.4375).to_i, "mois" %>
+    <% end %>
+  </div>
+</div>
+
+
 
           <div class="modal fade" id="<%= modal_id %>" tabindex="-1" aria-labelledby="<%= modal_label_id %>" aria-hidden="true">
   <div class="modal-dialog">
