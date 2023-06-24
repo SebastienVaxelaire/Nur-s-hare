@@ -10,38 +10,108 @@
 
   <% if @family.name != nil %>
 
-    <h2 class="mb-2">Famille <%= @family.name %> <%= link_to "<i class='fa-solid fa-pen-to-square'></i>".html_safe, edit_family_path(@family), class: "btn btn-info btn-sm ms-3" %></h2>
+    <h2 class="mb-3">Famille <%= @family.name %> <%= link_to "<i class='fa-solid fa-pen-to-square'></i>".html_safe, edit_family_path(@family), class: "btn btn-info btn-sm ms-3" %></h2>
 
-    <p><%= @family.description %></p>
+<div class="row">
 
-    <div id="carouselExampleIndicators" class="carousel slide w-50">
-      <div class="carousel-indicators">
-        <% @family.photos.each_with_index do |photo, index| %>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></button>
-        <% end %>
+
+
+    <div class="col-md-6">
+
+    <div class="light-card">
+
+
+      <div id="carouselExampleIndicators" class="carousel slide w-100">
+        <div class="carousel-indicators">
+          <% @family.photos.each_with_index do |photo, index| %>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></button>
+          <% end %>
+        </div>
+        <div class="carousel-inner">
+          <% @family.photos.each_with_index do |photo, index| %>
+            <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+              <%= cl_image_tag photo.key, class: "d-block w-100" %>
+            </div>
+          <% end %>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </button>
       </div>
-      <div class="carousel-inner">
-        <% @family.photos.each_with_index do |photo, index| %>
-          <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
-            <%= cl_image_tag photo.key, class: "d-block w-100" %>
-          </div>
-        <% end %>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </button>
+
     </div>
 
-    <hr>
+    </div>
 
+
+    <div class="col-md-6">
+
+      <div class="light-card description mb-3">
+        <p class="mb-0"><%= @family.description %></p>
+      </div>
+
+      <div class="light-card">
+
+        <div class="d-flex justify-content-start align-items-center">
+
+          <% if @family.husband_first_name.present? %>
+
+            <div class="col-md-6">
+
+              <div class="d-flex justify-content-start align-items-center">
+
+                <div class="image-container" style="height: 80px;">
+                  <img src="http://www.mediatoon-licensing.com/wp-content/myinserts/2019/07/NOUVELLES-ENTREES_Page_18.jpg" alt="Description de l'image">
+                </div>
+
+                <div class="">
+                  <p class="mb-0 text-light-sky-blue text-bolder">LE PAPA</p>
+                  <p class="mb-0"><%= @family.husband_first_name %></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+                    <% if @family.wife_first_name.present? %>
+
+            <div class="col-md-6">
+
+              <div class="d-flex justify-content-start align-items-center">
+
+                <div class="image-container" style="height: 80px;">
+                  <img src="https://easydrawingguides.com/wp-content/uploads/2022/05/Super-Mom-step-by-step-drawing-tutorial-step-10.png" alt="Description de l'image">
+                </div>
+
+                <div class="">
+                  <p class="mb-0 text-carnation-pink text-bolder">LA MAMAN</p>
+                  <p class="mb-0"><%= @family.wife_first_name %></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+
+
+
+      </div>
+
+
+    </div>
+
+
+<div class="light-card mt-3">
 
 <% if @children.present? %>
-  <h3 class="mb-3"><%= pluralize @children.count, "enfant" %></h3>
+  <h3 class="mb-3">Nos <%= @children.count %> <%= @children.count > 1 ? "enfants" : "enfant" %></h3>
+
+
 
   <div class="cards mb-3">
     <% @children.each do |child| %>
@@ -116,6 +186,11 @@
 
 
   <% end %>
+
+
+</div>
+
+
 
   <hr>
 
