@@ -40,111 +40,73 @@
     <hr>
 
 
-    <% if @children.present? %>
+<% if @children.present? %>
+  <h3 class="mb-3"><%= pluralize @children.count, "enfant" %></h3>
 
-      <h3 class="mb-3"><%= pluralize @children.count, "enfant" %></h3>
+  <div class="cards mb-3">
+    <% @children.each do |child| %>
+      <% if child.gender == "Fille" %>
+        <% avatar_image = child.photo.attached? ? cl_image_tag(child.photo.key, crop: :thumb, gravity: :face, class: "avatar-extra-large") : image_tag("https://img.freepik.com/premium-vector/little-girl-smiles-lifts-up-his-eyes-hands-prayer_71593-911.jpg", class: "avatar-extra-large") %>
+        <% card_class = "nur-girl-card" %>
+        <% modal_id = "girlModal-#{child.id}" %>
+        <% modal_label_id = "girlModalLabel-#{child.id}" %>
+      <% else %>
+        <% avatar_image = child.photo.attached? ? cl_image_tag(child.photo.key, crop: :thumb, gravity: :face, class: "avatar-extra-large") : image_tag("https://media.istockphoto.com/id/1241499465/vector/vector-mexican-boy-jumping-and-laughing-cartoon-character-design-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=nGEI21M6TDh9bZqC7tEbNpOfNtFrB4ZKeNIQB5CTq_g=", class: "avatar-extra-large") %>
+        <% card_class = "nur-boy-card" %>
+        <% modal_id = "boyModal-#{child.id}" %>
+        <% modal_label_id = "boyModalLabel-#{child.id}" %>
+      <% end %>
 
-      <div class="cards mb-3">
-        <% @children.each do |child| %>
-          <% if child.gender == "Fille" %>
-            <div class="nur-girl-card" data-bs-toggle="modal" data-bs-target="#girlModal">
-              <div class="text-center">
-                <% if child.photo.attached? %>
-                  <%= cl_image_tag child.photo.key, crop: :thumb, gravity: :face, class: "avatar-extra-large" %>
-                  <% else %>
-                  <%= image_tag "https://img.freepik.com/premium-vector/little-girl-smiles-lifts-up-his-eyes-hands-prayer_71593-911.jpg", class: "avatar-extra-large" %>
-                <% end %>
-                <p class="mt-2 fs-6"><%= child.name %>,
-                  <% if ((Date.today - child.birthday) / 365.25) > 1 %>
-                    <%= pluralize ((Date.today - child.birthday) / 365.25).to_i, "an" %>
-                  <% else %>
-                    <%= pluralize ((Date.today - child.birthday) / 30.4375).to_i, "mois" %>
-                  <% end %>
-                </p>
+      <div class="<%= card_class %>" data-bs-toggle="modal" data-bs-target="#<%= modal_id %>">
+        <div class="text-center">
+          <%= avatar_image %>
+          <p class="mt-2 fs-6">
+            <%= child.name %>,
+            <% if ((Date.today - child.birthday) / 365.25) > 1 %>
+              <%= pluralize ((Date.today - child.birthday) / 365.25).to_i, "an" %>
+            <% else %>
+              <%= pluralize ((Date.today - child.birthday) / 30.4375).to_i, "mois" %>
+            <% end %>
+          </p>
 
-                <div class="modal fade" id="girlModal" tabindex="-1" aria-labelledby="girlModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-4" id="exampleModalLabel"><%= child.name %></h1>
-                         <%= link_to "<i class='fa-solid fa-trash-can ms-2 mt-2' style='color: #ff2600;'></i>".html_safe,
-                                    family_child_path(@family, child),
-                                    class: "mb-2",
-                                    data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir enlever #{child.name} ?"} %>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <%= simple_form_for([@family, child]) do |f| %>
-                          <div class="fs-5">
-                          <%= f.input :photo, as: :file, label: "Modifier la photo" %>
-                          </div>
-                          <%= f.submit "Sauvegarder", class: "btn btn-primary"  %>
-                        <% end %>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          <% else %>
-            <div class="nur-boy-card" data-bs-toggle="modal" data-bs-target="#boyModal">
-              <div class="text-center">
-                <% if child.photo.attached? %>
-                  <%= cl_image_tag child.photo.key, crop: :thumb, gravity: :face, class: "avatar-extra-large"%>
-                  <% else %>
-                  <%= image_tag "https://media.istockphoto.com/id/1241499465/vector/vector-mexican-boy-jumping-and-laughing-cartoon-character-design-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=nGEI21M6TDh9bZqC7tEbNpOfNtFrB4ZKeNIQB5CTq_g=", class: "avatar-extra-large" %>
-                <% end %>
-                <p class="mt-2 fs-6"><%= child.name %>,
-                  <% if ((Date.today - child.birthday) / 365.25) > 1 %>
-                    <%= pluralize ((Date.today - child.birthday) / 365.25).to_i, "an" %>
-                  <% else %>
-                    <%= pluralize ((Date.today - child.birthday) / 30.4375).to_i, "mois" %>
-                  <% end %>
-                </p>
-
-                <div class="modal fade" id="boyModal" tabindex="-1" aria-labelledby="boyModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-4" id="exampleModalLabel"><%= child.name %></h1>
-                         <%= link_to "<i class='fa-solid fa-trash-can ms-2 mt-2' style='color: #ff2600;'></i>".html_safe,
-                                    family_child_path(@family, child),
-                                    class: "mb-2",
-                                    data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir enlever #{child.name} ?"} %>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <%= simple_form_for([@family, child]) do |f| %>
-                          <div class="fs-5">
-                          <%= f.input :photo, as: :file, label: "Modifier la photo" %>
-                          </div>
-                          <%= f.submit "Sauvegarder", class: "btn btn-primary" %>
-                        <% end %>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          <% end %>
-        <% end %>
-
-        <div class="new-child-card">
-          <div class="fs-3">
-            <%= link_to "<i class='fa-solid fa-plus' id='new-child-plus'></i>".html_safe, new_family_child_path(@family) %>
-          </div>
-        </div>
+          <div class="modal fade" id="<%= modal_id %>" tabindex="-1" aria-labelledby="<%= modal_label_id %>" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-4" id="exampleModalLabel"><%= child.name %></h1>
+        <%= link_to "<i class='fa-solid fa-trash-can ms-2 mt-2' style='color: #ff2600;'></i>".html_safe,
+                   family_child_path(@family, child),
+                   class: "mb-2",
+                   data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir enlever #{child.name} ?"} %>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+  <%= render 'children/form', family: @family, child: child %>
 
       </div>
+    </div>
+  </div>
+</div>
 
-    <% else %>
-      <h3 class="mb-3">Pas d'enfant pour le moment !</h3>
-      <%= link_to "Ajouter un enfant", new_family_child_path(@family), class: "btn btn-info btn-small mb-3" %>
+
+        </div>
+      </div>
+
     <% end %>
+
+    <div class="new-child-card">
+      <div class="fs-3">
+        <%= link_to "<i class='fa-solid fa-plus' id='new-child-plus'></i>".html_safe, new_family_child_path(@family) %>
+      </div>
+    </div>
+
+  </div>
+
+<% else %>
+  <h3 class="mb-3">Pas d'enfant pour le moment !</h3>
+  <%= link_to "Ajouter un enfant", new_family_child_path(@family), class: "btn btn-info btn-small mb-3" %>
+<% end %>
+
 
   <% end %>
 
