@@ -3,6 +3,8 @@ class FamiliesController < ApplicationController
 
   def show
     @children = Child.where(family: @family)
+    @total_groups = Group.where(family_id: @family.id).count +
+    FamiliesGroup.where(family_id: @family.id).count
   end
 
   def edit
