@@ -13,4 +13,10 @@ Rails.application.routes.draw do
   resources :groups, only: [:index, :show, :destroy] do
     resources :families_groups, only: [:new, :create]
   end
+  resources :families_groups do
+    member do
+      patch 'accept'
+      patch 'refuse'
+    end
+  end
 end

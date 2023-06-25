@@ -17,6 +17,24 @@ class FamiliesGroupsController < ApplicationController
     redirect_to group_path(@group), notice: 'Vous ne pouvez pas demander de rejoindre ce group'
   end
 
+  def accept
+    # raise
+    @family_group = FamiliesGroup.find(params[:id])
+    group_id = @family_group.group_id
+    @group = Group.find(group_id)
+    @family_group.update(confirmation:'accepted')
+    redirect_to group_path(@group), notice: 'Votre demande a été accepté'
+  end
+
+  def refuse
+    # raise
+    @family_group = FamiliesGroup.find(params[:id])
+    group_id = @family_group.group_id
+    @group = Group.find(group_id)
+    @family_group.update(confirmation:'refused')
+    redirect_to group_path(@group), notice: 'Votre demande a été refusé'
+  end
+
   private
 
   def check(group, family)
