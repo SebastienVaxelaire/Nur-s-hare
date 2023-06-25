@@ -3,7 +3,7 @@
   <div class="container">
     <h1 class="group-title"><%= @group.name %></h1>
     <p><%= @group.description %></p>
-    <a class="btn btn-primary" href="#">Rejoindre le groupe</a>
+    <%= link_to "Rejoindre le groupe",  new_group_families_group_path(@group, @familes_group), class: "btn btn-primary" %>
   </div>
 </div>
 
@@ -17,11 +17,16 @@
 
 
 
-<%= link_to "Éditer", edit_family_group_path(@family, @group) %>
-      <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
-                    group_path(@group),
-                    class: "text-decoration-none link-dark",
-                    data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de supprimer ?"} %>
+  <%= link_to "Éditer", edit_family_group_path(@family, @group) %>
+        <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
+                      group_path(@group),
+                      class: "text-decoration-none link-dark",
+                      data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de supprimer ?"} %>
 
-
+  <div class="light-card mt-3">
+    <h3 class="mb-4">Demande de rejoindre</h3>
+    <% @families_want_to_join.each do |family| %>
+      <p>Demande de family <%= family.name %></p>
+    <% end %>
+  </div>
 </div>

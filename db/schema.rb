@@ -69,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_230025) do
   create_table "families_groups", force: :cascade do |t|
     t.bigint "family_id", null: false
     t.bigint "group_id", null: false
+    t.string "confirmation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["family_id"], name: "index_families_groups_on_family_id"

@@ -7,8 +7,10 @@ Rails.application.routes.draw do
   # root "articles#index"
   resources :families, only: [:index, :show, :edit, :update] do
     resources :children, only: [:show, :new, :create, :edit, :update]
-    resources :groups, only: [:show, :new, :create, :edit, :update]
+    resources :groups, only: [:new, :create, :edit, :update]
   end
   resources :children, only: [:destroy]
-  resources :groups, only: [:index, :show, :destroy]
+  resources :groups, only: [:index, :show, :destroy] do
+    resources :families_groups, only: [:new, :create]
+  end
 end
