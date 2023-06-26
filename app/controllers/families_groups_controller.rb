@@ -5,7 +5,6 @@ class FamiliesGroupsController < ApplicationController
     @family = current_user.family
     # raise
     if check(@group, @family)
-      # raise
       @families_group = FamiliesGroup.new(family: @family, group: @group, confirmation: "pending")
       @families_group.save
       redirect_to group_path(@group), notice: 'Demande effectuée !'
