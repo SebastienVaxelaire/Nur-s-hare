@@ -16,9 +16,9 @@ class GroupsController < ApplicationController
     @families_groups.each do |x|
       @families_want_to_join << [Family.find(x.family_id), x]
     end
-    @current_family = current_user.family
-    @family_who_wants_to_join_the_group = FamiliesGroup.new(family_id: @current_family, group_id: @group.id, confirmation: "pending")
-    # ????? POURQUOI EST-CE QUE family_id ME RENVOIE NIL alors que @current_family existe ?????
+    # @current_family = current_user.family
+    # @family_who_wants_to_join_the_group = FamiliesGroup.new(family_id: @current_family, group_id: @group.id, confirmation: "pending")
+    # ??? POURQUOI EST-CE QUE family_id ME RENVOIE NIL alors que @current_family existe ???
     # raise
   end
 

@@ -88,7 +88,7 @@
 
     <div class="light-card mt-3">
       <% if @children.present? %>
-        <h3 class="mb-3"><%= pluralize(@children.count, "enfant") %></h3>
+        <h3 class="mb-3"><%= @children.count > 1 ? "#{@children.count} enfants" : "#{@children.count} enfant" %></h3>
 
         <div class="cards mb-3">
           <% @children.each do |child| %>
@@ -114,9 +114,9 @@
                   </div>
                   <div>
                     <% if ((Date.today - child.birthday) / 365.25) > 1 %>
-                      <%= pluralize(((Date.today - child.birthday) / 365.25).to_i, "an") %>
+                      <%= ((Date.today - child.birthday) / 365.25).to_i > 1 ? "#{((Date.today - child.birthday) / 365.25).to_i} ans" : "#{((Date.today - child.birthday) / 365.25).to_i} an" %>
                     <% else %>
-                      <%= pluralize(((Date.today - child.birthday) / 30.4375).to_i, "mois") %>
+                      <%= "#{((Date.today - child.birthday) / 30.4375).to_i} mois" %>
                     <% end %>
                   </div>
                 </div>

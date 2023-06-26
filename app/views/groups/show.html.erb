@@ -20,6 +20,12 @@
       </div>
     <% end %>
 
+    <%# code provisoire qui fonctionne !!! %>
+    <%# <div>
+      <% invited_family = FamiliesGroup.find_by(group_id: @group, family_id: current_user.family).where(confirmation: "pending") %>
+      <%# <%= invited_family.confirmation if invited_family %>
+    <%# </div> %>
+
   </div>
 
 </div>
