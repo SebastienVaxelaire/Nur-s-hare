@@ -14,9 +14,9 @@
     <%#  Vérifier que la famille qui veut rejoindre le groupe est current_user (ok) %>
     <%# !!! Mais surtout vérifier le statut de demande de la famille !!! (je n'y arrive pas du tout) %>
 
-    <% if !@families_want_to_join.empty? && @group.family.user != current_user && @families_want_to_join[0].include?(current_user.family) %>
+    <% if @families_groups.confirmation == "pending" %>
       <div class="light-card mt-3">
-        <p style="color: black;">VERIFIER ET AFFICHER LE STATUT DE LA DEMANDE ICI !!!</p>
+        <p style="color: black;">Demande en attente d'acceptation !</p>
       </div>
     <% end %>
 
