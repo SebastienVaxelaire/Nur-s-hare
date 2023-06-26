@@ -44,7 +44,7 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    @family =current_user.family
+    @family = current_user.family
     @group = Group.find(params[:id])
     @group.destroy
     redirect_to family_path(@family)
@@ -55,4 +55,10 @@ class GroupsController < ApplicationController
   def group_params
     params.require(:group).permit(:name, :description, :banner_photo)
   end
+
+  # def families_want_to_join_includes_current_family
+  #   @families_want_to_join.each do |f|
+  #     f[0].include?(current_user.family)
+  #   end
+  # end
 end

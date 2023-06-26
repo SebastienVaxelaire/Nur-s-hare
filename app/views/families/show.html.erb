@@ -1,7 +1,9 @@
 <div class="container margin-with-navbar">
   <% if @family.name == nil %>
-    <h2>Tu n'as pas encore ajouté d'informations sur ta famille, il est temps de nous en dire un peu plus !</h2>
-    <%= render 'form', family: @family %>
+    <h3 class="mb-4">Tu n'as pas encore ajouté d'informations sur ta famille, <br> il est temps de nous en dire un peu plus !</h3>
+    <div class="mb-4">
+      <%= render 'form', family: @family %>
+    </div>
   <% end %>
 
   <% if @family.name != nil %>
@@ -73,11 +75,11 @@
         </div>
 
         <div class="light-card mt-3">
-        <% if @total_groups == 0 %>
-        <p class="mb-0">Notre famille n'est encore membre d'aucun groupe de Nur's'hare !</p>
-        <% else %>
-        <p class="mb-0">Notre famille est membre de <%= pluralize(@total_groups, "groupe") %> de Nur's'hare !</p>
-        <% end %>
+          <% if @total_groups == 0 %>
+            <p class="mb-0">Notre famille n'est encore membre d'aucun groupe de Nur's'hare !</p>
+          <% else %>
+            <p class="mb-0">Notre famille est membre de <%= pluralize @total_groups, "groupe" %> de Nur's'hare !</p>
+          <% end %>
         </div>
 
       </div>
@@ -86,7 +88,7 @@
 
     <div class="light-card mt-3">
       <% if @children.present? %>
-        <h3 class="mb-3"><%= pluralize(@children.count, "enfant") %></h3>
+        <h3 class="mb-3"><%= @children.count > 1 ? "#{@children.count} enfants" : "#{@children.count} enfant" %></h3>
 
         <div class="cards mb-3">
           <% @children.each do |child| %>
@@ -112,9 +114,9 @@
                   </div>
                   <div>
                     <% if ((Date.today - child.birthday) / 365.25) > 1 %>
-                      <%= pluralize(((Date.today - child.birthday) / 365.25).to_i, "an") %>
+                      <%= ((Date.today - child.birthday) / 365.25).to_i > 1 ? "#{((Date.today - child.birthday) / 365.25).to_i} ans" : "#{((Date.today - child.birthday) / 365.25).to_i} an" %>
                     <% else %>
-                      <%= pluralize(((Date.today - child.birthday) / 30.4375).to_i, "mois") %>
+                      <%= "#{((Date.today - child.birthday) / 30.4375).to_i} mois" %>
                     <% end %>
                   </div>
                 </div>
@@ -126,7 +128,7 @@
                     <div class="modal-header">
                       <h1 class="modal-title fs-4" id="exampleModalLabel"><%= child.name %></h1>
                       <%= link_to "<i class='fa-solid fa-trash-can ms-2 mt-2' style='color: #ff2600;'></i>".html_safe,
-                                 family_child_path(@family, child),
+                                 child_path(child),
                                  class: "mb-2",
                                  data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir enlever #{child.name} ?"} %>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -152,21 +154,26 @@
       <% end %>
     </div>
 
-    <div class="light-card mt-3">
-      <h3 class="mb-4">Nous sommes membres des groupes suivants</h3>
-
-      <% @family.groups.each do |group| %>
-        <div class="px-4">
-          <div class="card-product mb-4">
-            <%= group.banner_photo.key.present? ? cl_image_tag(group.banner_photo.key, crop: :fit) : image_tag('https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80') %>
-            <div class="card-product-infos">
-              <h2><%= link_to group.name, group_path(group) %> </h2>
-              <p><%= group.description %></p>
+    <% if @total_groups != 0 %>
+      <div class="light-card mt-3">
+        <% if @family.groups.empty? %>
+          <h3 class="mb-4">Pas de groupe pour l'instant</h3>
+        <% else %>
+          <h3 class="mb-4">Nous sommes membres des groupes suivants</h3>
+          <% @family.groups.each do |group| %>
+            <div class="px-4">
+              <div class="card-product mb-4">
+                <%= group.banner_photo.key.present? ? cl_image_tag(group.banner_photo.key, crop: :fit) : image_tag('https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80') %>
+                <div class="card-product-infos">
+                  <h2><%= link_to group.name, group_path(group) %> </h2>
+                  <p><%= group.description %></p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
 
     </div>
 
