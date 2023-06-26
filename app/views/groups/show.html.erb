@@ -3,7 +3,7 @@
   <div class="container">
     <h1 class="group-title"><%= @group.name %></h1>
     <p><%= @group.description %></p>
-    <%= link_to "Rejoindre le groupe",  new_group_families_group_path(@group, @familes_group), class: "btn btn-primary" %>
+    <%= link_to "Rejoindre le groupe",  group_families_groups_path(@group), data: {"turbo-method": :post}, class: "btn btn-primary" %>
   </div>
 </div>
 
@@ -25,10 +25,10 @@
 
   <div class="light-card mt-3">
     <h3 class="mb-4">Demande de rejoindre</h3>
-    <% @families_want_to_join.each do |x| %>
-      <p>Demande de family <%= x[0].name %>
-        | <%= link_to 'Accept',  accept_families_group_path(x[1]), data: {"turbo-method": :patch} %>
-        | <%= link_to 'Refuse',  refuse_families_group_path(x[1]), data: {"turbo-method": :patch} %></p>
+    <% @families_groups.each do |family_group| %>
+      <p>Demande de family <%= family_group.family.name %>
+        | <%= link_to 'Accept',  accept_families_group_path(family_group), data: {"turbo-method": :patch} %>
+        | <%= link_to 'Refuse',  refuse_families_group_path(family_group), data: {"turbo-method": :patch} %></p>
     <% end %>
   </div>
 </div>

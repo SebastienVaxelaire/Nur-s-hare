@@ -12,11 +12,6 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @family = @group.family
     @families_groups = FamiliesGroup.where(group_id: @group.id, confirmation: "pending")
-    @families_want_to_join = []
-    @families_groups.each do |x|
-      @families_want_to_join << [Family.find(x.family_id), x]
-    end
-    # raise
   end
 
   def create
