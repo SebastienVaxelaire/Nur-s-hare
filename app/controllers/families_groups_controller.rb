@@ -8,13 +8,14 @@ class FamiliesGroupsController < ApplicationController
     @family = current_user.family
     # raise
     if check(@group, @family)
-      # raise
       @families_group = FamiliesGroup.new(family_id: @family.id, group_id: @group.id, confirmation: "pending")
       @families_group.save
       # @families_group.family = @family
       # @families_group.group = @group
+      redirect_to group_path(@group), notice: 'Demande effectuée !'
+    else
+      redirect_to group_path(@group), notice: 'Vous avez déjà demandé à rejoindre ce groupe'
     end
-    redirect_to group_path(@group), notice: 'Vous ne pouvez pas demander de rejoindre ce group'
   end
 
   def accept
@@ -22,8 +23,8 @@ class FamiliesGroupsController < ApplicationController
     @family_group = FamiliesGroup.find(params[:id])
     group_id = @family_group.group_id
     @group = Group.find(group_id)
-    @family_group.update(confirmation:'accepted')
-    redirect_to group_path(@group), notice: 'Votre demande a été accepté'
+    @family_group.update(confirmation: 'accepted')
+    redirect_to group_path(@group), notice: 'La demande a été acceptée !'
   end
 
   def refuse
@@ -31,8 +32,8 @@ class FamiliesGroupsController < ApplicationController
     @family_group = FamiliesGroup.find(params[:id])
     group_id = @family_group.group_id
     @group = Group.find(group_id)
-    @family_group.update(confirmation:'refused')
-    redirect_to group_path(@group), notice: 'Votre demande a été refusé'
+    @family_group.update(confirmation: 'refused')
+    redirect_to group_path(@group), notice: 'La demande a été refusée'
   end
 
   private
