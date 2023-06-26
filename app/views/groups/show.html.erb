@@ -28,11 +28,13 @@
 
   <h2>Créé par la famille <%= @family.name %></h2>
 
-  <%= link_to "<i class='fa-solid fa-pen-to-square' style='color: #F18C2D;'></i>".html_safe, edit_family_group_path(@family, @group), class: "me-2" %>
-  <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
-                group_path(@group),
-                class: "text-decoration-none link-dark",
-                data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de supprimer ?"} %>
+  <% if @group.family.user == current_user %>
+    <%= link_to "<i class='fa-solid fa-pen-to-square' style='color: #F18C2D;'></i>".html_safe, edit_family_group_path(@family, @group), class: "me-2" %>
+    <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
+                  group_path(@group),
+                  class: "text-decoration-none link-dark",
+                  data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de supprimer ?"} %>
+  <% end %>
 
   <% if !@families_want_to_join.empty? && @group.family.user == current_user %>
     <div class="light-card mt-3">
@@ -46,5 +48,14 @@
       <% end %>
     </div>
   <% end %>
+
+  <div class="light-card my-3">
+    <h3 class="mb-4">Tous les membres du groupe</h3>
+    <p style="color: black;">ITERER ICI SUR LES MEMBRES DU GROUPE !
+    Pareil, impossible à faire ici : soit il y a un problème avec la DB, soit je n'ai rien compris du tout aux relations N:N ...</p>
+    <%# <% @group.families.each do |family| %>
+      <%# <p class="mx-3">Famille <%= family.name %><%# </p> %>
+    <%# <% end %>
+  </div>
 
 </div>
