@@ -11,16 +11,12 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
     @family = @group.family
-    @families_groups = FamiliesGroup.find_by(group_id: @group, family_id: current_user.family)
-    @responsible_family = Family.find(@group.family_id)
-    @associated_families = @group.families
-    @all_families = [@responsible_family] + @associated_families
-    raise
-    @families_want_to_join = []
-    unless @families_group.nil?
-    @families_groups.each do |x|
-      @families_want_to_join << [Family.find(x.family_id), x]
-    end
+    @families_groups = FamiliesGroup.where(group: @group, confirmation: "pending")
+    @responsible_family = @group.family
+    @families_groups_accepted = FamiliesGroup.where(group: @group, confirmation: "accepted")
+    @all_families = [@responsible_family]
+    @families_groups_accepted.each do |family_group|
+      @all_families << family_group.family
     end
     # @current_family = current_user.family
     # @family_who_wants_to_join_the_group = FamiliesGroup.new(family_id: @current_family, group_id: @group.id, confirmation: "pending")

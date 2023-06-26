@@ -1,14 +1,10 @@
 class FamiliesGroupsController < ApplicationController
-  def new
-    create
-  end
-
   def create
     @group = Group.find(params[:group_id])
     @family = current_user.family
     # raise
     if check(@group, @family)
-      @families_group = FamiliesGroup.new(family_id: @family.id, group_id: @group.id, confirmation: "pending")
+      @families_group = FamiliesGroup.new(family: @family, group: @group, confirmation: "pending")
       @families_group.save
       # @families_group.family = @family
       # @families_group.group = @group
