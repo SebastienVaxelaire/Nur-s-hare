@@ -12,9 +12,12 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @family = @group.family
     @families_groups = FamiliesGroup.where(group_id: @group.id, confirmation: "pending")
+    raise
     @families_want_to_join = []
+    unless @families_group.nil?
     @families_groups.each do |x|
       @families_want_to_join << [Family.find(x.family_id), x]
+    end
     end
     # @current_family = current_user.family
     # @family_who_wants_to_join_the_group = FamiliesGroup.new(family_id: @current_family, group_id: @group.id, confirmation: "pending")
