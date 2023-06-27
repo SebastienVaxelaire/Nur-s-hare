@@ -3,8 +3,14 @@ class FamiliesController < ApplicationController
 
   def show
     @children = Child.where(family: @family)
-    @total_groups = Group.where(family_id: @family.id).count + FamiliesGroup.where(family_id: @family.id).count
-    # raise
+    @groups_created_by_this_family = Group.where(family_id: @family.id)
+    @other_groups = FamiliesGroup.where(family_id: @family.id)
+    @families_groups = @groups_created_by_this_family + @other_groups
+    @total_groups = @families_groups.count
+
+
+
+
     # @families_groups = FamiliesGroup.where(family_id: @family.id, confirmation: "accepted")
     # @families_groups_pending = FamiliesGroup.where(family_id: @family.id, confirmation: "pending")
     # @groups_pending = []

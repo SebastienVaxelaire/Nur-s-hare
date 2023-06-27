@@ -11,30 +11,36 @@
 
     <div class="row">
       <div class="col-md-6">
-        <div class="light-card">
-          <div id="carouselExampleIndicators" class="carousel carousel-container slide d-block w-100">
-            <div class="carousel-indicators">
-              <% @family.photos.each_with_index do |photo, index| %>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></button>
-              <% end %>
+        <% if current_user.family.photos[0] %>
+          <div class="light-card">
+            <div id="carouselExampleIndicators" class="carousel carousel-container slide d-block w-100">
+              <div class="carousel-indicators">
+                <% @family.photos.each_with_index do |photo, index| %>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></button>
+                <% end %>
+              </div>
+              <div class="carousel-inner">
+                <% @family.photos.each_with_index do |photo, index| %>
+                  <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+                    <%= cl_image_tag(photo.key, class: "d-block w-100 h-100", crop: :thumb) %>
+                  </div>
+                <% end %>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </button>
             </div>
-            <div class="carousel-inner">
-              <% @family.photos.each_with_index do |photo, index| %>
-                <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
-                  <%= cl_image_tag(photo.key, class: "d-block w-100 h-100", crop: :thumb) %>
-                </div>
-              <% end %>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </button>
+        <% else %>
+          <div class="light-card">
+            <%= image_tag "https://images.unsplash.com/photo-1491013516836-7db643ee125a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1325&q=80", id: "default-img" %>
           </div>
-        </div>
+        <% end %>
       </div>
 
       <div class="col-md-6">
@@ -78,7 +84,7 @@
           <% if @total_groups == 0 %>
             <p class="mb-0">Notre famille n'est encore membre d'aucun groupe de Nur's'hare !</p>
           <% else %>
-            <p class="mb-0">Notre famille est membre de <%= pluralize @total_groups, "groupe" %> de Nur's'hare !</p>
+            <p class="mb-0">Notre famille est membre de <%= @total_groups > 1 ? "#{@total_groups} groupes de Nur's'hare !" : "#{@total_groups} groupe de Nur's'hare !" %></p>
           <% end %>
         </div>
 
@@ -160,13 +166,24 @@
           <h3 class="mb-4">Pas de groupe pour l'instant</h3>
         <% else %>
           <h3 class="mb-4">Nous sommes membres des groupes suivants</h3>
-          <% @family.groups.each do |group| %>
+          <% @groups_created_by_this_family.each do |family_group| %>
             <div class="px-4">
               <div class="card-product mb-4">
-                <%= group.banner_photo.key.present? ? cl_image_tag(group.banner_photo.key, crop: :fit) : image_tag('https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80') %>
+                <%= family_group.banner_photo.key.present? ? cl_image_tag(group.banner_photo.key, crop: :fit) : image_tag('https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80') %>
                 <div class="card-product-infos">
-                  <h2><%= link_to group.name, group_path(group) %> </h2>
-                  <p><%= group.description %></p>
+                  <h2><%= link_to family_group.name, group_path(family_group) %> <%= '<i class="fa-regular fa-face-grin-stars"></i>'.html_safe %> </h2>
+                  <p><%= family_group.description %></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          <% @other_groups.each do |family_group| %>
+            <div class="px-4">
+              <div class="card-product mb-4">
+                <%= family_group.group.banner_photo.key.present? ? cl_image_tag(group.banner_photo.key, crop: :fit) : image_tag('https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80') %>
+                <div class="card-product-infos">
+                  <h2><%= link_to family_group.group.name, group_path(family_group.group) %> </h2>
+                  <p><%= family_group.group.description %></p>
                 </div>
               </div>
             </div>
