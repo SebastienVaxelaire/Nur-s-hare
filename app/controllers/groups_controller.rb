@@ -1,15 +1,18 @@
 class GroupsController < ApplicationController
   def index
-    @groups = Group.all
+    # @groups = Group.all
+    @groups = policy_scope(Group)
   end
 
   def new
     @family = current_user.family
     @group = Group.new
+    authorize group
   end
 
   def show
     @group = Group.find(params[:id])
+    authorize @group
     @family = @group.family
     @families_groups = FamiliesGroup.where(group: @group, confirmation: "pending")
     @responsible_family = @group.family
