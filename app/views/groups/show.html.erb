@@ -3,25 +3,69 @@
   <div class="container">
     <h1 class="group-title"><%= @group.name %></h1>
     <p><%= @group.description %></p>
-    <a class="btn btn-primary" href="#">Rejoindre le groupe</a>
+
+    <% if @group.family.user != current_user %>
+
+    <%# Eventuellement : essayer aussi de cacher le bouton lorsque la demande est déjà faite ! (je n'y arrive pas) %>
+
+      <%= link_to "Rejoindre le groupe", group_families_groups_path(@group), data: {turbo_method: 'post'}, class: "btn btn-primary" %>
+    <% end %>
+
+    <%#  Vérifier que la famille qui veut rejoindre le groupe est current_user (ok) %>
+    <%# !!! Mais surtout vérifier le statut de demande de la famille !!! (je n'y arrive pas du tout) %>
+
+    <% if @families_groups.size > 0 %>
+      <div class="light-card mt-3">
+        <p style="color: black;">Demande en attente d'acceptation !</p>
+      </div>
+    <% end %>
+
+    <%# code provisoire qui fonctionne !!! %>
+    <%# <div>
+      <% invited_family = FamiliesGroup.find_by(group_id: @group, family_id: current_user.family).where(confirmation: "pending") %>
+      <%# <%= invited_family.confirmation if invited_family %>
+    <%# </div> %>
+
   </div>
+
 </div>
 
-
-
-
-
-<div class="container margin-with-navbar">
+<div class="container mt-4">
 
   <h2>Créé par la famille <%= @family.name %></h2>
 
+  <% if @group.family.user == current_user %>
+    <%= link_to "<i class='fa-solid fa-pen-to-square' style='color: #F18C2D;'></i>".html_safe, edit_family_group_path(@family, @group), class: "me-2" %>
+    <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
+                  group_path(@group),
+                  class: "text-decoration-none link-dark",
+                  data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de supprimer ?"} %>
+  <% end %>
+  <%= link_to "Éditer", edit_family_group_path(@family, @group) %>
+        <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
+                      group_path(@group),
+                      class: "text-decoration-none link-dark",
+                      data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de supprimer ?"} %>
 
+  <% if !@families_groups.empty? && @group.family.user == current_user %>
+    <div class="light-card mt-3">
+      <h3 class="mb-4">Ils veulent rejoindre le groupe !</h3>
+      <% @families_groups.each do |family_group| %>
+        <div class="mx-3 me-3">
+          <p>Demande de la famille <%= family_group.family.name %></p>
+          <%= link_to 'Accepter', accept_families_group_path(family_group), data: {"turbo-method": :patch}, class: "btn btn-success btn-sm me-2" %>
+          <%= link_to 'Refuser', refuse_families_group_path(family_group), data: {"turbo-method": :patch}, class: "btn btn-danger btn-sm" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 
-<%= link_to "Éditer", edit_family_group_path(@family, @group) %>
-      <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
-                    group_path(@group),
-                    class: "text-decoration-none link-dark",
-                    data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de supprimer ?"} %>
-
-
+  <div class="light-card my-3">
+    <h3 class="mb-4">Tous les membres du groupe</h3>
+    <p style="color: black;">ITERER ICI SUR LES MEMBRES DU GROUPE !
+    Pareil, impossible à faire ici : soit il y a un problème avec la DB, soit je n'ai rien compris du tout aux relations N:N ...</p>
+    <% @all_families.each do |family| %>
+      <p class="mx-3">Famille <%= family.name%></p>
+    <% end %>
+  </div>
 </div>

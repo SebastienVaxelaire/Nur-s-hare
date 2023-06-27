@@ -1,13 +1,27 @@
 class GroupsController < ApplicationController
+  def index
+    @groups = Group.all
+  end
+
   def new
     @family = current_user.family
     @group = Group.new
   end
 
   def show
-    # raise
-    @family = Family.find(params[:family_id])
     @group = Group.find(params[:id])
+    @family = @group.family
+    @families_groups = FamiliesGroup.where(group: @group, confirmation: "pending")
+    @responsible_family = @group.family
+    @families_groups_accepted = FamiliesGroup.where(group: @group, confirmation: "accepted")
+    @all_families = [@responsible_family]
+    @families_groups_accepted.each do |family_group|
+      @all_families << family_group.family
+    end
+    # @current_family = current_user.family
+    # @family_who_wants_to_join_the_group = FamiliesGroup.new(family_id: @current_family, group_id: @group.id, confirmation: "pending")
+    # ??? POURQUOI EST-CE QUE family_id ME RENVOIE NIL alors que @current_family existe ???
+    # raise
   end
 
   def create
@@ -40,7 +54,7 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    @family =current_user.family
+    @family = current_user.family
     @group = Group.find(params[:id])
     @group.destroy
     redirect_to family_path(@family)
@@ -51,4 +65,10 @@ class GroupsController < ApplicationController
   def group_params
     params.require(:group).permit(:name, :description, :banner_photo)
   end
+
+  # def families_want_to_join_includes_current_family
+  #   @families_want_to_join.each do |f|
+  #     f[0].include?(current_user.family)
+  #   end
+  # end
 end
