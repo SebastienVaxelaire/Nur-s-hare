@@ -1,6 +1,12 @@
 <%= simple_form_for([@family, group]) do |f| %>
   <%= f.input :name, label: "Nom du groupe" %>
   <%= f.input :description %>
+  <%= f.input :place_address,
+              label: "Adresse",
+              input_html: {data: {address_autocomplete_target: "address"}, class: "d-none"},
+              wrapper_html: {data: {controller: "address-autocomplete",
+              address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}} %>
+  <%= f.input :place_radius, label: "Rayon maximum de garde" %>
   <%= f.input :banner_photo, as: :file, label: "Photo de bannière" %>
-  <%= f.submit "Créer le groupe" %>
+  <%= f.submit label, class: "btn btn-primary" %>
 <% end %>
