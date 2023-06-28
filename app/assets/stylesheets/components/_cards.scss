@@ -43,6 +43,13 @@
   border-radius: 8px;
 }
 
+.warning-card {
+  background: $carnation-pink;
+  box-shadow: 0 0 15px rgba(255, 0, 128, 0.1);
+  padding: 16px;
+  border-radius: 8px;
+}
+
 .description {
   font-family: 'Sacramento', cursive;
   font-size: 32px;
