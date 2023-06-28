@@ -14,6 +14,10 @@ class GroupPolicy < ApplicationPolicy
     true
   end
 
+  def destroy?
+    user.family == record.family
+  end
+
   def update?
     user.family == record.family
   end
