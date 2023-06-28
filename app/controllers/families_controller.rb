@@ -28,6 +28,7 @@ class FamiliesController < ApplicationController
 
   def set_family
     @family = Family.find(params[:id])
+    authorize @family
   end
 
   def params_family
