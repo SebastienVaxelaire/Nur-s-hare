@@ -58,7 +58,7 @@ class GroupsController < ApplicationController
     @family = Family.find(params[:family_id])
     # raise
     if @group.update(group_params)
-      redirect_to family_path(@family)
+      redirect_to group_path(@group)
     else
       render :new, status: :unprocessable_entity
     end
@@ -67,7 +67,7 @@ class GroupsController < ApplicationController
   def destroy
     @family = current_user.family
     @group.destroy
-    redirect_to family_path(@family)
+    redirect_to groups_path
   end
 
   private
