@@ -1,0 +1,11 @@
+.markers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 50%;
+  height: 48px;
+  width: 48px;
+  padding: 4px;
+  background-color: $carnation-pink;
+}

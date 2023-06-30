@@ -30,6 +30,11 @@ class GroupsController < ApplicationController
     end
     @invited_family = FamiliesGroup.find_by(group_id: @group, family_id: current_user.family, confirmation: "pending")
     @accepted_family = FamiliesGroup.find_by(group_id: @group, family_id: current_user.family, confirmation: "accepted")
+
+    @marker = [{ lat: @group.latitude,
+                 lng: @group.longitude,
+                 info_window_html: render_to_string(partial: "info_window", locals: {group: @group}),
+                 marker_html: render_to_string(partial: "marker")}]
     # @current_family = current_user.family
     # @family_who_wants_to_join_the_group = FamiliesGroup.new(family_id: @current_family, group_id: @group.id, confirmation: "pending")
     # ??? POURQUOI EST-CE QUE family_id ME RENVOIE NIL alors que @current_family existe ???
