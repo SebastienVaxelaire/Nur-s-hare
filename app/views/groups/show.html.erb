@@ -19,10 +19,10 @@
       <% else %>
         <%= link_to "Rejoindre le groupe", group_families_groups_path(@group), data: {turbo_method: 'post'}, class: "btn btn-primary mt-4" %>
       <% end %>
-    <% else %>
-      <p class="mt-5"><i class="fa-solid fa-circle-exclamation"></i> Pour rejoindre ce groupe, vous devez d'abord <%= link_to "ajouter des informations", family_path(current_user.family), class: "fw-bold" %> sur votre famille !</p>
     <% end %>
-
+    <% if !current_user.family.name.present? %>
+       <p class="mt-5"><i class="fa-solid fa-circle-exclamation"></i> Pour rejoindre ce groupe, vous devez d'abord <%= link_to "ajouter des informations", family_path(current_user.family), class: "fw-bold" %> sur votre famille !</p>
+    <% end %>
 
     <%# code initial qui fonctionne, déplacé depuis dans le controller %>
     <%# <div>

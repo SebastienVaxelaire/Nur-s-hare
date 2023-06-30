@@ -11,6 +11,7 @@ class FamiliesController < ApplicationController
 
 
 
+
     # @families_groups = FamiliesGroup.where(family_id: @family.id, confirmation: "accepted")
     # @families_groups_pending = FamiliesGroup.where(family_id: @family.id, confirmation: "pending")
     # @groups_pending = []
