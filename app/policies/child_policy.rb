@@ -18,11 +18,11 @@ class ChildPolicy < ApplicationPolicy
     create?
   end
 
-  def update
+  def update?
     user == record.family.user
   end
 
-  def destroy
+  def destroy?
     user == record.family.user
   end
 end

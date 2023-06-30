@@ -11,7 +11,7 @@
     <h3 class="mt-4">Créé par la famille <%= @family.name %></h3>
     <p class="fst-italic fs-6"><%= @group.place_address %></p>
     <p class="mt-4"><%= @group.description %></p>
-    <% if @group.family.user != current_user %>
+    <% if @group.family.user != current_user && current_user.family.name.present? %>
       <% if @invited_family %>
         <p class="btn btn-info disabled mt-4">Demande en attente d'acceptation</p>
       <% elsif @accepted_family %>
@@ -19,6 +19,8 @@
       <% else %>
         <%= link_to "Rejoindre le groupe", group_families_groups_path(@group), data: {turbo_method: 'post'}, class: "btn btn-primary mt-4" %>
       <% end %>
+    <% else %>
+      <p class="mt-5"><i class="fa-solid fa-circle-exclamation"></i> Pour rejoindre ce groupe, vous devez d'abord <%= link_to "ajouter des informations", family_path(current_user.family), class: "fw-bold" %> sur votre famille !</p>
     <% end %>
 
 
