@@ -7,4 +7,11 @@ class Group < ApplicationRecord
   has_one_attached :banner_photo
   has_many :families_groups
   has_many :families, through: :families_groups
+  after_create :create_chatroom
+
+  private
+
+  def create_chatroom
+    Chatroom.create(group: self)
+  end
 end
