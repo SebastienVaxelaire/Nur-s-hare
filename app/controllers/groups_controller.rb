@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
   def index
     @groups = policy_scope(Group)
-
+    @family = current_user.family
     @markers = @groups.geocoded.map do |group|
       {
         lat: group.latitude,
@@ -11,6 +11,11 @@ class GroupsController < ApplicationController
         marker_html: render_to_string(partial: "marker")
       }
     end
+    @family_marker = [{ lat: @family.latitude,
+                        lng: @family.longitude,
+                        info_window_html: render_to_string(partial: "info_window_family"),
+                        marker_html: render_to_string(partial: "marker_family")}]
+    @all_markers = @markers + @family_marker
   end
 
   def new

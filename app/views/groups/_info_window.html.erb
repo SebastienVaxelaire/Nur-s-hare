@@ -1,2 +1,2 @@
-<h2><%= group.name %></h2>
-<p><%= group.place_address %></p>
+<p><%= link_to group.name, group_path(group), class: "fs-6 text-decoration-none fw-bold text-black" %></p>
+<p class="fst-italic mb-0", id="small-line-height", style="margin-top: -8px;"><%= group.place_address %></p>
