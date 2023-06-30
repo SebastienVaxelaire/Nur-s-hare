@@ -4,8 +4,9 @@ class FamiliesGroupsController < ApplicationController
     @group = Group.find(params[:group_id])
     @family = current_user.family
     # raise
+    @families_group = FamiliesGroup.new(family: @family, group: @group, confirmation: "pending")
+    authorize @families_group
     if check(@group, @family)
-      @families_group = FamiliesGroup.new(family: @family, group: @group, confirmation: "pending")
       @families_group.save
       redirect_to group_path(@group), notice: 'Demande effectuée !'
     else
@@ -16,6 +17,7 @@ class FamiliesGroupsController < ApplicationController
   def accept
     # raise
     @family_group = FamiliesGroup.find(params[:id])
+    authorize @family_group
     group_id = @family_group.group_id
     @group = Group.find(group_id)
     @family_group.update(confirmation: 'accepted')
@@ -25,6 +27,7 @@ class FamiliesGroupsController < ApplicationController
   def refuse
     # raise
     @family_group = FamiliesGroup.find(params[:id])
+    authorize @family_group
     group_id = @family_group.group_id
     @group = Group.find(group_id)
     @family_group.update(confirmation: 'refused')
