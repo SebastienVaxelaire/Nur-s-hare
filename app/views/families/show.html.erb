@@ -169,7 +169,7 @@
           <% @groups_created_by_this_family.each do |family_group| %>
             <div class="px-4">
               <div class="card-product mb-4">
-                <%= family_group.banner_photo.key.present? ? cl_image_tag(group.banner_photo.key, crop: :fit) : image_tag('https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80') %>
+                <%= family_group.banner_photo.key.present? ? cl_image_tag(family_group.banner_photo.key, crop: :fit) : image_tag('https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80') %>
                 <div class="card-product-infos">
                   <h2><%= link_to family_group.name, group_path(family_group) %> <%= '<i class="fa-regular fa-face-grin-stars"></i>'.html_safe %> </h2>
                   <p><%= family_group.description %></p>
