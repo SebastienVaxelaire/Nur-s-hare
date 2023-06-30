@@ -13,5 +13,5 @@
   <%= f.input :photos, as: :file, input_html: { multiple: true } %>
   <%= f.input :description, label: "Décrivez-vous en quelques phrases !" %>
   <%= f.input :key_points, label: "Points particuliers" %>
-  <%= f.submit "Valider les informations" %>
+  <%= f.submit "Valider les informations", class: "btn btn-primary" %>
 <% end %>

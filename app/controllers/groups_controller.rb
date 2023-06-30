@@ -1,6 +1,8 @@
 class GroupsController < ApplicationController
+  before_action :set_group, only: [:show, :edit, :update, :destroy]
   def index
-    @groups = Group.all
+    @groups = policy_scope(Group)
+    @family = current_user.family
     @markers = @groups.geocoded.map do |group|
       {
         lat: group.latitude,
@@ -9,15 +11,20 @@ class GroupsController < ApplicationController
         marker_html: render_to_string(partial: "marker")
       }
     end
+    @family_marker = [{ lat: @family.latitude,
+                        lng: @family.longitude,
+                        info_window_html: render_to_string(partial: "info_window_family"),
+                        marker_html: render_to_string(partial: "marker_family")}]
+    @all_markers = @markers + @family_marker
   end
 
   def new
     @family = current_user.family
     @group = Group.new
+    authorize @group
   end
 
   def show
-    @group = Group.find(params[:id])
     @family = @group.family
     @families_groups = FamiliesGroup.where(group: @group, confirmation: "pending")
     @responsible_family = @group.family
@@ -28,6 +35,11 @@ class GroupsController < ApplicationController
     end
     @invited_family = FamiliesGroup.find_by(group_id: @group, family_id: current_user.family, confirmation: "pending")
     @accepted_family = FamiliesGroup.find_by(group_id: @group, family_id: current_user.family, confirmation: "accepted")
+
+    @marker = [{ lat: @group.latitude,
+                 lng: @group.longitude,
+                 info_window_html: render_to_string(partial: "info_window", locals: {group: @group}),
+                 marker_html: render_to_string(partial: "marker")}]
     # @current_family = current_user.family
     # @family_who_wants_to_join_the_group = FamiliesGroup.new(family_id: @current_family, group_id: @group.id, confirmation: "pending")
     # ??? POURQUOI EST-CE QUE family_id ME RENVOIE NIL alors que @current_family existe ???
@@ -37,6 +49,7 @@ class GroupsController < ApplicationController
   def create
     @family = Family.find(params[:family_id])
     @group = Group.new(group_params)
+    authorize @group
     @group.family = @family
     # raise
     if @group.save
@@ -49,15 +62,13 @@ class GroupsController < ApplicationController
 
   def edit
     @family = Family.find(params[:family_id])
-    @group = Group.find(params[:id])
   end
 
   def update
     @family = Family.find(params[:family_id])
-    @group = Group.find(params[:id])
     # raise
     if @group.update(group_params)
-      redirect_to family_path(@family)
+      redirect_to group_path(@group)
     else
       render :new, status: :unprocessable_entity
     end
@@ -65,12 +76,16 @@ class GroupsController < ApplicationController
 
   def destroy
     @family = current_user.family
-    @group = Group.find(params[:id])
     @group.destroy
-    redirect_to family_path(@family)
+    redirect_to groups_path
   end
 
   private
+
+  def set_group
+    @group = Group.find(params[:id])
+    authorize @group
+  end
 
   def group_params
     params.require(:group).permit(:name, :description, :banner_photo, :place_address, :place_radius)

@@ -1,5 +1,9 @@
 <main>
   <div class="home-top-image">
+    <% if current_user && current_user.family.name == nil %>
+      <h4><i class="fa-solid fa-circle-exclamation"></i> Il est maintenant temps d'ajouter des informations sur ta famille
+      <%= link_to "C'est parti !", family_path(current_user.family), class: "btn btn-info fw-bold mt-2" %></h4>
+    <% end %>
     <h4>Combattons ensemble les problèmes de garde, trouvez autour de vous des personnes de confiance qui comprennent vos problèmes et les partagent.</h4>
   </div>
   <div class="home-quick-explain">
@@ -18,22 +22,30 @@
       <div class="card shadow-custom" style="width: 18rem;">
         <img class="card-img-top" src="https://cdn.dribbble.com/users/77598/screenshots/7314321/media/86247d104aaf81bfa137271bf8786cb3.png">
         <div class="card-body">
-          <h5 class="card-title">Je crée ma famille</h5>
+          <% if current_user %>
+            <h5 class="card-title"><%= link_to "Je crée ma famille", family_path(current_user.family), class: "text-black text-decoration-none" %></h5>
+          <% else %>
+            <h5>Je crée ma famille</h5>
+          <% end %>
           <p class="card-text">Je nous décris, partage notre façon de vivre, exprime nos souhaits, mets en avant nos qualités mais aussi nos défauts !</p>
         </div>
       </div>
       <div class="card shadow-custom" style="width: 18rem;">
         <img class="card-img-top" src="https://cdn.dribbble.com/users/77598/screenshots/7283805/media/d93d307abd1d3c96bd9fc6d004d22de7.png">
         <div class="card-body">
-          <h5 class="card-title">J'informe les autres et je configure le rayon</h5>
+          <% if current_user %>
+            <h5 class="card-title"><%= link_to "J'informe les autres et je configure le rayon", new_family_group_path(current_user.family), class: "text-black text-decoration-none" %></h5>
+          <% else %>
+            <h5>J'informe les autres et je configure le rayon</h5>
+          <% end %>
           <p class="card-text">Je précise les jours où nous avons besoin de faire garder nos enfants mais également ceux où nous sommes disponibles pour garder les prochains copains. Je configure aussi la distance maximum à laquelle je suis prêt à me déplacer.</p>
         </div>
       </div>
       <div class="card shadow-custom" style="width: 18rem;">
         <img class="card-img-top" src="https://cdn.dribbble.com/users/77598/screenshots/7332213/media/066b07c14c3f8244a71e7742ffd521ff.png">
         <div class="card-body">
-          <h5 class="card-title">Je prends contact, croise les doigts et me réjouis !</h5>
-          <p class="card-text">Je regarde si des familles ou groupes de famille sont en recherche d'un nouveau membre ou je créé mon propre groupe.</p>
+          <h5 class="card-title"><%= link_to "Je prends contact, croise les doigts et me réjouis !", groups_path, class: "text-black text-decoration-none" %></h5>
+          <p class="card-text">Je regarde si des familles ou groupes de famille sont en recherche d'un nouveau membre ou je crée mon propre groupe.</p>
         </div>
       </div>
     </div>
