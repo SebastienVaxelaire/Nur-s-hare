@@ -44,6 +44,9 @@ class GroupsController < ApplicationController
     # @family_who_wants_to_join_the_group = FamiliesGroup.new(family_id: @current_family, group_id: @group.id, confirmation: "pending")
     # ??? POURQUOI EST-CE QUE family_id ME RENVOIE NIL alors que @current_family existe ???
     # raise
+    @events = Event.where(group_id: @group)
+    @events_to_come = @events.where('events."end" > ?', Time.now)
+    @past_events = @events.where('events."end" < ?', Time.now)
   end
 
   def create

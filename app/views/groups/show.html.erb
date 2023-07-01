@@ -24,6 +24,7 @@
        <p class="mt-5"><i class="fa-solid fa-circle-exclamation"></i> Pour rejoindre ce groupe, vous devez d'abord <%= link_to "ajouter des informations", family_path(current_user.family), class: "fw-bold" %> sur votre famille !</p>
     <% end %>
 
+
     <%# code initial qui fonctionne, déplacé depuis dans le controller %>
     <%# <div>
       <% invited_family = FamiliesGroup.find_by(group_id: @group, family_id: current_user.family).where(confirmation: "pending") %>
@@ -47,6 +48,25 @@
       <% end %>
     </div>
   <% end %>
+
+
+   <div class="light-card">
+    <h3 class="text-carnation-pink"><i class="fa-solid fa-democrat"></i> Les évenements du groupe</h3>
+    <% if @events.size > 0 %>
+    <p class="mb-0 text-grey"><%= @events_to_come.count %> événements à venir (<%= @events.count %> organisés au total)</p>
+    <% @events_to_come.each do |event_to_come| %>
+      <%= link_to "#{event_to_come.name}", group_event_path(@group, event_to_come), class: "fs-5" %><br>
+    <% end %>
+    <% @past_events.each do |past_event| %>
+      <%= link_to "#{past_event.name}", group_event_path(@group, past_event), class: "" %><br>
+    <% end %>
+    <% else %>
+      Il n'y a pas encore d'événement dans ce groupe
+    <% end %>
+  <%= link_to "Ajouter un événement", new_group_event_path(@group), class: "btn btn-primary mt-2" %>
+
+
+  </div>
 
   <div class="light-card my-3">
     <h3 class="mb-4">Tous les membres du groupe</h3>
