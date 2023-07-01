@@ -11,12 +11,13 @@
   border-radius: 4px;
   padding: 8px;
   min-height: 80px;
+  box-shadow: 0 0 15px rgba(255, 0, 128, 0.1);
 }
 
 .sender-style {
-  background-color: $fairy-tale;
+  border: 1px solid $fairy-tale;
 }
 
 .receiver-style {
-  background-color: $uranian-blue;
+  border: 1px solid $uranian-blue;
 }

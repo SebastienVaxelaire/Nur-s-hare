@@ -3,7 +3,7 @@
   data-chatroom-subscription-chatroom-id-value="<%= @chatroom.id %>"
   data-chatroom-subscription-current-user-id-value="<%= current_user.family.id %>">
 
-  <h1>Discussions du groupe @group.name</h1>
+  <h1>Discussions <%= @group.name %></h1>
 
   <div class="messages" data-chatroom-subscription-target="messages">
 <% @chatroom.messages.each do |message| %>
@@ -20,9 +20,9 @@
 %>
   <%= f.input :content,
     label: false,
-    placeholder: "Message #",
+    placeholder: "Ecrire un nouveau message",
     wrapper_html: {class: "flex-grow-1"}
   %>
-  <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+  <%= f.submit "Envoyer", class: "btn btn-primary mb-3" %>
 <% end %>
 </div>

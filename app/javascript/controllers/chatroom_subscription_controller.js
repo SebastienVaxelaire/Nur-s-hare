@@ -7,11 +7,11 @@ export default class extends Controller {
   static targets = ["messages"]
 
   connect() {
+    this.#scrollToBottom();
     this.channel = createConsumer().subscriptions.create(
       { channel: 'ChatroomChannel', id: this.chatroomIdValue },
       { received: data => this.#insertMessageAndScrollDown(data) }
     );
-    this.#scrollToBottom();
     console.log(`Subscribed to the chatroom with the id ${this.chatroomIdValue}.`);
     // console.log(this.messagesTarget);
   }

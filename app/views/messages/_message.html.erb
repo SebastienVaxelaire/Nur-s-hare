@@ -1,7 +1,25 @@
 <div id="message-<%= message.id %>">
+<div class="d-flex justify-content-start align-items-center">
+
+<div class="avatar-message">
+              <% if message.family.photos[0] %>
+                <%= image_tag message.family.photos[0], class: "avatar", alt: "dropdown menu" %>
+              <% else %>
+                <%= image_tag "https://images.unsplash.com/photo-1491013516836-7db643ee125a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1325&q=80", class: "avatar", alt: "dropdown menu" %>
+              <% end %>
+
+</div>
+
+<div class="">
+
   <small>
-    <strong><%= message.family.name %></strong>
-    <i><%= I18n.l(message.created_at, format: "%-d %B %Y à %H:%M") %></i>
+    <strong>Famille <%= message.family.name %></strong><br>
+    <i class="date-message"><%= I18n.l(message.created_at, format: "%-d %B %Y à %H:%M") %></i>
   </small>
-  <p><%= message.content %></p>
+
+</div>
+</div>
+
+  <p class="px-1 py-2 m-0"><%= message.content %></p>
+
 </div>
