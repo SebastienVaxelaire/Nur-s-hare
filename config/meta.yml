@@ -1,0 +1,5 @@
+meta_product_name: "Nurshare"
+meta_title: "NurShare - Garde d'enfants collaborative"
+meta_description: "Solution de garde collaborative entre particuliers"
+meta_image: "cover.png" # should exist in `app/assets/images/`
+twitter_account: "@nurshare"   # required for Twitter Cards
