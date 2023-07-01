@@ -11,6 +11,9 @@ class MessagesController < ApplicationController
         message: render_to_string(partial: "message", locals: { message: @message }),
         sender_id: @message.family.id
       )
+      @group = @chatroom.group
+      @family_group = FamiliesGroup.find_by(family_id: current_user.family.id, group_id: @group.id)
+      @family_group.update(last_read_at: Time.current) if @family_group
       head :ok
     else
       render "chatrooms/show", status: :unprocessable_entity

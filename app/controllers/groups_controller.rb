@@ -44,6 +44,13 @@ class GroupsController < ApplicationController
     # @family_who_wants_to_join_the_group = FamiliesGroup.new(family_id: @current_family, group_id: @group.id, confirmation: "pending")
     # ??? POURQUOI EST-CE QUE family_id ME RENVOIE NIL alors que @current_family existe ???
     # raise
+    @chatroom = @group.chatroom
+
+    if @accepted_family
+      @unread_messages_count = @chatroom.messages.where("created_at > ?", @accepted_family.last_read_at).count
+    else
+      @unread_messages_count = 0
+    end
   end
 
   def create

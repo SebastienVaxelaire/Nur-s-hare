@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_30_194348) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_01_081803) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,6 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_30_194348) do
     t.string "confirmation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "last_read_at"
     t.index ["family_id"], name: "index_families_groups_on_family_id"
     t.index ["group_id"], name: "index_families_groups_on_group_id"
   end
