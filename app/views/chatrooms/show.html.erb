@@ -5,10 +5,13 @@
   <h1>Discussions du groupe @group.name</h1>
 
   <div class="messages" data-chatroom-subscription-target="messages">
-    <% @chatroom.messages.each do |message| %>
+<% @chatroom.messages.each do |message| %>
+  <div class="message-row d-flex <%= message.sender?(current_user) ? 'justify-content-end' : 'justify-content-start' %>">
+    <div class="<%= message.sender?(current_user) ? 'sender-style' : 'receiver-style' %>">
       <%= render "messages/message", message: message %>
-    <% end %>
+    </div>
   </div>
+<% end %>
 
 <%= simple_form_for [@chatroom, @message],
   html: { data: { action: "turbo:submit-end->chatroom-subscription#resetForm" }, class: "d-flex" } do |f|
