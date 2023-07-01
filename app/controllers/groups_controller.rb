@@ -48,6 +48,8 @@ class GroupsController < ApplicationController
 
     if @accepted_family
       @unread_messages_count = @chatroom.messages.where("created_at > ?", @accepted_family.last_read_at).count
+    elsif @reponsible_family == current_user.family
+      @unread_messages_count = @chatroom.messages.where("created_at > ?", @group.last_read_at).count
     else
       @unread_messages_count = 0
     end
