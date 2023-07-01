@@ -1,7 +1,7 @@
 <div class="banner" style="background-image: linear-gradient(rgba(255, 192, 203, 0.6), rgba(0, 0, 0, 0.6)), url('<%= @group.banner_photo.key.present? ? cl_image_path(@group.banner_photo.key, crop: :fit) : 'https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80' %>');">
   <div class="container">
     <h1 class="group-title"><%= @group.name %></h1>
-    <p>Nombre de messages non lus : <%= @unread_messages_count %></p>
+
     <% if @group.family.user == current_user %>
       <%= link_to "<i class='fa-solid fa-pen-to-square' style='color: #F18C2D;'></i>".html_safe, edit_family_group_path(@family, @group), class: "me-2" %>
       <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
@@ -48,6 +48,25 @@
       <% end %>
     </div>
   <% end %>
+
+  <div class="light-card my-3">
+
+    <div class="d-flex align-items-center justify-content-center">
+      <div>
+          <h1 class="padding-right-16 mb-0"><i class="fa-regular fa-comments" style="color: #ffafccff;"></i></h1>
+      </div>
+
+      <%= link_to group_chatroom_path(group_id: @group.id, id: @chatroom), class: "btn btn-primary position-relative" do %>
+        <%= @chatroom.messages.count %> messages dans le fil de discussions
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <%= @unread_messages_count %>
+          <span class="visually-hidden">unread messages</span>
+        </span>
+      <% end %>
+
+
+    </div>
+  </div>
 
   <div class="light-card my-3">
     <h3 class="mb-4">Tous les membres du groupe</h3>
