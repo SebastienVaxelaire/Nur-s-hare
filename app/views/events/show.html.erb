@@ -1,0 +1,46 @@
+<div class="banner" style="background-image: linear-gradient(rgba(255, 192, 203, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');">
+
+  <div class="container margin-with-navbar">
+  <h1 class="group-title"><%= @event.name %></h1>
+  <p class="mb-0"><i class="fa-regular fa-calendar-days"></i> <%= I18n.l(@event.start, format: "%-d %B %Y à %H:%M") %></p>
+  <p><i class="fa-solid fa-hourglass-start"></i> <%= @duration_hours %> heures</p>
+  <% if @already_register %>
+<div class="btn btn-success">Vous êtes inscrit à l'événement</div>
+  <% else %>
+  <%= link_to "S'inscrire à l'événement", register_group_event_path(@event.group, @event), data: {"turbo-method": :post}, class: "btn btn-primary" %>
+  <% end %>
+
+
+
+  </div>
+</div>
+
+<div class="container mt-3">
+  <div class="light-card">
+    <h3 class="text-carnation-pink"><i class="fa-solid fa-circle-info"></i> Description</h3>
+    <p class="mb-0 text-grey">Groupe : <%= @event.group.name %></p>
+    <p class="mb-0"><%= @event.description %></p>
+  </div>
+
+    <div class="light-card mt-3">
+    <h3 class="text-carnation-pink"><i class="fa-regular fa-calendar-days"></i></i> Dates</h3>
+    <p class="mb-0"><i class="fa-solid fa-flag-checkered"></i> <%= I18n.l(@event.start, format: "%-d %B %Y à %H:%M") %></p>
+    <p class="mb-0"><i class="fa-regular fa-circle-xmark"></i> <%= I18n.l(@event.end, format: "%-d %B %Y à %H:%M") %></p>
+    <p class="mb-0"><i class="fa-solid fa-hourglass-start"></i> <%= @duration_hours %> heures</p>
+  </div>
+
+    <div class="light-card mt-3">
+    <h3 class="text-carnation-pink"><i class="fa-solid fa-people-group"></i> Les familles qui participent</h3>
+    <% @families.each do |family| %>
+    <div class="">
+        <div class="card-product my-4">
+          <%= family.photos[0] ? image_tag(family.photos[0], crop: :fit) : image_tag("https://images.unsplash.com/photo-1491013516836-7db643ee125a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1325&q=80") %>
+          <div class="card-product-infos">
+            <%= link_to "Famille #{family.name.capitalize}", family_path(family), class: "fs-5" %> <%= '<i class="fa-regular fa-face-grin-stars"></i>'.html_safe if @family == family %>
+            <% event_family = EventsFamily.find_by(event_id: @event.id, family_id: family.id) %>
+            <p>Inscrite le <%= I18n.l(event_family.created_at, format: "%-d %B %Y à %H:%M") %></p>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>

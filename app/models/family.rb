@@ -4,6 +4,8 @@ class Family < ApplicationRecord
   after_validation :geocode, if: :will_save_change_to_address?
   has_many :children, dependent: :destroy
   has_many :groups, dependent: :destroy
+  has_many :events_families
+  has_many :events, through: :events_families
   validates :user, presence: true
   validates :name, presence: true, on: :update
   validates :description, presence: true, on: :update, length: { minimum: 10, maximum: 1000 }

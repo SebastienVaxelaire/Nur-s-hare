@@ -12,7 +12,11 @@ Rails.application.routes.draw do
   resources :children, only: [:destroy]
   resources :groups, only: [:index, :show, :destroy] do
     resources :families_groups, only: [:new, :create]
-    resources :events
+    resources :events do
+      member do
+        post 'register', to: 'events#register'
+      end
+    end
   end
   resources :families_groups, only: [:destroy] do
     member do
@@ -20,4 +24,5 @@ Rails.application.routes.draw do
       patch 'refuse'
     end
   end
+  resources :events
 end

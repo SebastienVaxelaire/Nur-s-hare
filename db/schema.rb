@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_01_103549) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_01_160516) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +68,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_01_103549) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_events_on_group_id"
+  end
+
+  create_table "events_families", force: :cascade do |t|
+    t.bigint "family_id", null: false
+    t.bigint "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_events_families_on_event_id"
+    t.index ["family_id"], name: "index_events_families_on_family_id"
   end
 
   create_table "families", force: :cascade do |t|
@@ -138,6 +147,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_01_103549) do
   add_foreign_key "chatrooms", "groups"
   add_foreign_key "children", "families"
   add_foreign_key "events", "groups"
+  add_foreign_key "events_families", "events"
+  add_foreign_key "events_families", "families"
   add_foreign_key "families", "users"
   add_foreign_key "families_groups", "families"
   add_foreign_key "families_groups", "groups"
