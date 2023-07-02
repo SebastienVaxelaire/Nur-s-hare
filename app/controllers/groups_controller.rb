@@ -25,7 +25,6 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @family = @group.family
     @families_groups = FamiliesGroup.where(group: @group, confirmation: "pending")
     @responsible_family = @group.family
     @families_groups_accepted = FamiliesGroup.where(group: @group, confirmation: "accepted")
@@ -35,7 +34,6 @@ class GroupsController < ApplicationController
     end
     @invited_family = FamiliesGroup.find_by(group_id: @group, family_id: current_user.family, confirmation: "pending")
     @accepted_family = FamiliesGroup.find_by(group_id: @group, family_id: current_user.family, confirmation: "accepted")
-
     @marker = [{ lat: @group.latitude,
                  lng: @group.longitude,
                  info_window_html: render_to_string(partial: "info_window", locals: {group: @group}),
@@ -45,6 +43,8 @@ class GroupsController < ApplicationController
     # ??? POURQUOI EST-CE QUE family_id ME RENVOIE NIL alors que @current_family existe ???
     # raise
     @chatroom = @group.chatroom
+
+    @family_group = FamiliesGroup.find_by(group_id: @group, family_id: current_user.family)
 
     if @accepted_family
       @unread_messages_count = @chatroom.messages.where("created_at > ?", @accepted_family.last_read_at).count

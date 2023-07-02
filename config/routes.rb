@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     resources :chatrooms, only: :show do
       resources :messages, only: :create
     end
-    resources :families_groups, only: [:new, :create]
+    resources :families_groups, only: [:new, :create, :destroy]
   end
   resources :families_groups, only: [:destroy] do
     member do

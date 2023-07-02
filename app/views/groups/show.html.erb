@@ -3,13 +3,13 @@
     <h1 class="group-title"><%= @group.name %></h1>
 
     <% if @group.family.user == current_user %>
-      <%= link_to "<i class='fa-solid fa-pen-to-square' style='color: #F18C2D;'></i>".html_safe, edit_family_group_path(@family, @group), class: "me-2" %>
+      <%= link_to "<i class='fa-solid fa-pen-to-square' style='color: #F18C2D;'></i>".html_safe, edit_family_group_path(@responsible_family, @group), class: "me-2" %>
       <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
                     group_path(@group),
                     class: "text-decoration-none link-dark",
-                    data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de supprimer ?"} %>
+                    data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce groupe ?"} %>
     <% end %>
-    <h3 class="mt-4">Créé par la famille <%= @family.name %></h3>
+    <h3 class="mt-4">Créé par la famille <%= @responsible_family.name %></h3>
     <p class="fst-italic fs-6"><%= @group.place_address %></p>
     <p class="mt-4"><%= @group.description %></p>
     <% if @group.family.user != current_user && current_user.family.name.present? %>
@@ -17,8 +17,11 @@
         <p class="btn btn-info disabled mt-4">Demande en attente d'acceptation</p>
       <% elsif @accepted_family %>
         <p class="btn btn-success disabled mt-4">Vous êtes membre de ce groupe !</p>
+        <p class="fs-6"><%= link_to 'Quitter le groupe',
+                  group_families_group_path(@family_group),
+                  data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir quitter ce groupe ?"} %>
       <% else %>
-        <%= link_to "Rejoindre le groupe", group_families_groups_path(@group), data: {turbo_method: 'post'}, class: "btn btn-primary mt-4" %>
+        <%= link_to "Rejoindre le groupe", group_families_groups_path(@group), data: {turbo_method: 'post'}, class: "btn btn-primary mt-4" %></p>
       <% end %>
     <% end %>
     <% if !current_user.family.name.present? %>
@@ -49,24 +52,26 @@
     </div>
   <% end %>
 
-  <div class="light-card my-3">
+  <% if @responsible_family == current_user.family || @accepted_family %>
 
-    <div class="d-flex align-items-center justify-content-center">
-      <div>
-          <h1 class="padding-right-16 mb-0"><i class="fa-regular fa-comments" style="color: #ffafccff;"></i></h1>
+    <div class="light-card my-3">
+
+      <div class="d-flex align-items-center justify-content-center">
+        <div>
+            <h1 class="padding-right-16 mb-0"><i class="fa-regular fa-comments" style="color: #ffafccff;"></i></h1>
+        </div>
+
+        <%= link_to group_chatroom_path(group_id: @group.id, id: @chatroom), class: "btn btn-primary position-relative" do %>
+          <%= @chatroom.messages.count %> messages dans le fil de discussions
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            <%= @unread_messages_count %>
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        <% end %>
+
       </div>
-
-      <%= link_to group_chatroom_path(group_id: @group.id, id: @chatroom), class: "btn btn-primary position-relative" do %>
-        <%= @chatroom.messages.count %> messages dans le fil de discussions
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-          <%= @unread_messages_count %>
-          <span class="visually-hidden">unread messages</span>
-        </span>
-      <% end %>
-
-
     </div>
-  </div>
+  <% end %>
 
   <div class="light-card my-3">
     <h3 class="mb-4">Tous les membres du groupe</h3>
@@ -75,7 +80,7 @@
         <div class="card-product my-4">
           <%= family.photos[0] ? image_tag(family.photos[0], crop: :fit) : image_tag("https://images.unsplash.com/photo-1491013516836-7db643ee125a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1325&q=80") %>
           <div class="card-product-infos">
-            <%= link_to "Famille #{family.name.capitalize}", family_path(family), class: "fs-5" %> <%= '<i class="fa-regular fa-face-grin-stars"></i>'.html_safe if @family == family %>
+            <%= link_to "Famille #{family.name.capitalize}", family_path(family), class: "fs-5" %> <%= '<i class="fa-regular fa-face-grin-stars"></i>'.html_safe if @responsible_family == family %>
           </div>
         </div>
       </div>

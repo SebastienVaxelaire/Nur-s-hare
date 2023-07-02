@@ -17,4 +17,8 @@ class FamiliesGroupPolicy < ApplicationPolicy
   def refuse?
     accept?
   end
+
+  def destroy?
+    user.family == record.family
+  end
 end
