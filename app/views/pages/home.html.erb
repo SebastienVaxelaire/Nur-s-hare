@@ -1,6 +1,6 @@
 <main>
   <div class="home-top-image">
-    <% if current_user && current_user.family.name == nil %>
+    <% if current_user && !current_user.family.name.present? %>
       <h4><i class="fa-solid fa-circle-exclamation"></i> Il est maintenant temps d'ajouter des informations sur ta famille
       <%= link_to "C'est parti !", family_path(current_user.family), class: "btn btn-info fw-bold mt-2" %></h4>
     <% end %>

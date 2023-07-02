@@ -11,12 +11,19 @@ Rails.application.routes.draw do
   end
   resources :children, only: [:destroy]
   resources :groups, only: [:index, :show, :destroy] do
-    resources :families_groups, only: [:new, :create]
+    resources :chatrooms, only: :show do
+      resources :messages, only: :create
+    end
+    resources :families_groups, only: [:new, :create, :destroy]
   end
   resources :families_groups, only: [:destroy] do
     member do
       patch 'accept'
       patch 'refuse'
     end
+  end
+
+  resources :chatrooms, only: :show do
+    resources :messages, only: :create
   end
 end

@@ -7,7 +7,7 @@
   <% end %>
 
   <% if @family.name != nil %>
-    <h2 class="mb-3">Famille <%= @family.name %> <%= link_to "<i class='fa-solid fa-pen-to-square'></i>".html_safe, edit_family_path(@family), class: "btn btn-info btn-sm ms-3" %></h2>
+    <h2 class="mb-3">Famille <%= @family.name %> <% if current_user.family == @family %><%= link_to "<i class='fa-solid fa-pen-to-square'></i>".html_safe, edit_family_path(@family), class: "btn btn-info btn-sm ms-3" %><% end %></h2>
 
     <div class="row">
       <div class="col-md-6">
@@ -138,7 +138,7 @@
                                   child_path(child),
                                   class: "mb-2",
                                   data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir enlever #{child.name} ?"} %>
-                        <%# <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> %>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
                         <%= render 'children/form', family: @family, child: child %>
@@ -157,17 +157,14 @@
               </div>
             </div>
           <% end %>
-
         </div>
       <% else %>
         <h3 class="mb-3">Pas d'enfant pour le moment !</h3>
-        <% if current_user.family == @family %>
-          <%= link_to "Ajouter un enfant", new_family_child_path(@family), class: "btn btn-info btn-small mb-3" %>
-        <% end %>
+        <%= link_to "Ajouter un enfant", new_family_child_path(@family), class: "btn btn-info btn-small mb-3" %>
       <% end %>
     </div>
 
-
+    <% if @total_groups != 0 %>
       <div class="light-card mt-3">
         <% if @families_groups.empty? %>
           <h3 class="mb-4">Pas de groupe pour l'instant</h3>
@@ -187,7 +184,7 @@
           <% @other_groups.each do |family_group| %>
             <div class="px-4">
               <div class="card-product mb-4">
-                <%= family_group.group.banner_photo.key.present? ? cl_image_tag(group.banner_photo.key, crop: :fit) : image_tag('https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80') %>
+                <%= family_group.group.banner_photo.key.present? ? cl_image_tag(family_group.group.banner_photo.key, crop: :fit) : image_tag('https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80') %>
                 <div class="card-product-infos">
                   <h2><%= link_to family_group.group.name, group_path(family_group.group) %> </h2>
                   <p><%= family_group.group.description %></p>
@@ -197,7 +194,7 @@
           <% end %>
         <% end %>
       </div>
-
+    <% end %>
 
     </div>
 
@@ -205,26 +202,3 @@
 
 
 </div>
-
-<%# <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> %>
