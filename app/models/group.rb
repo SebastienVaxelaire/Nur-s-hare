@@ -9,6 +9,7 @@ class Group < ApplicationRecord
   has_many :families, through: :families_groups
   after_create :create_chatroom
   has_one :chatroom
+  has_many :events
 
   private
 

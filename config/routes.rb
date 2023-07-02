@@ -15,6 +15,12 @@ Rails.application.routes.draw do
       resources :messages, only: :create
     end
     resources :families_groups, only: [:new, :create, :destroy]
+    resources :families_groups, only: [:new, :create]
+    resources :events do
+      member do
+        post 'register', to: 'events#register'
+      end
+    end
   end
   resources :families_groups, only: [:destroy] do
     member do
@@ -22,8 +28,8 @@ Rails.application.routes.draw do
       patch 'refuse'
     end
   end
-
   resources :chatrooms, only: :show do
     resources :messages, only: :create
   end
+  resources :events
 end
