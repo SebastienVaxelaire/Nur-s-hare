@@ -83,8 +83,9 @@
         <%= link_to "#{past_event.name}", group_event_path(@group, past_event), class: "" %><br>
       <% end %>
     <% else %>
-      Il n'y a pas encore d'événement dans ce groupe
+      Il n'y a pas encore d'événement dans ce groupe !
     <% end %>
+    <br>
     <%= link_to "Ajouter un événement", new_group_event_path(@group), class: "btn btn-primary mt-2" %>
   </div>
 
