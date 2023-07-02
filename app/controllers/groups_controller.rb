@@ -54,7 +54,7 @@ class GroupsController < ApplicationController
     # raise
     if @group.save
       # raise
-      redirect_to family_path(@family)
+      redirect_to group_path(@group), notice: 'Groupe créé avec succès !'
     else
       render :new, status: :unprocessable_entity
     end
@@ -68,7 +68,7 @@ class GroupsController < ApplicationController
     @family = Family.find(params[:family_id])
     # raise
     if @group.update(group_params)
-      redirect_to group_path(@group)
+      redirect_to group_path(@group), notice: 'Groupe mis à jour !'
     else
       render :new, status: :unprocessable_entity
     end

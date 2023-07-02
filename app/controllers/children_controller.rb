@@ -16,7 +16,7 @@ class ChildrenController < ApplicationController
     @child.family = Family.find(params[:family_id])
     authorize @child
     if @child.save
-      redirect_to family_path(@child.family)
+      redirect_to family_path(@child.family), notice: 'Enfant ajouté avec succès !'
     else
       @family = Family.find(params[:family_id])
       render :new, status: :unprocessable_entity
@@ -28,7 +28,7 @@ class ChildrenController < ApplicationController
 
   def update
     if @child.update(child_params)
-      redirect_to family_path(@family)
+      redirect_to family_path(@family), notice: 'Enfant mis à jour avec succès !'
     else
       render :edit, status: :unprocessable_entity
     end

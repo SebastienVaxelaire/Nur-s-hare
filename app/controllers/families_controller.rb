@@ -7,11 +7,6 @@ class FamiliesController < ApplicationController
     @other_groups = FamiliesGroup.where(family_id: @family.id)
     @families_groups = @groups_created_by_this_family + @other_groups
     @total_groups = @families_groups.count
-
-
-
-
-
     # @families_groups = FamiliesGroup.where(family_id: @family.id, confirmation: "accepted")
     # @families_groups_pending = FamiliesGroup.where(family_id: @family.id, confirmation: "pending")
     # @groups_pending = []
@@ -25,7 +20,7 @@ class FamiliesController < ApplicationController
 
   def update
     if @family.update(params_family)
-      redirect_to family_path(@family)
+      redirect_to family_path(@family), notice: 'Votre famille a bien été mise à jour !'
     else
       render :edit, status: :unprocessable_entity
     end
