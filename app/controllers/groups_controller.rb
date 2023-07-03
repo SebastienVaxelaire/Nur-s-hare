@@ -43,12 +43,12 @@ class GroupsController < ApplicationController
     # @current_family = current_user.family
     # @family_who_wants_to_join_the_group = FamiliesGroup.new(family_id: @current_family, group_id: @group.id, confirmation: "pending")
     # ??? POURQUOI EST-CE QUE family_id ME RENVOIE NIL alors que @current_family existe ???
+
     # raise
 
-    raise
     # Calendar
     start_date = params.fetch(:start_date, Date.today).to_date
-    @plannings = Planning.where(start_time: start_date.beginning_of_month.beginning_of_week..start_date.end_of_month.end_of_week)
+    @plannings = Planning.where(group_id: params[:id], start_time: start_date.beginning_of_month.beginning_of_week..start_date.end_of_month.end_of_week)
   end
 
   def create

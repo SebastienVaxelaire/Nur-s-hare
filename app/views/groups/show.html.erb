@@ -67,8 +67,9 @@
       <%= month_calendar(events: @plannings, end_attribute: :end_time) do |date, plannings| %>
         <%= date %>
         <% plannings.each do |planning| %>
-          <div class="planning">  <-- We will add some style to the meeting class later so let's add it now -->
+          <div class="planning">
             <p><%= planning.name %></p>
+            <small><%= planning.time unless planning.multi_days? %></small>
           </div>
         <% end %>
       <% end %>
