@@ -9,7 +9,7 @@ class Group < ApplicationRecord
   has_many :families, through: :families_groups
   after_create :create_chatroom
   has_one :chatroom, dependent: :destroy
-  has_many :events
+  has_many :events, dependent: :destroy
 
   private
 
