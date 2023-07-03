@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_group, only: [:new, :create, :update]
   def index
     @events = Event.all
   end
@@ -15,17 +15,21 @@ class EventsController < ApplicationController
   end
 
   def new
+    # raise
     @event = Event.new
     authorize @event
   end
 
   def create
+    # raise
     @event = Event.new(params_event)
     authorize @event
-
+    @event.group = @group
     if @event.save
+
       EventsFamily.create(family_id: current_user.family.id, event_id: @event)
-      redirect_to @event, notice: "L'événement a été créé avec succès."
+
+      redirect_to group_event_path(@group, @event), notice: "L'événement a été créé avec succès."
     else
       render :new, status: :unprocessable_entity
     end
@@ -37,7 +41,7 @@ class EventsController < ApplicationController
 
   def update
     authorize @event
-
+    @event.group = @group
     if @event.update(params_event)
       redirect_to @event, notice: "L'événement a été mis à jour avec succès."
     else
@@ -65,7 +69,12 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
   end
 
+  def set_group
+    @group = Group.find(params[:group_id])
+    authorize @group
+  end
+
   def params_event
-    params.require(:event).permit(:name, :group_id, :start, :end, :description)
+    params.require(:event).permit(:name, :start, :end, :description)
   end
 end

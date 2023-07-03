@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   belongs_to :group
-  has_many :events_families
+  has_many :events_families, dependent: :destroy
   has_many :families, through: :events_families
 
   validates :name, presence: true
