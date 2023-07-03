@@ -3,7 +3,7 @@ class Group < ApplicationRecord
   after_validation :geocode, if: :will_save_change_to_place_address?
   belongs_to :family
   validates :name, presence: true
-  validates :description, presence: true
+  validates :description, presence: true, length: { minimum: 10, maximum: 1000 }
   has_one_attached :banner_photo
   has_many :families_groups, dependent: :destroy
   has_many :families, through: :families_groups
