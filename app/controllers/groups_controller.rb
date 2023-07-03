@@ -50,7 +50,6 @@ class GroupsController < ApplicationController
     @events = Event.where(group_id: @group)
     @events_to_come = @events.where('events."end" > ?', Time.now)
     @past_events = @events.where('events."end" < ?', Time.now)
-    @event = Event.new
   end
 
   def create
