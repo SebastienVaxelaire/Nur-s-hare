@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :children, only: [:destroy]
   resources :groups, only: [:index, :show, :destroy] do
     resources :families_groups, only: [:new, :create]
+    resources :plannings, only: :new
   end
   resources :families_groups, only: [:destroy] do
     member do

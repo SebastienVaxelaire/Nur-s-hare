@@ -64,8 +64,13 @@
 
   <div style="display: flex; justify-content: space-between; height: 600px;">
     <div style="width: 49%; height: 600px;">
-      <%= month_calendar do |date| %>
+      <%= month_calendar(events: @plannings, end_attribute: :end_time) do |date, plannings| %>
         <%= date %>
+        <% plannings.each do |planning| %>
+          <div class="planning">  <-- We will add some style to the meeting class later so let's add it now -->
+            <p><%= planning.name %></p>
+          </div>
+        <% end %>
       <% end %>
     </div>
     <div style="width: 49%; height: 600px;"
