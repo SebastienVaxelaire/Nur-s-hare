@@ -1,0 +1,35 @@
+<div class="container chatroom"
+  data-controller="chatroom-subscription"
+  data-chatroom-subscription-chatroom-id-value="<%= @chatroom.id %>"
+  data-chatroom-subscription-current-user-id-value="<%= current_user.family.id %>">
+
+  <h1 class="text-center">
+  <i class="fa-regular fa-comments"></i><br>
+  <%= @group.name %>
+  </h1>
+
+  <div class="messages" data-chatroom-subscription-target="messages">
+<% @chatroom.messages.each do |message| %>
+  <div class="message-row d-flex <%= message.sender?(current_user) ? 'justify-content-end' : 'justify-content-start' %>">
+    <div class="<%= message.sender?(current_user) ? 'sender-style' : 'receiver-style' %>">
+      <%= render "messages/message", message: message %>
+    </div>
+  </div>
+<% end %>
+</div>
+
+<%= simple_form_for [@chatroom, @message],
+  html: { data: { action: "turbo:submit-end->chatroom-subscription#resetForm" }, class: "d-flex" } do |f|
+%>
+  <%= f.input :content,
+    label: false,
+    placeholder: "Ecrire un nouveau message",
+    wrapper_html: {class: "flex-grow-1"}
+  %>
+  <%= f.submit "Envoyer", class: "btn btn-primary mb-3" %>
+<% end %>
+<div class="d-flex justify-content-end">
+
+<%= link_to "Retour vers la page du groupe", group_path(@group), class: "back-link mb-4 px-3" %>
+</div>
+</div>

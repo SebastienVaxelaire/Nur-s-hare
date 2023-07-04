@@ -34,6 +34,14 @@ class FamiliesGroupsController < ApplicationController
     redirect_to group_path(@group), notice: 'La demande a été refusée'
   end
 
+  def destroy
+    @group = Group.find(params[:id])
+    @family_group = FamiliesGroup.find_by(group_id: @group.id, family_id: current_user.family)
+    authorize @family_group
+    @family_group.destroy
+    redirect_to groups_path
+  end
+
   private
 
   def check(group, family)

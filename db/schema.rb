@@ -42,6 +42,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_02_192012) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "chatrooms", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_chatrooms_on_group_id"
+  end
+
   create_table "children", force: :cascade do |t|
     t.string "name"
     t.string "gender"
@@ -50,6 +57,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_02_192012) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["family_id"], name: "index_children_on_family_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.datetime "start"
+    t.datetime "end"
+    t.text "description"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_events_on_group_id"
+  end
+
+  create_table "events_families", force: :cascade do |t|
+    t.bigint "family_id", null: false
+    t.bigint "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_events_families_on_event_id"
+    t.index ["family_id"], name: "index_events_families_on_family_id"
   end
 
   create_table "families", force: :cascade do |t|
@@ -74,6 +101,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_02_192012) do
     t.string "confirmation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "last_read_at"
     t.index ["family_id"], name: "index_families_groups_on_family_id"
     t.index ["group_id"], name: "index_families_groups_on_group_id"
   end
@@ -88,16 +116,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_02_192012) do
     t.float "longitude"
     t.string "place_address"
     t.integer "place_radius"
+    t.datetime "last_read_at"
     t.index ["family_id"], name: "index_groups_on_family_id"
-  end
-
-  create_table "names", force: :cascade do |t|
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.bigint "group_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_names_on_group_id"
   end
 
   create_table "plannings", force: :cascade do |t|
@@ -108,6 +128,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_02_192012) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_plannings_on_group_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string "content"
+    t.bigint "chatroom_id", null: false
+    t.bigint "family_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chatroom_id"], name: "index_messages_on_chatroom_id"
+    t.index ["family_id"], name: "index_messages_on_family_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -124,11 +154,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_02_192012) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "chatrooms", "groups"
   add_foreign_key "children", "families"
+  add_foreign_key "events", "groups"
+  add_foreign_key "events_families", "events"
+  add_foreign_key "events_families", "families"
   add_foreign_key "families", "users"
   add_foreign_key "families_groups", "families"
   add_foreign_key "families_groups", "groups"
   add_foreign_key "groups", "families"
-  add_foreign_key "names", "groups"
   add_foreign_key "plannings", "groups"
+  add_foreign_key "messages", "chatrooms"
+  add_foreign_key "messages", "families"
 end
