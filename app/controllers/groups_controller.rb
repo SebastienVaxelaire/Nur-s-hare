@@ -38,6 +38,9 @@ class GroupsController < ApplicationController
                  lng: @group.longitude,
                  info_window_html: render_to_string(partial: "info_window", locals: {group: @group}),
                  marker_html: render_to_string(partial: "marker")}]
+    # Calendar
+    start_date = params.fetch(:start_date, Date.today).to_date
+    @plannings = Planning.where(group_id: params[:id], start_time: start_date.beginning_of_month.beginning_of_week..start_date.end_of_month.end_of_week)
     @family_group = FamiliesGroup.find_by(group_id: @group, family_id: current_user.family)
     @chatroom = @group.chatroom
     if @accepted_family

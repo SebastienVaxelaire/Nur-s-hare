@@ -1,0 +1,11 @@
+<div class="container margin-with-navbar">
+
+  <h1>Créer un planning</h1>
+
+  <%= simple_form_for([@group, @planning]) do |f| %>
+    <%= f.input :name, label: "Famille", collection: @all_families_names %>
+    <%= f.input :start_time, label: "Jour de début" %>
+    <%= f.input :end_time, label: "Jour de fin" %>
+    <%= f.submit "Créer jour", class: "btn btn-primary" %>
+  <% end %>
+</div>

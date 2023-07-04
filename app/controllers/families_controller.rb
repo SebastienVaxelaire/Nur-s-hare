@@ -1,5 +1,6 @@
 class FamiliesController < ApplicationController
   before_action :set_family, only: [:show, :edit, :update]
+  after_action :capitalize_name, only: [:update]
 
   def show
     @children = Child.where(family: @family)
@@ -37,4 +38,7 @@ class FamiliesController < ApplicationController
     params.require(:family).permit(:name, :husband_first_name, :wife_first_name, :address, :phone_number, :description, :key_points, photos: [])
   end
 
+  def capitalize_name
+    @family.name = @family.name.capitalize
+  end
 end

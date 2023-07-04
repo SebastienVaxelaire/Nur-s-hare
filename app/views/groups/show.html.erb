@@ -9,7 +9,7 @@
                     class: "text-decoration-none link-dark",
                     data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce groupe ?"} %>
     <% end %>
-    <h3 class="mt-4">Créé par la famille <%= @responsible_family.name %></h3>
+    <h3 class="mt-4">Créé par la famille <%= @responsible_family.name.upcase %></h3>
     <p class="fst-italic fs-6"><%= @group.place_address %></p>
     <p class="mt-4"><%= @group.description %></p>
     <% if @group.family.user != current_user && current_user.family.name.present? %>
@@ -28,17 +28,10 @@
        <p class="mt-5"><i class="fa-solid fa-circle-exclamation"></i> Pour rejoindre ce groupe, vous devez d'abord <%= link_to "ajouter des informations", family_path(current_user.family), class: "fw-bold" %> sur votre famille !</p>
     <% end %>
 
-
-    <%# code initial qui fonctionne, déplacé depuis dans le controller %>
-    <%# <div>
-      <% invited_family = FamiliesGroup.find_by(group_id: @group, family_id: current_user.family).where(confirmation: "pending") %>
-      <%# <%= invited_family.confirmation if invited_family %>
-    <%# </div> %>
-
   </div>
 </div>
 
-<div class="container mt-4">
+<div class="container my-4">
 
   <% if !@families_groups.empty? && @group.family.user == current_user %>
     <div class="warning-card mt-3">
@@ -57,14 +50,14 @@
     <div class="light-card my-3">
       <div class="d-flex align-items-center justify-content-center">
         <div>
-            <h1 class="padding-right-16 mb-0"><i class="fa-regular fa-comments" style="color: #ffafccff;"></i></h1>
+          <h1 class="padding-right-16 mb-0"><i class="fa-regular fa-comments" style="color: #ffafccff;"></i></h1>
         </div>
 
         <%= link_to group_chatroom_path(group_id: @group.id, id: @chatroom), class: "btn btn-primary position-relative" do %>
           <%= @chatroom.messages.count %> messages dans le fil de discussions
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             <%= @unread_messages_count %>
-            <span class="visually-hidden">unread messages</span>
+            <span class="visually-hidden">Messages non lus</span>
           </span>
         <% end %>
 
@@ -72,8 +65,8 @@
     </div>
   <% end %>
 
-  <div class="light-card">
-    <h3 class="text-carnation-pink mb-3"><i class="fa-solid fa-democrat"></i> Les événements du groupe (<%= @events.count %>)</h3>
+  <div class="light-card my-3">
+    <h3 class="mb-3 text-grey"><i class="fa-solid fa-democrat"></i> Les événements du groupe (<%= @events.count %>)</h3>
     <% if @events.size > 0 %>
       <p class="mb-0 text-grey fs-5"><%= @events_to_come.count > 1 ? "#{@events_to_come.count} événements à venir" : "#{@events_to_come.count} événement à venir" %>  </p>
       <% @events_to_come.each do |event_to_come| %>
@@ -91,7 +84,7 @@
   </div>
 
   <div class="light-card my-3">
-    <h3 class="mb-4">Tous les membres du groupe</h3>
+    <h3 class="mb-4 text-grey">Tous les membres du groupe (<%= @all_families.count %>)</h3>
     <% @all_families.each do |family| %>
       <div class="px-4">
         <div class="card-product my-4">
@@ -104,8 +97,23 @@
     <% end %>
   </div>
 
-  <div style="width: 100%; height: 600px;"
-  data-controller="map"
-  data-map-markers-value="<%= @marker.to_json %>"
-  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+  <div style="display: flex; justify-content: space-between; height: 600px;">
+    <div style="width: 49%; height: 600px;">
+      <%= month_calendar(events: @plannings, end_attribute: :end_time) do |date, plannings| %>
+        <%= date %>
+        <div class="mt-2">
+          <% plannings.each do |planning| %>
+            <div class="planning mb-2">
+              <p class="fw-bold mb-0"><%= planning.name %></p>
+              <small><%= planning.time unless planning.multi_days? %></small>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div style="width: 49%; height: 600px;"
+    data-controller="map"
+    data-map-markers-value="<%= @marker.to_json %>"
+    data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+  </div>
 </div>

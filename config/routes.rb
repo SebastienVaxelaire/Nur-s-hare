@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     end
     resources :families_groups, only: [:new, :create, :destroy]
     resources :families_groups, only: [:new, :create]
+    resources :plannings, only: [:new, :create]
     resources :events do
       member do
         post 'register', to: 'events#register'

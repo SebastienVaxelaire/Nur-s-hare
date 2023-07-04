@@ -7,6 +7,7 @@ class Group < ApplicationRecord
   has_one_attached :banner_photo
   has_many :families_groups, dependent: :destroy
   has_many :families, through: :families_groups
+  has_many :plannings, dependent: :destroy
   after_create :create_chatroom
   has_one :chatroom, dependent: :destroy
   has_many :events, dependent: :destroy

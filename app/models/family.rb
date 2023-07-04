@@ -15,12 +15,19 @@ class Family < ApplicationRecord
   has_many_attached :photos
   has_many :families_groups, dependent: :destroy
   has_many :groups, through: :families_groups
+  before_save :capitalize_name
 
   private
 
   def validate_husband_or_wife_first_name_presence
     if husband_first_name.blank? && wife_first_name.blank?
       errors.add(:base, "Il doit y avoir au moins un papa ou une maman")
+    end
+  end
+
+  def capitalize_name
+    if !self.name.nil?
+      self.name = name.capitalize
     end
   end
 end
