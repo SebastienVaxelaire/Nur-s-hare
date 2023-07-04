@@ -5,10 +5,10 @@ class Group < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
   has_one_attached :banner_photo
-  has_many :families_groups
+  has_many :families_groups, dependent: :destroy
   has_many :families, through: :families_groups
   after_create :create_chatroom
-  has_one :chatroom
+  has_one :chatroom, dependent: :destroy
   has_many :events
 
   private
