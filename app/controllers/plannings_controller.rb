@@ -5,6 +5,15 @@ class PlanningsController < ApplicationController
     @planning = Planning.new
     @group = Group.find(params[:group_id])
     authorize @planning
+    @responsible_family = @group.family
+    @families_groups_accepted = FamiliesGroup.where(group: @group, confirmation: "accepted")
+    @all_families = [@responsible_family]
+    @families_groups_accepted.each do |family_group|
+      @all_families << family_group.family
+    end
+    @all_families_names = @all_families.map do |family|
+      family.name
+    end
   end
 
   def create

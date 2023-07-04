@@ -7,7 +7,7 @@
   <% end %>
 
   <% if @family.name != nil %>
-    <h2 class="mb-3">Famille <%= @family.name %> <% if current_user.family == @family %><%= link_to "<i class='fa-solid fa-pen-to-square'></i>".html_safe, edit_family_path(@family), class: "btn btn-info btn-sm ms-3" %><% end %></h2>
+    <h2 class="mb-3">Famille <%= @family.name.upcase %> <% if current_user.family == @family %><%= link_to "<i class='fa-solid fa-pen-to-square'></i>".html_safe, edit_family_path(@family), class: "btn btn-info btn-sm ms-3" %><% end %></h2>
 
     <div class="row">
       <div class="col-md-6">

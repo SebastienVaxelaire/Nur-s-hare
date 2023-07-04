@@ -6,7 +6,8 @@ class Planning < ApplicationRecord
   default_scope -> { order(:start_time) }
 
   def time
-    "#{start_time.strftime('%I:%M %p')} - #{end_time.strftime('%I:%M %p')}"
+    "#{I18n.l(start_time, format: '%H:%M')} - #{I18n.l(end_time, format: '%H:%M')}"
+    # "#{start_time.strftime('%I:%M %p')} - #{end_time.strftime('%I:%M %p')}"
   end
 
   def multi_days?
