@@ -4,5 +4,5 @@ class Event < ApplicationRecord
   has_many :families, through: :events_families
 
   validates :name, presence: true
-  validates :description, presence: true
+  validates :description, presence: true, length: { minimum: 10, maximum: 1000 }
 end

@@ -73,20 +73,21 @@
   <% end %>
 
   <div class="light-card">
-    <h3 class="text-carnation-pink"><i class="fa-solid fa-democrat"></i> Les événements du groupe</h3>
+    <h3 class="text-carnation-pink mb-3"><i class="fa-solid fa-democrat"></i> Les événements du groupe (<%= @events.count %>)</h3>
     <% if @events.size > 0 %>
-      <p class="mb-0 text-grey"><%= @events_to_come.count %> événements à venir (<%= @events.count %> organisés au total)</p>
+      <p class="mb-0 text-grey fs-5"><%= @events_to_come.count > 1 ? "#{@events_to_come.count} événements à venir" : "#{@events_to_come.count} événement à venir" %>  </p>
       <% @events_to_come.each do |event_to_come| %>
-        <%= link_to "#{event_to_come.name}", group_event_path(@group, event_to_come), class: "fs-5" %><br>
+        <i class="fa-solid fa-sun text-carnation-pink"></i> <%= link_to "#{event_to_come.name}", group_event_path(@group, event_to_come), class: "fs-5" %><br>
       <% end %>
+      <p class="mt-4 mb-0 text-grey">Événements passés (<%= @past_events.count %>)</p>
       <% @past_events.each do |past_event| %>
-        <%= link_to "#{past_event.name}", group_event_path(@group, past_event), class: "" %><br>
+        <%= link_to "#{past_event.name}", group_event_path(@group, past_event) %><br>
       <% end %>
     <% else %>
       Il n'y a pas encore d'événement dans ce groupe !
     <% end %>
     <br>
-    <%= link_to "Ajouter un événement", new_group_event_path(@group), class: "btn btn-primary mt-2" %>
+    <%= link_to "Ajouter un événement", new_group_event_path(@group, @event), class: "btn btn-primary mt-2" %>
   </div>
 
   <div class="light-card my-3">

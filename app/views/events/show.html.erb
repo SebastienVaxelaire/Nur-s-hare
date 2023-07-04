@@ -2,7 +2,8 @@
 
   <div class="container margin-with-navbar">
     <h1 class="group-title"><%= @event.name %></h1>
-    <p class="mb-0"><i class="fa-regular fa-calendar-days"></i> <%= I18n.l(@event.start, format: "%-d %B %Y à %H:%M") %></p>
+    <h3 class="mt-3">Groupe : <%= link_to @event.group.name, group_path(@event.group), class: "text-white" %></h3>
+    <p class="mt-3 mb-0"><i class="fa-regular fa-calendar-days"></i> <%= I18n.l(@event.start, format: "%-d %B %Y à %H:%M") %></p>
     <p><i class="fa-solid fa-hourglass-start"></i>
     <% if @duration_hours < 1 %>
       <%= @duration_minutes %> minutes
