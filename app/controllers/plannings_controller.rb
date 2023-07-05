@@ -24,6 +24,15 @@ class PlanningsController < ApplicationController
     if @planning.save
       redirect_to group_path(@group)
     else
+      @responsible_family = @group.family
+      @families_groups_accepted = FamiliesGroup.where(group: @group, confirmation: "accepted")
+      @all_families = [@responsible_family]
+      @families_groups_accepted.each do |family_group|
+        @all_families << family_group.family
+      end
+      @all_families_names = @all_families.map do |family|
+        family.name
+      end
       render :new, status: :unprocessable_entity
     end
   end

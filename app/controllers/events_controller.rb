@@ -26,9 +26,7 @@ class EventsController < ApplicationController
     authorize @event
     @event.group = @group
     if @event.save
-
       EventsFamily.create(family_id: current_user.family.id, event_id: @event)
-
       redirect_to group_event_path(@group, @event), notice: "L'événement a été créé avec succès."
     else
       render :new, status: :unprocessable_entity
