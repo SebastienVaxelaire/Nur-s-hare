@@ -26,8 +26,13 @@ export default class extends Controller {
       const popup = new mapboxgl.Popup().setHTML(marker.info_window_html)
       const customMarker = document.createElement("div")
       customMarker.innerHTML = marker.marker_html
+   /*    const center = [marker.lng, marker.lat];
+      const radius = marker.rad;
+      const options = {steps: 50, units: 'kilometers', properties: {foo: 'bar'}};
+      const circle = turf.circle(center, radius, options); */
       new mapboxgl.Marker(customMarker)
         .setLngLat([marker.lng, marker.lat])
+        /* .circle([marker.rad]) */
         .setPopup(popup)
         .addTo(this.map)
     })
@@ -38,5 +43,4 @@ export default class extends Controller {
     this.markersValue.forEach(marker => bounds.extend([ marker.lng, marker.lat ]))
     this.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 })
   }
-
 }
