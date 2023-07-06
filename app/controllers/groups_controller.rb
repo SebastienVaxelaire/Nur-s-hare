@@ -7,6 +7,7 @@ class GroupsController < ApplicationController
       {
         lat: group.latitude,
         lng: group.longitude,
+        rad: group.place_radius,
         info_window_html: render_to_string(partial: "info_window", locals: {group: group}),
         marker_html: render_to_string(partial: "marker")
       }

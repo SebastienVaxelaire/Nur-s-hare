@@ -99,17 +99,7 @@
 
   <div style="display: flex; justify-content: space-between; height: 600px;">
     <div style="width: 49%; height: 600px;">
-      <%= month_calendar(events: @plannings, end_attribute: :end_time) do |date, plannings| %>
-        <%= date %>
-        <div class="mt-2">
-          <% plannings.each do |planning| %>
-            <div class="planning mb-2">
-              <p class="fw-bold mb-0"><%= planning.name %></p>
-              <small><%= planning.time unless planning.multi_days? %></small>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
+      <%= render "calendar", plannings: @plannings %>
     </div>
     <div style="width: 49%; height: 600px;"
     data-controller="map"

@@ -127,27 +127,27 @@
                   </div>
                 </div>
               </div>
+            </div>
 
-              <% if current_user.family == @family %>
-                <div class="modal fade" id="<%= modal_id %>" tabindex="-1" aria-labelledby="<%= modal_label_id %>" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-4" id="exampleModalLabel"><%= child.name %></h1>
-                        <%= link_to "<i class='fa-solid fa-trash-can ms-2 mt-2' style='color: #ff2600;'></i>".html_safe,
-                                  child_path(child),
-                                  class: "mb-2",
-                                  data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir enlever #{child.name} ?"} %>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <%= render 'children/form', family: @family, child: child %>
-                      </div>
+            <% if current_user.family == @family %>
+              <div class="modal fade" id="<%= modal_id %>" tabindex="-1" aria-labelledby="<%= modal_label_id %>" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-4" id="exampleModalLabel"><%= child.name %></h1>
+                      <%= link_to "<i class='fa-solid fa-trash-can ms-2 mt-2' style='color: #ff2600;'></i>".html_safe,
+                                child_path(child),
+                                class: "mb-2",
+                                data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir enlever #{child.name} ?"} %>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <%= render 'children/form', family: @family, child: child %>
                     </div>
                   </div>
                 </div>
-              <% end %>
-            </div>
+              </div>
+            <% end %>
           <% end %>
 
           <% if current_user.family == @family %>

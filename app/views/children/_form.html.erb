@@ -1,7 +1,7 @@
 <%= simple_form_for([family, child]) do |f| %>
   <%= f.input :name, label: "Prénom" %>
   <%= f.input :gender, collection: ["Fille", "Garçon"], label: "Fille ou garçon ?" %>
-  <%= f.input :birthday, label: "Date de naissance" %>
+  <%= f.input :birthday, start_year: 2018, end_year: Date.current.year, label: "Date de naissance" %>
   <%= f.input :photo, as: :file %>
   <%= f.submit "Valider" %>
 <% end %>
