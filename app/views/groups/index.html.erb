@@ -2,7 +2,7 @@
 
   <h1>Tous les groupes</h1>
 
-  <div style="width: 100%; height: 600px;"
+  <div class="mt-4" style="width: 100%; height: 500px;"
   data-controller="map"
   data-map-markers-value="<%= @family.address.present? ? @all_markers.to_json : @markers.to_json %>"
   data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
