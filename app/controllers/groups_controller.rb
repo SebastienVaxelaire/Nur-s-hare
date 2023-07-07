@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
+
   def index
     @groups = policy_scope(Group)
     @family = current_user.family
@@ -8,6 +9,7 @@ class GroupsController < ApplicationController
         lat: group.latitude,
         lng: group.longitude,
         rad: group.place_radius,
+        id: group.id,
         info_window_html: render_to_string(partial: "info_window", locals: {group: group}),
         marker_html: render_to_string(partial: "marker")
       }
@@ -46,7 +48,7 @@ class GroupsController < ApplicationController
     @chatroom = @group.chatroom
     if @accepted_family
       @unread_messages_count = @chatroom.messages.where("created_at > ?", @accepted_family.last_read_at).count
-    elsif @reponsible_family == current_user.family
+    elsif @responsible_family == current_user.family
       @unread_messages_count = @chatroom.messages.where("created_at > ?", @group.last_read_at).count
     else
       @unread_messages_count = 0

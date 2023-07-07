@@ -1,6 +1,12 @@
 <div class="container margin-with-navbar mb-4">
 
   <h1>Tous les groupes</h1>
+
+  <div style="width: 100%; height: 600px;"
+  data-controller="map"
+  data-map-markers-value="<%= @family.address.present? ? @all_markers.to_json : @markers.to_json %>"
+  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+
   <% @groups.each do |group| %>
     <div class="card-product my-4">
       <%= group.banner_photo.key.present? ? cl_image_tag(group.banner_photo.key, crop: :fit) : image_tag('https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80') %>
@@ -10,10 +16,5 @@
       </div>
     </div>
   <% end %>
-
-  <div style="width: 100%; height: 600px;"
-  data-controller="map"
-  data-map-markers-value="<%= @family.address.present? ? @all_markers.to_json : @markers.to_json %>"
-  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
 
 </div>

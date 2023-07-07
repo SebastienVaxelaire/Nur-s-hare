@@ -35,6 +35,7 @@ export default class extends Controller {
         const radius = marker.rad
         const options = { steps: 50, units: 'kilometers' }
         const circle = turf.circle(center, radius, options)
+        console.log(marker.id)
 
         const polygonCoordinates = circle.geometry.coordinates[0].map(coord => [Number(coord[0]), Number(coord[1])])
 
