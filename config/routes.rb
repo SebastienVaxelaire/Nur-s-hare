@@ -15,7 +15,6 @@ Rails.application.routes.draw do
       resources :messages, only: :create
     end
     resources :families_groups, only: [:new, :create, :destroy]
-    resources :families_groups, only: [:new, :create]
     resources :plannings, only: [:new, :create]
     resources :events do
       member do
