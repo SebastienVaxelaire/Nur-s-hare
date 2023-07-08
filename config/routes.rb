@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       member do
         post 'register', to: 'events#register'
       end
+      resources :events_families, only: :destroy
     end
   end
   resources :families_groups, only: [:destroy] do
