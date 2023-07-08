@@ -53,3 +53,13 @@
   opacity: 0.8;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }
+
+.homebanner .homebanner-card h4 {
+  width: 20%;
+  font-size: 16px;
+  border: 1px solid;
+  background: $fairy-tale;
+  border-radius: 3px;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}

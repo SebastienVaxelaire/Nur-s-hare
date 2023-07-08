@@ -3,7 +3,13 @@
   <div class="container mt-4">
     <h1><i class="fa-solid fa-hands-holding-child fa-lg"></i> Nur'S'hare</h1>
     <h3>Découvrez une nouvelle façon de gérer la garde d'enfants. <span data-controller="typed-js"></span></h3>
-
+    <div class="homebanner-card mt-5">
+      <% if current_user && !current_user.family.name.present? %>
+        <h4><i class="fa-solid fa-circle-exclamation"></i> Il est maintenant temps d'ajouter des informations sur ta famille
+        <br>
+        <%= link_to "C'est parti !", family_path(current_user.family), class: "btn btn-info fw-bold mt-2" %></h4>
+      <% end %>
+    </div>
   </div>
 </div>
 
