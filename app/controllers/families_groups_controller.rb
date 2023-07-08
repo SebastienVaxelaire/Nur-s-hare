@@ -8,6 +8,10 @@ class FamiliesGroupsController < ApplicationController
     authorize @families_group
     if check(@group, @family)
       @families_group.save
+      NotificationsChannel.broadcast_to(
+        @group.family.user,
+        message: "La famille #{@family.name} souhaite rejoindre votre groupe #{@group.name}"
+      )
       redirect_to group_path(@group), notice: 'Demande effectuée !'
     else
       redirect_to group_path(@group), notice: 'Vous avez déjà demandé à rejoindre ce groupe'
