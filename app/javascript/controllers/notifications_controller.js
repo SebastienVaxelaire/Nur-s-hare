@@ -14,10 +14,10 @@ export default class extends Controller {
   }
 
   handleReceived(data) {
-    this.showFlash(data.message);
+    this.showFlash(data.message, data.link, data.groupname);
   }
 
-  showFlash(message) {
+  showFlash(message, link, groupname) {
     const flashDiv = document.createElement("div");
     const successBabyUrlMetaTag = document.head.querySelector("[name='success-baby-url']");
 
@@ -33,7 +33,8 @@ export default class extends Controller {
                               <img src="${successBabyUrl}" height="70px">
                               </div>
                               <div class="">
-                                ${message}
+                                ${message}<a href="${link}">${groupname}</a> !
+
                               </div>
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
