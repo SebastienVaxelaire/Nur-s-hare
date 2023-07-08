@@ -1,20 +1,31 @@
 <main>
-  <div class="home-top-image">
-    <% if current_user && !current_user.family.name.present? %>
-      <h4><i class="fa-solid fa-circle-exclamation"></i> Il est maintenant temps d'ajouter des informations sur ta famille
-      <%= link_to "C'est parti !", family_path(current_user.family), class: "btn btn-info fw-bold mt-2" %></h4>
-    <% end %>
-    <h4>Combattons ensemble les problèmes de garde, trouvez autour de vous des personnes de confiance qui comprennent vos problèmes et les partagent.</h4>
+<div class="homebanner" style="background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)), url(https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80);">
+  <div class="container mt-4">
+    <h1><i class="fa-solid fa-hands-holding-child fa-lg"></i> Nur'S'hare</h1>
+    <h3>Découvrez une nouvelle façon de gérer la garde d'enfants. <span data-controller="typed-js"></span></h3>
+
   </div>
+</div>
+
   <div class="home-quick-explain">
     <img src="https://cdn.dribbble.com/users/77598/screenshots/16032812/media/bd58de124eaf5ee8dea1b330ff6d1874.png">
     <div class="home-quick-explain-text">
       <h2>Je cherche une solution de garde</h2>
-      <p>Les places de crèche et de garderie sont limitées, les mamans de jour ou nounous sont souvent onéreuses et la confiance n'est pas toujours là !</p>
+      <p>Les places de crèche et de garderie sont limitées, les nounous sont souvent onéreuses et la confiance n'est pas toujours là !</p>
+      <div class="icon">
+      <%= link_to groups_path do %>
+      <i class="fa-solid fa-magnifying-glass-location fa-2xl"></i>
+      <% end %>
+      </div>
     </div>
     <div class="home-quick-explain-text">
       <h2>Je cherche à partager une activité</h2>
       <p>Organisez des activités et donner le sourire à vos enfants en les laissant s'amuser tout en se créant de nouveaux amis !</p>
+          <div class="icon">
+      <%= link_to groups_path do %>
+        <i class="fa-solid fa-magnifying-glass-location fa-2xl"></i>
+      <% end %>
+    </div>
     </div>
   </div>
   <div style="background-color: #cdb4dbff;">
@@ -52,31 +63,7 @@
   </div>
 </main>
 <footer>
-  <div class="mt-3">
-    <h6>Infos pratiques</h6>
-    <ul>
-      <li>L'équipe</li>
-      <li>L'équipe</li>
-      <li>L'équipe</li>
-      <li>L'équipe</li>
-    </ul>
-  </div>
-  <div class="mt-3">
-    <h6>À propos</h6>
-    <ul>
-      <li>L'équipe</li>
-      <li>L'équipe</li>
-      <li>L'équipe</li>
-      <li>L'équipe</li>
-    </ul>
-  </div>
-  <div class="mt-3">
-    <h6>Garde partagée</h6>
-    <ul>
-      <li>L'équipe</li>
-      <li>L'équipe</li>
-      <li>L'équipe</li>
-      <li>L'équipe</li>
-    </ul>
+  <div class="my-4">
+    Fait avec <i class="fa-solid fa-heart" style="color: #eb0505;"></i> par l'équipe de Nur'S'hare
   </div>
 </footer>
