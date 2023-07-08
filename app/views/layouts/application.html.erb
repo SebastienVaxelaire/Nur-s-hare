@@ -32,9 +32,11 @@
     <!-- CSS and Javascript initializers -->
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+
+     <meta name="success-baby-url" content="<%= image_url('successbaby.png') %>">
   </head>
 
-  <body>
+  <body data-controller="notifications">
     <%= render "shared/navbar" %>
     <%= render "shared/flashes" %>
 
