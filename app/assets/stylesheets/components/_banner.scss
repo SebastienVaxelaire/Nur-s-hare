@@ -23,3 +23,33 @@
   opacity: .7;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }
+
+.homebanner {
+  background-size: cover;
+  background-position: 50% 75%;
+  padding: 150px 0;
+  height: 470px;
+}
+
+.homebanner h1 {
+  background: linear-gradient(to right, $carnation-pink, $fairy-tale);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.homebanner h3 {
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  font-size: 24px;
+  margin-bottom: 0px;
+}
+
+.homebanner p {
+  font-size: 20px;
+  color: white;
+  opacity: 0.8;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}

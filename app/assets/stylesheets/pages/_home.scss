@@ -41,14 +41,39 @@ main {
     height: 80%;
   }
   .home-quick-explain-text {
-    padding: 10px;
-    min-height: 80%;
+    min-height: 70%;
     max-width: 25%;
     border: 1px solid $light-sky-blue;
-    border-radius: 3px;
     h2 {
       min-height: 3em;
+      color: $light-sky-blue;
     }
+    .icon {
+      color: $light-sky-blue;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    background: white;
+    box-shadow: 0 0 15px rgba(18, 173, 239, 0.3);
+    padding: 16px;
+    border-radius: 4px;
+    text-align:center;
+  }
+  .home-quick-explain-text:hover {
+    border: 1px solid $light-sky-blue;
+    h2 {
+      color: $white;
+    }
+    .icon {
+      color: $white;
+    }
+    background: $light-sky-blue;
+    box-shadow: 0 0 15px rgba(18, 173, 239, 0.3);
+    padding: 16px;
+    border-radius: 4px;
+    text-align:center;
   }
  }
 

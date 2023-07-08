@@ -18,6 +18,11 @@ module NurSHare
 
     config.i18n.default_locale = :fr
 
+    config.action_dispatch.default_headers.merge!(
+      'Turbo-Frame' => 'SAMEORIGIN',
+      'Access-Control-Allow-Origin' => '*'
+    )
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

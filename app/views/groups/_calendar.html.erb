@@ -1,5 +1,5 @@
 <%= turbo_frame_tag 'calendar' do %>
-  <%= month_calendar(events: plannings, end_attribute: :end_time) do |date, plannings| %>
+  <%= month_calendar(events: plannings, group: group, end_attribute: :end_time) do |date, plannings| %>
     <%= date %>
     <div class="mt-2">
       <% plannings.each do |planning| %>
