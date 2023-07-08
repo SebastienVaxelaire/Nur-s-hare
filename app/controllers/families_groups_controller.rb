@@ -21,6 +21,12 @@ class FamiliesGroupsController < ApplicationController
     group_id = @family_group.group_id
     @group = Group.find(group_id)
     @family_group.update(confirmation: 'accepted')
+    puts "test"
+    puts @family_group.family.user.id
+    NotificationsChannel.broadcast_to(
+      @family_group.family.user,
+      message: "Vous avez été accepté dans le groupe #{@group.name} !"
+    )
     redirect_to group_path(@group), notice: 'La demande a été acceptée !'
   end
 

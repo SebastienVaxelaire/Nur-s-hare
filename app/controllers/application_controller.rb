@@ -17,9 +17,20 @@ class ApplicationController < ActionController::Base
     { host: ENV["DOMAIN"] || "localhost:3000" }
   end
 
+  def set_user_cookie(user)
+    cookies.encrypted[:user_id] = user.id
+  end
+
+  def after_sign_in_path_for(resource)
+    set_user_cookie(resource)
+    super(resource)
+  end
+
   private
 
   def skip_pundit?
     devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)/
   end
+
+
 end
