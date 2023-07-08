@@ -13,7 +13,10 @@
       <%= @duration_minutes == 0 ? "#{@duration_hours} heures" : "#{@duration_hours} heures #{@duration_minutes} minutes" %></p>
     <% end %>
     <% if @already_register %>
-      <div class="btn btn-success">Vous êtes inscrit à l'événement</div>
+      <div class="btn btn-success disabled">Vous êtes inscrit à l'événement</div>
+      <p class="fs-6 mt-2"><%= link_to 'Se désinscrire',
+                  group_event_events_family_path(@event.group, @event, @event_family),
+                  data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir vous désinscrire de cet événement ?"} %>
     <% else %>
       <%= link_to "S'inscrire à l'événement", register_group_event_path(@event.group, @event), data: {"turbo-method": :post}, class: "btn btn-primary" %>
     <% end %>
