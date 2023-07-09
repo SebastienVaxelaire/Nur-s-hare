@@ -40,6 +40,6 @@ class PlanningsController < ApplicationController
   private
 
   def planning_params
-    params.require(:planning).permit(:name, :start_time, :end_time)
+    params.require(:planning).permit(:name, :start_time, :end_time, :event)
   end
 end

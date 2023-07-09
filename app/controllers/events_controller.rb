@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_action :set_group, only: [:new, :create, :update]
+  before_action :set_group, only: [:new, :create, :update, :destroy]
   def index
     @events = Event.all
   end
@@ -27,8 +27,11 @@ class EventsController < ApplicationController
     authorize @event
     @event.group = @group
     if @event.save
-      EventsFamily.create(family_id: current_user.family.id, event_id: @event)
-      redirect_to group_event_path(@group, @event), notice: "L'événement a été créé avec succès."
+      EventsFamily.create(family_id: current_user.family.id, event_id: @event.id)
+      @planning = Planning.new(name: @event.name, start_time: @event.start, end_time: @event.end, group_id: @event.group_id, event: true)
+      authorize @planning
+      @planning.save
+      redirect_to group_event_path(@group, @event), notice: "L'événement #{@event.name} a été créé avec succès."
     else
       render :new, status: :unprocessable_entity
     end
@@ -42,7 +45,7 @@ class EventsController < ApplicationController
     authorize @event
     @event.group = @group
     if @event.update(params_event)
-      redirect_to @event, notice: "L'événement a été mis à jour avec succès."
+      redirect_to group_event_path(@group, @event), notice: "L'événement #{@event.name} a été mis à jour avec succès."
     else
       render :edit
     end
@@ -51,15 +54,14 @@ class EventsController < ApplicationController
   def destroy
     authorize @event
     @event.destroy
-
-    redirect_to events_url, notice: "L'événement a été supprimé avec succès."
+    redirect_to group_path(@group), notice: "L'événement #{@event.name} a été supprimé avec succès."
   end
 
   def register
     @event = Event.find(params[:id])
     authorize @event
     EventsFamily.create!(event_id: @event.id, family_id: current_user.family.id)
-    redirect_to group_event_path(@event.group, @event), notice: "Vous êtes inscrit à l'événement."
+    redirect_to group_event_path(@event.group, @event), notice: "Vous êtes inscrit à l'événement #{@event.name} !"
   end
 
   private
@@ -75,5 +77,9 @@ class EventsController < ApplicationController
 
   def params_event
     params.require(:event).permit(:name, :start, :end, :description)
+  end
+
+  def planning_params
+    params.require(:planning).permit(:name, :start_time, :end_time, :event)
   end
 end

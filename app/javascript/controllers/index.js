@@ -10,16 +10,17 @@ application.register("address-autocomplete", AddressAutocompleteController)
 import ChatroomSubscriptionController from "./chatroom_subscription_controller"
 application.register("chatroom-subscription", ChatroomSubscriptionController)
 
+import GroupmenuController from "./groupmenu_controller"
+application.register("groupmenu", GroupmenuController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
 import MapController from "./map_controller"
 application.register("map", MapController)
 
-
-import TypedJsController from "./typed_js_controller"
-application.register("typed-js", TypedJsController)
-
 import NotificationsController from "./notifications_controller"
 application.register("notifications", NotificationsController)
 
+import TypedJsController from "./typed_js_controller"
+application.register("typed-js", TypedJsController)
