@@ -1,89 +1,75 @@
 <div class="banner" style="background-image: linear-gradient(rgba(255, 192, 203, 0.6), rgba(0, 0, 0, 0.6)), url('<%= @group.banner_photo.key.present? ? cl_image_path(@group.banner_photo.key, crop: :fit) : 'https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80' %>');">
-  <div class="container">
-    <h1 class="group-title"><%= @group.name %></h1>
-
-    <% if @group.family.user == current_user %>
-      <%= link_to "<i class='fa-solid fa-pen-to-square' style='color: #F18C2D;'></i>".html_safe, edit_family_group_path(@responsible_family, @group), class: "me-2" %>
-      <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
-                    group_path(@group),
-                    class: "text-decoration-none link-dark",
-                    data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce groupe ?"} %>
-    <% end %>
-    <h3 class="mt-4">Créé par la famille <%= @responsible_family.name.upcase %></h3>
-    <p class="fst-italic fs-6"><%= @group.place_address %></p>
-    <p class="mt-4"><%= @group.description %></p>
-    <% if @group.family.user != current_user && current_user.family.name.present? %>
-      <% if @invited_family %>
-        <p class="btn btn-info disabled mt-4">Demande en attente d'acceptation</p>
-      <% elsif @accepted_family %>
-        <p class="btn btn-success disabled mt-4">Vous êtes membre de ce groupe !</p>
-        <p class="fs-6"><%= link_to 'Quitter le groupe',
-                  group_families_group_path(@family_group),
-                  data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir quitter ce groupe ?"} %>
-      <% else %>
-        <%= link_to "Rejoindre le groupe", group_families_groups_path(@group), data: {turbo_method: 'post'}, class: "btn btn-primary mt-4" %></p>
-      <% end %>
-    <% end %>
-    <% if !current_user.family.name.present? %>
-       <p class="mt-5"><i class="fa-solid fa-circle-exclamation"></i> Pour rejoindre ce groupe, vous devez d'abord <%= link_to "ajouter des informations", family_path(current_user.family), class: "fw-bold" %> sur votre famille !</p>
-    <% end %>
-
-  </div>
+    <div class="container">
+        <h1 class="group-title"><%= @group.name %></h1>
+        <% if @group.family.user == current_user %>
+            <%= link_to "<i class='fa-solid fa-pen-to-square' style='color: #F18C2D;'></i>".html_safe, edit_family_group_path(@responsible_family, @group), class: "me-2" %>
+            <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
+                        group_path(@group),
+                        class: "text-decoration-none link-dark",
+                        data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce groupe ?"} %>
+        <% end %>
+        <h3 class="mt-4">Créé par la famille <%= @responsible_family.name.upcase %></h3>
+        <p class="fst-italic fs-6"><%= @group.place_address %></p>
+        <p class="mt-4"><%= @group.description %></p>
+        <% if @group.family.user != current_user && current_user.family.name.present? %>
+            <% if @invited_family %>
+                <p class="btn btn-info disabled mt-4">Demande en attente d'acceptation</p>
+            <% elsif @accepted_family %>
+                <p class="btn btn-success disabled mt-4">Vous êtes membre de ce groupe !</p>
+                <p class="fs-6"><%= link_to 'Quitter le groupe',
+                            group_families_group_path(@family_group),
+                            data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir quitter ce groupe ?"} %></p>
+            <% else %>
+                <%= link_to "Rejoindre le groupe", group_families_groups_path(@group), data: {turbo_method: 'post'}, class: "btn btn-primary mt-4" %></p>
+            <% end %>
+        <% end %>
+        <% if !current_user.family.name.present? %>
+            <p class="mt-5"><i class="fa-solid fa-circle-exclamation"></i> Pour rejoindre ce groupe, vous devez d'abord <%= link_to "ajouter des informations", family_path(current_user.family), class: "fw-bold" %> sur votre famille !</p>
+        <% end %>
+    </div>
 </div>
 
 <div class="container" data-controller="groupmenu">
-
-
-
-<div class="container my-4">
-
-  <% if !@families_groups.empty? && @group.family.user == current_user %>
-    <div class="warning-card mt-3">
-      <h3 class="mb-4">Ils veulent rejoindre le groupe !</h3>
-      <% @families_groups.each do |family_group| %>
-        <div class="mx-3 me-3">
-          <p><%= link_to "Demande de la famille #{family_group.family.name}", family_path(family_group.family), class: "text-decoration-none text-black" %></p>
-          <%= link_to 'Accepter', accept_families_group_path(family_group), data: {"turbo-method": :patch}, class: "btn btn-success btn-sm me-2" %>
-          <%= link_to 'Refuser', refuse_families_group_path(family_group), data: {"turbo-method": :patch}, class: "btn btn-danger btn-sm" %>
+    <div class="container my-4">
+        <% if !@families_groups.empty? && @group.family.user == current_user %>
+            <div class="warning-card mt-3">
+                <h3 class="mb-4">Ils veulent rejoindre le groupe !</h3>
+                <% @families_groups.each do |family_group| %>
+                    <div class="mx-3 me-3">
+                        <p><%= link_to "Demande de la famille #{family_group.family.name}", family_path(family_group.family), class: "text-decoration-none text-black" %></p>
+                        <%= link_to 'Accepter', accept_families_group_path(family_group), data: {"turbo-method": :patch}, class: "btn btn-success btn-sm me-2" %>
+                        <%= link_to 'Refuser', refuse_families_group_path(family_group), data: {"turbo-method": :patch}, class: "btn btn-danger btn-sm" %>
+                    </div>
+                <% end %>
+            </div>
+        <% end %>
+        <div class="d-flex justify-content-start align-items-start border-menu">
+            <div class="menu first" data-action="click->groupmenu#toggleMembers"><i class="fa-solid fa-people-group i-menu"></i> Le groupe</div>
+            <div class="menu" data-action="click->groupmenu#toggleAgenda"><i class="fa-solid fa-calendar-days i-menu"></i> Agenda</div>
+            <% if @responsible_family == current_user.family || @accepted_family %>
+                <div class="menu" data-action="click->groupmenu#toggleDiscussion"><i class="fa-solid fa-comments i-menu"></i> Fil de discussions (<%= @chatroom.messages.count %>)
+                    <span class="badge rounded-pill bg-danger">
+                        <%= @unread_messages_count %>
+                        <span class="visually-hidden">Messages non lus</span>
+                    </span>
+                </div>
+            <% end %>
+            <div class="menu" data-action="click->groupmenu#toggleEvents"><i class="fa-solid fa-democrat i-menu"></i> Evenements (<%= @events_to_come.count %> à venir)</div>
         </div>
-      <% end %>
-    </div>
-  <% end %>
-
-  <div class="d-flex justify-content-start align-items-start border-menu">
-
-    <div class="menu first" data-action="click->groupmenu#toggleMembers"><i class="fa-solid fa-people-group i-menu"></i> Le groupe</div>
-
-    <div class="menu" data-action="click->groupmenu#toggleAgenda"><i class="fa-solid fa-calendar-days i-menu"></i> Agenda</div>
-
-  <% if @responsible_family == current_user.family || @accepted_family %>
-    <div class="menu" data-action="click->groupmenu#toggleDiscussion"><i class="fa-solid fa-comments i-menu"></i> Fil de discussions (<%= @chatroom.messages.count %>)        <span class="badge rounded-pill bg-danger">
-            <%= @unread_messages_count %>
-            <span class="visually-hidden">Messages non lus</span>
-          </span></div>
-<% end %>
-
-    <div class="menu" data-action="click->groupmenu#toggleEvents"><i class="fa-solid fa-democrat i-menu"></i> Evenements (<%= @events_to_come.count %> à venir)</div>
-
-  </div>
-
-<div>
-
-
+     <div>
   </div>
 
   <div class="events-active d-none">
-
   <div class="light-card my-3">
-  <div class="d-flex justify-content-between align-item-center mb-3">
-    <div>
-    <h3 class="text-grey mb-0"><i class="fa-solid fa-democrat"></i> Les événements du groupe (<%= @events.count %>)</h3>
+    <div class="d-flex justify-content-between align-item-center mb-3">
+      <div>
+      <h3 class="text-grey mb-0"><i class="fa-solid fa-democrat"></i> Les événements du groupe (<%= @events.count %>)</h3>
+      </div>
+      <div>
+        <%= link_to "Ajouter un événement", new_group_event_path(@group, @event), class: "btn btn-primary" %>
+      </div>
     </div>
-  <div>
-      <%= link_to "Ajouter un événement", new_group_event_path(@group, @event), class: "btn btn-primary" %>
-  </div>
 
-  </div>
     <% if @events.size > 0 %>
       <p class="mb-0 text-grey fs-5 border-bottom"><%= @events_to_come.count > 1 ? "#{@events_to_come.count} événements à venir" : "#{@events_to_come.count} événement à venir" %>  </p>
       <% @events_to_come.each do |event_to_come| %>
@@ -122,23 +108,23 @@
 
 
 <div class="calendar-active d-none mt-4">
-<div class="light-card">
-<h3 class="mb-4 text-grey">Agenda</h3>
-     <div id="calendar" data-turbo-frame>
+  <div class="light-card">
+    <h3 class="mb-4 text-grey">Agenda</h3>
+    <div id="calendar" data-turbo-frame>
       <%= render "calendar", plannings: @plannings, group: @group %>
-      </div>
-
-</div>
-</div>
-
-<div class="map-active">
-<div class="light-card">
-<h3 class="mb-4 text-grey">La carte du groupe</h3>
-    <div style="height: 600px;"
-    data-controller="map"
-    data-map-markers-value="<%= @marker.to_json %>"
-    data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+    </div>
   </div>
+</div>
+
+  <div class="map-active">
+    <div class="light-card">
+      <h3 class="mb-4 text-grey">La carte du groupe</h3>
+      <div style="height: 600px;"
+        data-controller="map"
+        data-map-markers-value="<%= @marker.to_json %>"
+        data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
+    </div>
   </div>
 </div>
 
