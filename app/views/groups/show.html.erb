@@ -54,7 +54,7 @@
                     </span>
                 </div>
             <% end %>
-            <div class="menu" data-action="click->groupmenu#toggleEvents"><i class="fa-solid fa-democrat i-menu"></i> Evenements (<%= @events_to_come.count %> à venir)</div>
+            <div class="menu" data-action="click->groupmenu#toggleEvents"><i class="fa-solid fa-democrat i-menu"></i> Événements (<%= @events_to_come.count %> à venir)</div>
         </div>
      <div>
   </div>
@@ -73,7 +73,7 @@
     <% if @events.size > 0 %>
       <p class="mb-0 text-grey fs-5 border-bottom"><%= @events_to_come.count > 1 ? "#{@events_to_come.count} événements à venir" : "#{@events_to_come.count} événement à venir" %>  </p>
       <% @events_to_come.each do |event_to_come| %>
-        <i class="fa-solid fa-sun text-carnation-pink mt-4"></i> <%= link_to "#{event_to_come.name}", group_event_path(@group, event_to_come), class: "fs-5" %> le <%= I18n.l(event_to_come.start, format: "%-d %B %Y à %H:%M") %> (<%= event_to_come.families.count %> familles inscrites)<br>
+        <i class="fa-solid fa-sun text-carnation-pink mt-4"></i> <%= link_to "#{event_to_come.name}", group_event_path(@group, event_to_come), class: "fs-5" %> le <%= I18n.l(event_to_come.start, format: "%-d %B %Y à %H:%M") %> (<%= event_to_come.families.count > 1 ? "#{event_to_come.families.count} familles inscrites" : "#{event_to_come.families.count} famille inscrite" %>)<br>
       <% end %>
       <p class="mt-4 mb-0 text-grey">Événements passés (<%= @past_events.count %>)</p>
       <% @past_events.each do |past_event| %>
