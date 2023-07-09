@@ -3,6 +3,7 @@ class GroupsController < ApplicationController
 
   def index
     @groups = policy_scope(Group)
+    # raise
     @family = current_user.family
     @markers = @groups.geocoded.map do |group|
       {
@@ -14,11 +15,12 @@ class GroupsController < ApplicationController
         marker_html: render_to_string(partial: "marker")
       }
     end
-    @family_marker = [{ lat: @family.latitude,
-                        lng: @family.longitude,
-                        info_window_html: render_to_string(partial: "info_window_family"),
-                        marker_html: render_to_string(partial: "marker_family")}]
-    @all_markers = @markers + @family_marker
+    # @family_marker = [{ lat: @family.latitude,
+    #                     lng: @family.longitude,
+    #                     info_window_html: render_to_string(partial: "info_window_family"),
+    #                     marker_html: render_to_string(partial: "marker_family")}]
+    # @all_markers = @markers + @family_marker
+    @all_markers = @markers
   end
 
   def new
