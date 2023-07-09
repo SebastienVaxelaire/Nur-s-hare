@@ -1,0 +1,32 @@
+.menu {
+  padding-right: 24px;
+  padding-bottom: 16px;
+  padding-left: 8px;
+  padding-top: 8px;
+  border-bottom: 4px solid $light-gray;
+  color: $carnation-pink;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.menu:hover {
+  border-bottom: 4px solid $carnation-pink;
+  background-color: $uranian-blue;
+  cursor: pointer;
+  color: $white
+}
+
+
+.border-menu {
+  border-bottom: 1px solid $light-sky-blue;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.active {
+  border-bottom: 4px solid $carnation-pink;
+}
+
+.i-menu {
+  padding-right: 8px;
+}

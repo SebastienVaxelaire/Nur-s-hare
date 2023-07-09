@@ -56,6 +56,14 @@ class GroupsController < ApplicationController
     @events = Event.where(group_id: @group)
     @events_to_come = @events.where('events."end" > ?', Time.now)
     @past_events = @events.where('events."end" < ?', Time.now)
+    # chatroom
+    @chatroom = Chatroom.find_by(group_id: @group)
+    authorize @chatroom
+    @group = @chatroom.group
+    @family_group = FamiliesGroup.find_by(family_id: current_user.family.id, group_id: @group.id)
+    @family_group.update(last_read_at: Time.current) if @family_group
+    @group.update(last_read_at: Time.current) if @group.family == current_user.family
+    @message = Message.new
   end
 
   def create
