@@ -97,13 +97,12 @@
     <% end %>
   </div>
 
-  <div style="display: flex; justify-content: space-between; height: 600px;">
-    <div style="width: 49%; height: 600px;">
      <div id="calendar" data-turbo-frame>
       <%= render "calendar", plannings: @plannings, group: @group %>
       </div>
-    </div>
-    <div style="width: 49%; height: 600px;"
+
+
+    <div style="height: 600px;"
     data-controller="map"
     data-map-markers-value="<%= @marker.to_json %>"
     data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>

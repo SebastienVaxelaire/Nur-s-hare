@@ -27,7 +27,10 @@ class EventsController < ApplicationController
     authorize @event
     @event.group = @group
     if @event.save
-      EventsFamily.create(family_id: current_user.family.id, event_id: @event)
+      EventsFamily.create(family_id: current_user.family.id, event_id: @event.id)
+      @planning = Planning.new(name: @event.name, start_time: @event.start, end_time: @event.end, group_id: @event.group_id, event: true)
+      authorize @planning
+      @planning.save
       redirect_to group_event_path(@group, @event), notice: "L'événement a été créé avec succès."
     else
       render :new, status: :unprocessable_entity
@@ -75,5 +78,9 @@ class EventsController < ApplicationController
 
   def params_event
     params.require(:event).permit(:name, :start, :end, :description)
+  end
+
+  def planning_params
+    params.require(:planning).permit(:name, :start_time, :end_time, :event)
   end
 end
