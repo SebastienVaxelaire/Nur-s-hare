@@ -71,9 +71,7 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     authorize @group
     @group.family = @family
-    # raise
     if @group.save
-      # raise
       redirect_to group_path(@group), notice: 'Groupe créé avec succès !'
     else
       render :new, status: :unprocessable_entity
@@ -110,10 +108,4 @@ class GroupsController < ApplicationController
   def group_params
     params.require(:group).permit(:name, :description, :banner_photo, :place_address, :place_radius)
   end
-
-  # def families_want_to_join_includes_current_family
-  #   @families_want_to_join.each do |f|
-  #     f[0].include?(current_user.family)
-  #   end
-  # end
 end

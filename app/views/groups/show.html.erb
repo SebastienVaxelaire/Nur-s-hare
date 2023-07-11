@@ -110,7 +110,8 @@
 <div class="calendar-active d-none mt-4">
   <div class="light-card">
     <h3 class="mb-4 text-grey">Agenda</h3>
-    <div id="calendar" data-turbo-frame>
+    <%= link_to 'Ajouter une garde', new_group_planning_path(@group), class: 'btn btn-outline-warning' %>
+    <div id="calendar">
       <%= render "calendar", plannings: @plannings, group: @group %>
     </div>
   </div>

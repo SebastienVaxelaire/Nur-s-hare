@@ -1,22 +1,21 @@
-<%= turbo_frame_tag 'calendar' do %>
-  <%= month_calendar(events: plannings, group: group, end_attribute: :end_time) do |date, plannings| %>
+
+  <%= month_calendar(locals: { events: plannings, group: group, end_attribute: :end_time }) do |date, plannings| %>
     <%= date %>
     <div class="">
       <% plannings.each do |planning| %>
 
-      <% if planning.event == false %>
-        <div class="meeting">
-          <p class="fw-bold mb-0"><i class="fa-solid fa-baby-carriage"></i> <%= planning.name %></p>
-          <small><%= planning.time unless planning.multi_days? %></small>
-        </div>
+        <% if planning.event == false %>
+          <div class="meeting">
+            <p class="fw-bold mb-0"><i class="fa-solid fa-baby-carriage"></i> <%= planning.name %></p>
+            <small><%= planning.time unless planning.multi_days? %></small>
+          </div>
         <% else %>
-        <div class="meeting-event">
-          <p class="fw-bold mb-0"><i class="fa-solid fa-democrat"></i> <%= planning.name %></p>
-          <small><%= planning.time unless planning.multi_days? %></small>
-        </div>
+          <div class="meeting-event">
+            <p class="fw-bold mb-0"><i class="fa-solid fa-democrat"></i> <%= planning.name %></p>
+            <small><%= planning.time unless planning.multi_days? %></small>
+          </div>
 
         <% end %>
       <% end %>
     </div>
   <% end %>
-<% end %>

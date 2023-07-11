@@ -20,6 +20,9 @@ class FamiliesController < ApplicationController
   end
 
   def update
+    params[:family][:photos].each do |photo|
+      @family.photos.attach(photo)
+    end
     if @family.update(params_family)
       redirect_to family_path(@family), notice: 'Votre famille a bien été mise à jour !'
     else
