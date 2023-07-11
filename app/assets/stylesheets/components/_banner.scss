@@ -1,7 +1,15 @@
-.banner {
+.banner-group {
   background-size: cover;
   background-position: center;
-  padding: 150px 0;
+  padding: 120px 0;
+  height: 500px;
+}
+
+.banner-event {
+  background-size: cover;
+  background-position: center;
+  padding: 40px 0;
+  height: 450px;
 }
 
 .banner h1 {

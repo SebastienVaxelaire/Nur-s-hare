@@ -2,7 +2,7 @@
   <% if !current_user.family.name.present? %>
     <h3>Avant de créer un groupe, nous t'incitons d'abord à <%= link_to "ajouter des informations", family_path(current_user.family) %> sur ta famille !</h3>
   <% else %>
-    <h1>Créer un groupe</h1>
+    <h2>Créer un groupe</h2>
     <%= render "form", family: @family, group: @group, label: "Créer le groupe" %>
   <% end %>
 </div>

@@ -3,18 +3,17 @@
     <%= date %>
     <div class="">
       <% plannings.each do |planning| %>
-
         <% if planning.event == false %>
-          <div class="meeting">
+          <div class="meeting mt-2">
             <p class="fw-bold mb-0"><i class="fa-solid fa-baby-carriage"></i> <%= planning.name %></p>
             <small><%= planning.time unless planning.multi_days? %></small>
           </div>
         <% else %>
-          <div class="meeting-event">
-            <p class="fw-bold mb-0"><i class="fa-solid fa-democrat"></i> <%= planning.name %></p>
+          <div class="meeting-event mt-2">
+            <%# <p class="fw-bold mb-0"><i class="fa-solid fa-democrat"></i> <%= planning.name %>
+            <i class="fa-solid fa-democrat"></i> <%= link_to planning.name, group_event_path(group, planning), class:"fw-bold text-white text-decoration-none mb-0", data: { turbo_frame: "_top" } %>
             <small><%= planning.time unless planning.multi_days? %></small>
           </div>
-
         <% end %>
       <% end %>
     </div>

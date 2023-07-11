@@ -1,32 +1,32 @@
-<div class="banner" style="background-image: linear-gradient(rgba(255, 192, 203, 0.6), rgba(0, 0, 0, 0.6)), url('<%= @group.banner_photo.key.present? ? cl_image_path(@group.banner_photo.key, crop: :fit) : 'https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80' %>');">
-    <div class="container">
-        <h1 class="group-title"><%= @group.name %></h1>
-        <% if @group.family.user == current_user %>
-            <%= link_to "<i class='fa-solid fa-pen-to-square' style='color: #F18C2D;'></i>".html_safe, edit_family_group_path(@responsible_family, @group), class: "me-2" %>
-            <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
-                        group_path(@group),
-                        class: "text-decoration-none link-dark",
-                        data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce groupe ?"} %>
-        <% end %>
-        <h3 class="mt-4">Créé par la famille <%= @responsible_family.name.upcase %></h3>
-        <p class="fst-italic fs-6"><%= @group.place_address %></p>
-        <p class="mt-4"><%= @group.description %></p>
-        <% if @group.family.user != current_user && current_user.family.name.present? %>
-            <% if @invited_family %>
-                <p class="btn btn-info disabled mt-4">Demande en attente d'acceptation</p>
-            <% elsif @accepted_family %>
-                <p class="btn btn-success disabled mt-4">Vous êtes membre de ce groupe !</p>
-                <p class="fs-6"><%= link_to 'Quitter le groupe',
-                            group_families_group_path(@family_group),
-                            data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir quitter ce groupe ?"} %></p>
-            <% else %>
-                <%= link_to "Rejoindre le groupe", group_families_groups_path(@group), data: {turbo_method: 'post'}, class: "btn btn-primary mt-4" %></p>
-            <% end %>
-        <% end %>
-        <% if !current_user.family.name.present? %>
-            <p class="mt-5"><i class="fa-solid fa-circle-exclamation"></i> Pour rejoindre ce groupe, vous devez d'abord <%= link_to "ajouter des informations", family_path(current_user.family), class: "fw-bold" %> sur votre famille !</p>
-        <% end %>
-    </div>
+<div class="banner-group" style="background-image: linear-gradient(rgba(255, 192, 203, 0.6), rgba(0, 0, 0, 0.6)), url('<%= @group.banner_photo.key.present? ? cl_image_path(@group.banner_photo.key, crop: :fit) : 'https://images.unsplash.com/photo-1525026198548-4baa812f1183?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1334&q=80' %>');">
+  <div class="container">
+      <h1 class="group-title"><%= @group.name %></h1>
+      <% if @group.family.user == current_user %>
+          <%= link_to "<i class='fa-solid fa-pen-to-square' style='color: #F18C2D;'></i>".html_safe, edit_family_group_path(@responsible_family, @group), class: "me-2" %>
+          <%= link_to "<i class='fa-solid fa-trash-can' style='color: #ff2600;'></i>".html_safe,
+                      group_path(@group),
+                      class: "text-decoration-none link-dark",
+                      data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce groupe ?"} %>
+      <% end %>
+      <h3 class="mt-4">Créé par la famille <%= @responsible_family.name.upcase %></h3>
+      <p class="fst-italic fs-6"><%= @group.place_address %></p>
+      <p class="mt-4"><%= @group.description %></p>
+      <% if @group.family.user != current_user && current_user.family.name.present? %>
+          <% if @invited_family %>
+              <p class="btn btn-info disabled mt-4">Demande en attente d'acceptation</p>
+          <% elsif @accepted_family %>
+              <p class="btn btn-success disabled mt-4">Vous êtes membre de ce groupe !</p>
+              <p class="fs-6"><%= link_to 'Quitter le groupe',
+                          group_families_group_path(@family_group),
+                          data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir quitter ce groupe ?"} %></p>
+          <% else %>
+              <%= link_to "Rejoindre le groupe", group_families_groups_path(@group), data: {turbo_method: 'post'}, class: "btn btn-primary mt-4" %></p>
+          <% end %>
+      <% end %>
+      <% if !current_user.family.name.present? %>
+          <p class="mt-5"><i class="fa-solid fa-circle-exclamation"></i> Pour rejoindre ce groupe, vous devez d'abord <%= link_to "ajouter des informations", family_path(current_user.family), class: "fw-bold" %> sur votre famille !</p>
+      <% end %>
+  </div>
 </div>
 
 <div class="container" data-controller="groupmenu">
@@ -110,7 +110,6 @@
 <div class="calendar-active d-none mt-4">
   <div class="light-card">
     <h3 class="mb-4 text-grey">Agenda</h3>
-    <%= link_to 'Ajouter une garde', new_group_planning_path(@group), class: 'btn btn-outline-warning' %>
     <div id="calendar">
       <%= render "calendar", plannings: @plannings, group: @group %>
     </div>
