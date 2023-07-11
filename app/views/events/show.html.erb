@@ -1,5 +1,4 @@
-<div class="banner" style="background-image: linear-gradient(rgba(255, 192, 203, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');">
-
+<div class="banner-event" style="background-image: linear-gradient(rgba(255, 192, 203, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');">
   <div class="container margin-with-navbar">
     <h1 class="group-title"><%= @event.name %></h1>
     <% if @already_register %>
@@ -25,7 +24,7 @@
                   group_event_events_family_path(@event.group, @event, @event_family),
                   data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir vous désinscrire de cet événement ?"} %>
     <% else %>
-      <%= link_to "S'inscrire à l'événement", register_group_event_path(@event.group, @event), data: {"turbo-method": :post}, class: "btn btn-primary" %>
+      <div><%= link_to "S'inscrire à l'événement", register_group_event_path(@event.group, @event), data: {"turbo-method": :post}, class: "btn btn-primary" %></div>
     <% end %>
   </div>
 </div>
@@ -51,8 +50,12 @@
     <% end %>
   </div>
 
-  <div class="light-card mt-3">
+  <div class="light-card my-3">
     <h3 class="text-carnation-pink"><i class="fa-solid fa-people-group"></i> Les familles qui participent</h3>
+    <% if @families.empty? %>
+      <p>Pas de participant pour l'instant</p>
+
+    <% end %>
     <% @families.each do |family| %>
       <div class="">
         <div class="card-product my-4">

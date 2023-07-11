@@ -11,7 +11,7 @@ class EventsController < ApplicationController
     @duration_hours = (duration / 3600).to_i
     @duration_minutes = ((duration - (@duration_hours * 3600)) / 60).to_i
     @families = @event.families
-    @already_register = EventsFamily.find_by(family_id: current_user.family).present?
+    @already_register = EventsFamily.find_by(family_id: current_user.family, event_id: @event).present?
     @event_family = EventsFamily.find_by(event_id: @event, family_id: current_user.family)
   end
 
