@@ -13,14 +13,14 @@
       <%# <p class="mt-4"><%= @group.description %></p>
       <% if @group.family.user != current_user && current_user.family.name.present? %>
         <% if @invited_family %>
-          <p class="btn btn-info disabled mt-4">Demande en attente d'acceptation</p>
+          <p class="btn btn-info disabled mt-2">Demande en attente d'acceptation</p>
         <% elsif @accepted_family %>
-          <p class="btn btn-success disabled mt-4">Vous êtes membre de ce groupe !</p>
+          <p class="btn btn-success disabled mt-2">Vous êtes membre de ce groupe !</p>
           <p class="fs-6"><%= link_to 'Quitter le groupe',
                       group_families_group_path(@family_group),
                       data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir quitter ce groupe ?"} %></p>
         <% else %>
-          <%= link_to "Rejoindre le groupe", group_families_groups_path(@group), data: {turbo_method: 'post'}, class: "btn btn-primary mt-4" %></p>
+          <%= link_to "Rejoindre le groupe", group_families_groups_path(@group), data: {turbo_method: 'post'}, class: "btn btn-primary mt-2" %></p>
         <% end %>
       <% end %>
       <% if !current_user.family.name.present? %>
