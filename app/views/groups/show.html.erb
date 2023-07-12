@@ -45,16 +45,16 @@
         <% end %>
         <div class="d-flex justify-content-start align-items-start border-menu">
             <div class="menu first" data-action="click->groupmenu#toggleMembers"><i class="fa-solid fa-people-group i-menu"></i> Le groupe</div>
-            <div class="menu" data-action="click->groupmenu#toggleAgenda"><i class="fa-solid fa-calendar-days i-menu"></i> Agenda</div>
             <% if @responsible_family == current_user.family || @accepted_family %>
-                <div class="menu" data-action="click->groupmenu#toggleDiscussion"><i class="fa-solid fa-comments i-menu"></i> Fil de discussions (<%= @chatroom.messages.count %>)
-                    <span class="badge rounded-pill bg-danger">
-                        <%= @unread_messages_count %>
-                        <span class="visually-hidden">Messages non lus</span>
-                    </span>
-                </div>
+              <div class="menu" data-action="click->groupmenu#toggleAgenda"><i class="fa-solid fa-calendar-days i-menu"></i> Agenda</div>
+              <div class="menu" data-action="click->groupmenu#toggleDiscussion"><i class="fa-solid fa-comments i-menu"></i> Fil de discussions (<%= @chatroom.messages.count %>)
+                <span class="badge rounded-pill bg-danger">
+                    <%= @unread_messages_count %>
+                    <span class="visually-hidden">Messages non lus</span>
+                </span>
+              </div>
+              <div class="menu" data-action="click->groupmenu#toggleEvents"><i class="fa-solid fa-democrat i-menu"></i> Événements (<%= @events_to_come.count %> à venir)</div>
             <% end %>
-            <div class="menu" data-action="click->groupmenu#toggleEvents"><i class="fa-solid fa-democrat i-menu"></i> Événements (<%= @events_to_come.count %> à venir)</div>
         </div>
      <div>
   </div>
