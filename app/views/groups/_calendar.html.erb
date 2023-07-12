@@ -1,5 +1,5 @@
-
-  <%= month_calendar(locals: { events: plannings, group: group, end_attribute: :end_time }) do |date, plannings| %>
+<%= turbo_frame_tag 'calendar' do %>
+  <%= month_calendar(events: plannings, group: group, end_attribute: :end_time) do |date, plannings| %>
     <%= date %>
     <div class="">
       <% plannings.each do |planning| %>
@@ -18,3 +18,4 @@
       <% end %>
     </div>
   <% end %>
+<% end %>
