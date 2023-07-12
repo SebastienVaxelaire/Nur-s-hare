@@ -12,16 +12,16 @@
       <p class="fst-italic fs-6"><%= @group.place_address %></p>
       <p class="mt-4"><%= @group.description %></p>
       <% if @group.family.user != current_user && current_user.family.name.present? %>
-          <% if @invited_family %>
-              <p class="btn btn-info disabled mt-4">Demande en attente d'acceptation</p>
-          <% elsif @accepted_family %>
-              <p class="btn btn-success disabled mt-4">Vous êtes membre de ce groupe !</p>
-              <p class="fs-6"><%= link_to 'Quitter le groupe',
-                          group_families_group_path(@family_group),
-                          data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir quitter ce groupe ?"} %></p>
-          <% else %>
-              <%= link_to "Rejoindre le groupe", group_families_groups_path(@group), data: {turbo_method: 'post'}, class: "btn btn-primary mt-4" %></p>
-          <% end %>
+        <% if @invited_family %>
+          <p class="btn btn-info disabled mt-4">Demande en attente d'acceptation</p>
+        <% elsif @accepted_family %>
+          <p class="btn btn-success disabled mt-4">Vous êtes membre de ce groupe !</p>
+          <p class="fs-6"><%= link_to 'Quitter le groupe',
+                      group_families_group_path(@family_group),
+                      data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir quitter ce groupe ?"} %></p>
+        <% else %>
+          <%= link_to "Rejoindre le groupe", group_families_groups_path(@group), data: {turbo_method: 'post'}, class: "btn btn-primary mt-4" %></p>
+        <% end %>
       <% end %>
       <% if !current_user.family.name.present? %>
           <p class="mt-5"><i class="fa-solid fa-circle-exclamation"></i> Pour rejoindre ce groupe, vous devez d'abord <%= link_to "ajouter des informations", family_path(current_user.family), class: "fw-bold" %> sur votre famille !</p>
@@ -73,7 +73,7 @@
     <% if @events.size > 0 %>
       <p class="mb-0 text-grey fs-5 border-bottom"><%= @events_to_come.count > 1 ? "#{@events_to_come.count} événements à venir" : "#{@events_to_come.count} événement à venir" %>  </p>
       <% @events_to_come.each do |event_to_come| %>
-        <i class="fa-solid fa-sun text-carnation-pink mt-4"></i> <%= link_to "#{event_to_come.name}", group_event_path(@group, event_to_come), class: "fs-5" %> le <%= I18n.l(event_to_come.start, format: "%-d %B %Y à %H:%M") %> (<%= event_to_come.families.count > 1 ? "#{event_to_come.families.count} familles inscrites" : "#{event_to_come.families.count} famille inscrite" %>)<br>
+        <i class="fa-solid fa-sun text-carnation-pink mt-4"></i> <%= link_to "#{event_to_come.name}", group_event_path(@group, event_to_come), class: "fs-5" %> le <%= I18n.l(event_to_come.start_time, format: "%-d %B %Y à %H:%M") %> (<%= event_to_come.families.count > 1 ? "#{event_to_come.families.count} familles inscrites" : "#{event_to_come.families.count} famille inscrite" %>)<br>
       <% end %>
       <p class="mt-4 mb-0 text-grey">Événements passés (<%= @past_events.count %>)</p>
       <% @past_events.each do |past_event| %>
@@ -111,7 +111,7 @@
   <div class="light-card">
     <h3 class="mb-4 text-grey">Agenda</h3>
     <div id="calendar">
-      <%= render "calendar", plannings: @plannings, group: @group %>
+      <%= render "calendar", plannings: @plannings, group: @group, events: @events, events_and_plannings: @events_and_plannings %>
     </div>
   </div>
 </div>

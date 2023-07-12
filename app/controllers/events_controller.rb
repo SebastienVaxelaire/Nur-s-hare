@@ -7,7 +7,7 @@ class EventsController < ApplicationController
 
   def show
     authorize @event
-    duration = @event.end.to_time - @event.start.to_time
+    duration = @event.end_time.to_time - @event.start_time.to_time
     @duration_hours = (duration / 3600).to_i
     @duration_minutes = ((duration - (@duration_hours * 3600)) / 60).to_i
     @families = @event.families
@@ -28,9 +28,9 @@ class EventsController < ApplicationController
     @event.group = @group
     if @event.save
       EventsFamily.create(family_id: current_user.family.id, event_id: @event.id)
-      @planning = Planning.new(name: @event.name, start_time: @event.start, end_time: @event.end, group_id: @event.group_id, event: true)
-      authorize @planning
-      @planning.save
+      # @planning = Planning.new(name: @event.name, start_time: @event.start_time, end_time: @event.end_time, group_id: @event.group_id, event: true)
+      # authorize @planning
+      # @planning.save
       redirect_to group_event_path(@group, @event), notice: "L'événement #{@event.name} a été créé avec succès."
     else
       render :new, status: :unprocessable_entity
@@ -76,7 +76,7 @@ class EventsController < ApplicationController
   end
 
   def params_event
-    params.require(:event).permit(:name, :start, :end, :description)
+    params.require(:event).permit(:name, :start_time, :end_time, :description)
   end
 
   def planning_params

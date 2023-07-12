@@ -160,14 +160,19 @@
         </div>
       <% else %>
         <h3 class="mb-3">Pas d'enfant pour le moment !</h3>
-        <%= link_to "Ajouter un enfant", new_family_child_path(@family), class: "btn btn-info btn-small mb-3" %>
+        <% if current_user.family == @family %>
+          <%= link_to "Ajouter un enfant", new_family_child_path(@family), class: "btn btn-info btn-small mb-3" %>
+        <% end %>
       <% end %>
     </div>
 
 
     <div class="light-card mt-3", id="groups">
       <% if @families_groups.empty? %>
-        <h3 class="mb-4">Pas de groupe pour l'instant</h3>
+        <h3 class="mb-3">Pas de groupe pour l'instant !</h3>
+        <% if current_user.family == @family %>
+          <%= link_to "Voir tous les groupes", groups_path, class: "btn btn-primary btn-small mb-3" %>
+        <% end %>
       <% else %>
         <h3 class="mb-4">Nous sommes membres des groupes suivants</h3>
         <% @groups_created_by_this_family.each do |family_group| %>

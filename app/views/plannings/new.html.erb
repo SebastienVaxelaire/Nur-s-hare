@@ -3,7 +3,7 @@
   <h2>Ajouter une garde</h2>
 
   <%= simple_form_for([@group, @planning]) do |f| %>
-    <%= f.input :name, label: "Famille", collection: @all_families_names %>
+    <%= f.input :name, label: "Famille", collection: @all_families_names, selected: current_user.family.name %>
     <%= f.input :start_time, label: "Début" %>
     <%= f.input :end_time, label: "Fin" %>
     <%= f.submit "Créer la garde", class: "btn btn-primary" %>

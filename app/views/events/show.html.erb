@@ -9,7 +9,7 @@
                       data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer cet événement ?"} %>
     <% end %>
     <h3 class="mt-3">Groupe : <%= link_to @event.group.name, group_path(@event.group), class: "text-white" %></h3>
-    <p class="mt-3 mb-0"><i class="fa-regular fa-calendar-days"></i> <%= I18n.l(@event.start, format: "%-d %B %Y à %H:%M") %></p>
+    <p class="mt-3 mb-0"><i class="fa-regular fa-calendar-days"></i> <%= I18n.l(@event.start_time, format: "%-d %B %Y à %H:%M") %></p>
     <p><i class="fa-solid fa-hourglass-start"></i>
     <% if @duration_hours < 1 %>
       <%= @duration_minutes %> minutes
@@ -38,8 +38,8 @@
 
   <div class="light-card mt-3">
     <h3 class="text-carnation-pink"><i class="fa-regular fa-calendar-days"></i></i> Dates</h3>
-    <p class="mb-0"><i class="fa-solid fa-flag-checkered"></i> <%= I18n.l(@event.start, format: "%-d %B %Y à %H:%M") %></p>
-    <p class="mb-0"><i class="fa-regular fa-circle-xmark"></i> <%= I18n.l(@event.end, format: "%-d %B %Y à %H:%M") %></p>
+    <p class="mb-0"><i class="fa-solid fa-flag-checkered"></i> <%= I18n.l(@event.start_time, format: "%-d %B %Y à %H:%M") %></p>
+    <p class="mb-0"><i class="fa-regular fa-circle-xmark"></i> <%= I18n.l(@event.end_time, format: "%-d %B %Y à %H:%M") %></p>
     <p class="mb-0"><i class="fa-solid fa-hourglass-start"></i>
     <% if @duration_hours < 1 %>
       <%= @duration_minutes %> minutes

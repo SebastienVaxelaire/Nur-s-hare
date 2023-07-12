@@ -54,8 +54,9 @@ class GroupsController < ApplicationController
       @unread_messages_count = 0
     end
     @events = Event.where(group_id: @group)
-    @events_to_come = @events.where('events."end" > ?', Time.now)
-    @past_events = @events.where('events."end" < ?', Time.now)
+    @events_and_plannings = @events + @plannings
+    @events_to_come = @events.where('events."end_time" > ?', Time.now)
+    @past_events = @events.where('events."end_time" < ?', Time.now)
     # chatroom
     @chatroom = Chatroom.find_by(group_id: @group)
     authorize @chatroom

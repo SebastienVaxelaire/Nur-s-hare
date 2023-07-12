@@ -1,8 +1,8 @@
 <%= simple_form_for [group, event] do |f| %>
   <%= f.input :name, label: "Type d'activité" %>
   <%= f.input :description, label: "Description" %>
-  <%= f.input :start, label: "Début" %>
-  <%= f.input :end, label: "Fin" %>
+  <%= f.input :start_time, label: "Début" %>
+  <%= f.input :end_time, label: "Fin" %>
   <%# <%= f.hidden_field :group_id, value: params[:group_id] %>
   <%= f.submit label, class: "btn btn-primary" %>
 <% end %>
